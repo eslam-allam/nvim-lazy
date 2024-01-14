@@ -20,10 +20,6 @@ vim.keymap.set("n", "<leader>tgqc", function()
 end, { desc = "Kill current Gradle daemons" })
 
 vim.keymap.set("n", "<leader>tgqa", function()
-  local success = os.execute()
-  if success then
-    vim.notify("Succesfully killed all Gradle daemons", 2, {})
-  else
-    vim.notify("Failed to kill all Gradle daemons", 4, {})
-  end
+  local _ = vim.fn.system({ "pkill", "-f", ".*GradleDaemon.*" })
+  vim.notify("Succesfully killed all Gradle daemons", 2, {})
 end, { desc = "Kill all Gradle daemons" })
