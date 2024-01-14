@@ -1,2 +1,4 @@
 - working_dir: /home/eslamallam/ADRI/java_projects/adri-reviewer-server
   root: /home/eslamallam/ADRI/java_projects/adri-reviewer-server
+- working_dir: /home/eslamallam/ADRI/java_projects/adri-account-server
+  root: /home/eslamallam/ADRI/java_projects/adri-account-server
