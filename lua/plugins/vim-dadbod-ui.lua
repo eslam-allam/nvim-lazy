@@ -12,8 +12,8 @@ return {
   },
 
   keys = {
-    { "<leader>dt", "<cmd>DBUIToggle<CR>", desc = "Toggle database client", mode = { "n" } },
-    { "<leader>da", "<cmd>DBUIAddConnection<CR>", desc = "Add database client connection", mode = { "n" } },
+    { "<leader>cdt", "<cmd>DBUIToggle<CR>", desc = "Toggle database client", mode = { "n" } },
+    { "<leader>cda", "<cmd>DBUIAddConnection<CR>", desc = "Add database client connection", mode = { "n" } },
   },
   init = function()
     -- Your DBUI configuration
