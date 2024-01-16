@@ -10,6 +10,12 @@ return {
           key = "p",
         },
         {
+          action = "Telescope find_files",
+          desc = " Find file",
+          icon = " ",
+          key = "f",
+        },
+        {
           action = "ene | startinsert",
           desc = " New file",
           icon = " ",
