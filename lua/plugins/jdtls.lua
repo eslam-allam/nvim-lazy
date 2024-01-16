@@ -29,14 +29,6 @@ return {
       },
 
       jdtls = {
-        init_options = {
-          bundles = {
-            vim.fn.glob(
-              "/home/eslamallam/java-ext/java-debug/com.microsoft.java.debug.plugin/target/com.microsoft.java.debug.plugin-*.jar",
-              1
-            ),
-          },
-        },
         settings = {
           java = {
             configuration = {

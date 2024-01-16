@@ -51,3 +51,21 @@ vim.api.nvim_create_autocmd("TermOpen", {
     end
   end,
 })
+
+
+vim.api.nvim_create_autocmd({
+  "BufNewFile",
+  "BufRead",
+}, {
+  pattern = { "*.gradle" },
+  callback = function()
+    local buf = vim.api.nvim_get_current_buf()
+    vim.api.nvim_buf_set_option(buf, "filetype", "java")
+  end,
+})
+
+vim.api.nvim_create_autocmd({ "BufNewFile", "BufRead" }, {
+  callback = function()
+    require("neo-tree.command").execute({ action = "close" })
+  end,
+})

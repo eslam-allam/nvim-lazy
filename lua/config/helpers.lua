@@ -11,6 +11,39 @@ function M.File_exists(name)
   end
 end
 
+function M.tableToString(tbl)
+    local str = "{"
+
+    for key, value in pairs(tbl) do
+        str = str .. string.format("[%s] = %s, ", key, tostring(value))
+    end
+
+    -- Remove the trailing comma and space if the table is not empty
+    if next(tbl) then
+        str = str:sub(1, -3)
+    end
+
+    str = str .. "}"
+
+    return str
+end
+
+function M.get_gradle_projects(gradlew_root)
+	local output = vim.fn.system({
+		gradlew_root .. "/gradlew",
+		"projects",
+		"--quiet",
+		"--build-file",
+		gradlew_root .. "/build.gradle"
+	})
+	local subprojects = {'root'}
+
+  for subproject in output:gmatch("':([a-zA-Z0-9\\-]*)'") do
+    table.insert(subprojects, subproject)
+  end
+	return subprojects
+end
+
 function M.ReadFile(file)
   local f = assert(io.open(file, "rb"))
   local content = f:read("*all")
