@@ -17,7 +17,7 @@ return {
           local project_actions = require("telescope._extensions.project.actions")
           -- Do anything you want in here. For example:
           
-          project_actions.find_project_files(prompt_bufnr, true)
+          project_actions.find_project_files(prompt_bufnr, false)
           vim.api.nvim_cmd({cmd = 'BufferLineCloseOthers'}, {})
           vim.cmd('bd')
 
