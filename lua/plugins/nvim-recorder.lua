@@ -10,8 +10,7 @@ return {
     { "yq", desc = "  Yank Macro" },
     { "dq", desc = "  Clear Macros" },
   },
-  opts = function()
-    require("recorder").setup({
+  opts = {
       slots = { "a", "b", "c", "d" },
       mapping = {
         startStopRecording = "q",
@@ -56,6 +55,5 @@ return {
       -- [experimental] partially share keymaps with nvim-dap.
       -- (See README for further explanations.)
       dapSharedKeymaps = false,
-    })
-  end,
+  },
 }

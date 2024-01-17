@@ -36,12 +36,9 @@ return {
           function()
             return require("recorder").recordingStatus()
           end,
-          cond = function()
-            return package.loaded["recorder"] and require("recorder").recordingStatus() ~= ""
-          end,
-          color = Util.ui.fg("Statement"),
+          color = Util.ui.fg("Special"),
         },
- -- stylua: ignore
+        -- stylua: ignore
         {
           function() return require("noice").api.status.command.get() end,
           cond = function() return package.loaded["noice"] and require("noice").api.status.command.has() end,
