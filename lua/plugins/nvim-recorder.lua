@@ -57,16 +57,5 @@ return {
       -- (See README for further explanations.)
       dapSharedKeymaps = false,
     })
-    local lualineX = require("lualine").get_config().sections.lualine_x or {}
-    local lualineY = require("lualine").get_config().sections.lualine_y or {}
-    table.insert(lualineX, { require("recorder").recordingStatus })
-    table.insert(lualineY, { require("recorder").displaySlots })
-
-    require("lualine").setup({
-      sections = {
-        lualine_x = lualineX,
-        lualine_y = lualineY,
-      },
-    })
   end,
 }
