@@ -24,7 +24,6 @@ return {
           cond = function()
             return pythonEnv() ~= ""
           end,
-          color = Util.ui.fg("Special"),
         },
         {
           function()
