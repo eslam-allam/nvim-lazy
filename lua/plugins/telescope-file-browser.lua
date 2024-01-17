@@ -12,7 +12,14 @@ return {
       mode = "n",
     },
   },
-
+init = function()
+    if vim.fn.argc(-1) == 1 then
+      local stat = vim.loop.fs_stat(vim.fn.argv(0))
+      if stat and stat.type == "directory" then
+        require("telescope").extensions.file_browser.file_browser()
+      end
+    end
+  end,
   config = function()
     Util.on_load("telescope.nvim", function()
       require("telescope").load_extension("file_browser")

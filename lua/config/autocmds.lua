@@ -1,7 +1,7 @@
 -- Autocmds are automatically loaded on the VeryLazy event
 -- Default autocmds that are always set: https://github.com/LazyVim/LazyVim/blob/main/lua/lazyvim/config/autocmds.lua
 -- Add any additional autocmds here
-vim.api.nvim_create_autocmd({ "VimEnter", "DirChanged"}, {
+vim.api.nvim_create_autocmd({ "VimEnter", "DirChanged" }, {
   callback = function()
     local pythonFiles = vim.fn.globpath(vim.fn.getcwd(), "*.py", 0, 1)
     if #pythonFiles > 0 then
@@ -47,11 +47,9 @@ vim.api.nvim_create_autocmd("TermOpen", {
         activateCommand = "conda activate " .. envSelector.get_active_venv()
       end
       vim.cmd('call chansend(b:terminal_job_id, "' .. activateCommand .. ' \\<cr>")')
-      --vim.api.nvim_exec("call chansend(b:terminal_job_id, '\\<cr>')", false)
     end
   end,
 })
-
 
 vim.api.nvim_create_autocmd({
   "BufNewFile",
@@ -64,8 +62,3 @@ vim.api.nvim_create_autocmd({
   end,
 })
 
-vim.api.nvim_create_autocmd({ "BufNewFile", "BufRead" }, {
-  callback = function()
-    require("neo-tree.command").execute({ action = "close" })
-  end,
-})
