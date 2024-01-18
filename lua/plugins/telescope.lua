@@ -1,4 +1,7 @@
 local Util = require("lazyvim.util")
+local browse_files = function()
+    require("telescope").extensions.file_browser.file_browser()
+  end
 return {
   "nvim-telescope/telescope.nvim",
   keys = {
@@ -41,6 +44,7 @@ return {
       mappings = {
         i = {
           ["<C-h>"] = "which_key",
+          ["<a-f>"] = browse_files,
         },
       },
     },
