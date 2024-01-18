@@ -5,6 +5,7 @@
 --
 
 local helpers = require("config.helpers")
+local Util = require("lazyvim.util")
 
 vim.keymap.set("n", "<leader>tgqc", function()
   local root = helpers.User_configured_root_dir(vim.api.nvim_buf_get_name(0))
@@ -23,3 +24,6 @@ vim.keymap.set("n", "<leader>tgqa", function()
   local _ = vim.fn.system({ "pkill", "-f", ".*GradleDaemon.*" })
   vim.notify("Succesfully killed all Gradle daemons", 2, {})
 end, { desc = "Kill all Gradle daemons" })
+
+vim.keymap.set("n", "<leader>gg", function() Util.terminal({ "lazygit" }, {cwd = Util.root(), esc_esc = false, ctrl_hjkl = false}) end, { desc = "Lazygit (cwd)" })
+vim.keymap.set("n", "<leader>gG", function() Util.terminal({ "lazygit" }, {esc_esc = false, ctrl_hjkl = false}) end, { desc = "Lazygit (cwd)" })

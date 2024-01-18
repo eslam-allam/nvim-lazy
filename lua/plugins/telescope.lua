@@ -1,7 +1,17 @@
+local Util = require("lazyvim.util")
 return {
   "nvim-telescope/telescope.nvim",
   keys = {
     { "<leader>gb", "<cmd>Telescope git_branches<CR>", desc = "branches" },
+    { "<leader>ff", "<cmd>Telescope find_files<CR>", desc = "Find Files (cwd)" },
+    { "<leader><Space>", "<cmd>Telescope find_files<CR>", desc = "Find Files (cwd)" },
+    {
+      "<leader>fF",
+      function()
+        require("telescope.builtin").find_files({ cwd = Util.root()})
+      end,
+      desc = "Find Files (Root)",
+    },
   },
   opts = {
 
