@@ -2,14 +2,18 @@ local Util = require("lazyvim.util")
 local browse_files = function()
     require("telescope").extensions.file_browser.file_browser()
   end
+local find_all_files = function()
+    local action_state = require("telescope.actions.state")
+    local line = action_state.get_current_line()
+    Util.telescope("find_files", { no_ignore = true, hidden = true, default_text = line })()  end
 return {
   "nvim-telescope/telescope.nvim",
   keys = {
     { "<leader>gb", "<cmd>Telescope git_branches<CR>", desc = "branches" },
-    { "<leader>fF", "<cmd>Telescope find_files<CR>", desc = "Find Files (cwd)" },
+    { "<leader>ff", "<cmd>Telescope find_files<CR>", desc = "Find Files (cwd)" },
     { "<leader><Space>", "<cmd>Telescope find_files<CR>", desc = "Find Files (cwd)" },
     {
-      "<leader>ff",
+      "<leader>fF",
       function()
         require("telescope.builtin").find_files({ cwd = Util.root()})
       end,
@@ -45,6 +49,7 @@ return {
         i = {
           ["<C-h>"] = "which_key",
           ["<a-f>"] = browse_files,
+          ["<a-u>"] = find_all_files,
         },
       },
     },
