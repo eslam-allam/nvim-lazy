@@ -6,10 +6,10 @@ return {
   "nvim-telescope/telescope.nvim",
   keys = {
     { "<leader>gb", "<cmd>Telescope git_branches<CR>", desc = "branches" },
-    { "<leader>ff", "<cmd>Telescope find_files<CR>", desc = "Find Files (cwd)" },
+    { "<leader>fF", "<cmd>Telescope find_files<CR>", desc = "Find Files (cwd)" },
     { "<leader><Space>", "<cmd>Telescope find_files<CR>", desc = "Find Files (cwd)" },
     {
-      "<leader>fF",
+      "<leader>ff",
       function()
         require("telescope.builtin").find_files({ cwd = Util.root()})
       end,
