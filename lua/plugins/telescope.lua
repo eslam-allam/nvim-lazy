@@ -6,17 +6,19 @@ local find_all_files = function()
     local action_state = require("telescope.actions.state")
     local line = action_state.get_current_line()
     Util.telescope("find_files", { no_ignore = true, hidden = true, default_text = line })()  end
+local find_root_files = function()
+        require("telescope.builtin").find_files({ cwd = Util.root()})
+      end
+
 return {
   "nvim-telescope/telescope.nvim",
   keys = {
     { "<leader>gb", "<cmd>Telescope git_branches<CR>", desc = "branches" },
-    { "<leader>ff", "<cmd>Telescope find_files<CR>", desc = "Find Files (cwd)" },
-    { "<leader><Space>", "<cmd>Telescope find_files<CR>", desc = "Find Files (cwd)" },
+    { "<leader>fF", "<cmd>Telescope find_files<CR>", desc = "Find Files (cwd)" },
+    { "<leader><Space>", find_root_files, desc = "Find Files (Root)" },
     {
-      "<leader>fF",
-      function()
-        require("telescope.builtin").find_files({ cwd = Util.root()})
-      end,
+      "<leader>ff",
+      find_root_files,
       desc = "Find Files (Root)",
     },
   },
