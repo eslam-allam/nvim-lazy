@@ -28,6 +28,10 @@ function M.tableToString(tbl)
     return str
 end
 
+function M.cwd()
+  return vim.fn.expand("%:p:h")
+end
+
 function M.get_gradle_projects(gradlew_root)
 	local output = vim.fn.system({
 		gradlew_root .. "/gradlew",

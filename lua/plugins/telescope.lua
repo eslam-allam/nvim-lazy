@@ -1,4 +1,5 @@
 local Util = require("lazyvim.util")
+local helpers = require("config.helpers")
 local browse_files = function()
     require("telescope").extensions.file_browser.file_browser()
   end
@@ -10,11 +11,15 @@ local find_root_files = function()
         require("telescope.builtin").find_files({ cwd = Util.root()})
       end
 
+local find_cwd_files = function()
+        require("telescope.builtin").find_files({ cwd = helpers.cwd() })
+      end
+
 return {
   "nvim-telescope/telescope.nvim",
   keys = {
     { "<leader>gb", "<cmd>Telescope git_branches<CR>", desc = "branches" },
-    { "<leader>fF", "<cmd>Telescope find_files<CR>", desc = "Find Files (cwd)" },
+    { "<leader>fF", find_cwd_files, desc = "Find Files (cwd)" },
     { "<leader><Space>", find_root_files, desc = "Find Files (Root)" },
     {
       "<leader>ff",
