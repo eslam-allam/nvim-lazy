@@ -31,6 +31,7 @@ return {
           "~/ADRI",
           "~/.config",
         },
+        cd_scope = { "tab", "window", "global" },
         -- theme = "dropdown",
         on_project_selected = function(prompt_bufnr)
           local project_actions = require("telescope._extensions.project.actions")
