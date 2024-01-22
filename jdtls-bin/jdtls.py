@@ -77,11 +77,10 @@ def main(args):
 	known_args, args = parser.parse_known_args(args)
 	java_executable = get_java_executable(known_args.validate_java_version)
 
-	jdtls_base_path = Path(f"{os.getenv("MASON")}/packages/jdtls")
+	jdtls_base_path = Path(f"{os.getenv('MASON')}/packages/jdtls")
 	shared_config_path = get_shared_config_path(jdtls_base_path)
 	jar_path = find_equinox_launcher(jdtls_base_path)
 
-	system = platform.system()
 	exec_args = ["-Declipse.application=org.eclipse.jdt.ls.core.id1",
 			"-Dosgi.bundles.defaultStartLevel=4",
 			"-Declipse.product=org.eclipse.jdt.ls.core.product",

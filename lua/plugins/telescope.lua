@@ -28,24 +28,7 @@ return {
     },
   },
   opts = {
-
     extensions = {
-      project = {
-        base_dirs = {
-          "~/personal_projects",
-          "~/ADRI",
-          "~/.config",
-        },
-        cd_scope = { "tab", "window", "global" },
-        -- theme = "dropdown",
-        on_project_selected = function(prompt_bufnr)
-          local project_actions = require("telescope._extensions.project.actions")
-          -- Do anything you want in here. For example:
-          project_actions.find_project_files(prompt_bufnr, false)
-          vim.api.nvim_cmd({ cmd = "BufferLineCloseOthers" }, {})
-          vim.cmd("bd")
-        end,
-      },
       file_browser = {
         -- disables netrw and use telescope-file-browser in its place
         hijack_netrw = true,
