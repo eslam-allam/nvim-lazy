@@ -18,6 +18,7 @@ local find_cwd_files = function()
 return {
   "nvim-telescope/telescope.nvim",
   keys = {
+    { "<leader>cb", "<cmd>Telescope lsp_document_symbols<CR>", desc = "Find Symbol" },
     { "<leader>gb", "<cmd>Telescope git_branches<CR>", desc = "branches" },
     { "<leader>fF", find_cwd_files, desc = "Find Files (cwd)" },
     { "<leader><Space>", find_root_files, desc = "Find Files (Root)" },
@@ -41,6 +42,7 @@ return {
           ["<C-h>"] = "which_key",
           ["<a-f>"] = browse_files,
           ["<a-u>"] = find_all_files,
+          ["<a-F>"] = find_root_files,
         },
       },
     },
