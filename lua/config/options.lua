@@ -3,3 +3,11 @@
 -- Add any additional options here
 
 vim.g.autoformat = false
+
+vim.g.ray_options = {
+ ["theme"] = "falcon",
+ [ "background" ] = "true",
+ [ "darkMode" ] = "true",
+ [ "padding" ] = 16,
+ [ "language" ] = "auto"
+  }
