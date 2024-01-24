@@ -7,6 +7,8 @@
 local helpers = require("config.helpers")
 local Util = require("lazyvim.util")
 
+vim.api.nvim_create_user_command("Silicon", helpers.silicon, { nargs = "*" } )
+
 -- gradle
 vim.keymap.set("n", "<leader>tgqc", function()
   local root = helpers.User_configured_root_dir(vim.api.nvim_buf_get_name(0))
