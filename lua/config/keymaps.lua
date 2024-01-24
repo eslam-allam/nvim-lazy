@@ -7,7 +7,7 @@
 local helpers = require("config.helpers")
 local Util = require("lazyvim.util")
 
-vim.api.nvim_create_user_command("Silicon", helpers.silicon, { nargs = "*", range = 2 } )
+vim.api.nvim_create_user_command("Silicon", helpers.silicon, { nargs = "*"} )
 
 vim.keymap.set("x", "<leader>cc", "<cmd>Silicon<CR>", { desc = "Snap to Clipboard" })
 vim.keymap.set("x", "<leader>cC", "<cmd>Silicon type=file<CR>", { desc = "Snap to file (cwd)" })

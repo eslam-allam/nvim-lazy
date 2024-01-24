@@ -10,6 +10,7 @@ return {
       ["<leader>t"] = { name = "+terminal" },
       ["<leader>tg"] = { name = "+gradle" },
       ["<leader>tgq"] = { name = "+kill" },
+      ["<leader>cj"] = { name = "+jdtls" },
     },
   },
 }

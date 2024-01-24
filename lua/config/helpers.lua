@@ -83,6 +83,14 @@ function M.splitStr(inputstr, sep)
 end
 
 function M.silicon(options)
+
+  if vim.fn.mode() ~= "v" then
+    vim.notify("[Silicon] not in visual mode!", 4)
+    return
+  end
+
+  local keys = vim.api.nvim_replace_termcodes("<ESC>", true, false, true)
+  vim.api.nvim_feedkeys(keys, "x", false)
   local unsplit_opts = options.fargs
 
   local opts = {}
@@ -91,12 +99,10 @@ function M.silicon(options)
     opts = vim.tbl_extend("keep", opts, { [split_table[1]] = split_table[2] })
   end
 
-
   local highlightedText = M.appendTableEntries(M.getHighlightedLines(), "\n")
 
-
   local defaults = {
-    type = 'clipboard',
+    type = "clipboard",
     file_path = M.cwd() .. "/" .. M.uuid(),
   }
 
@@ -112,7 +118,7 @@ function M.silicon(options)
 
   local action = ""
 
-  if opts.type == 'clipboard' then
+  if opts.type == "clipboard" then
     action = "copied image to clipboard"
     command = command .. "--to-clipboard "
   end
