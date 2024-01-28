@@ -2,6 +2,16 @@ local helpers = require("config.helpers")
 
 return {
   "mfussenegger/nvim-jdtls",
+
+  keys = {
+    { "<leader>cjw", "<cmd>JdtWipeDataAndRestart<CR>", desc = "[W]ipe and Restart" },
+    { "<leader>cjc", "<cmd>JdtCompile<CR>", desc = "[C]ompile" },
+    { "<leader>cjs", "<cmd>JdtSetRuntime<CR>", desc = "[S]et Runtime" },
+    { "<leader>cju", "<cmd>JdtUpdateConfig<CR>", desc = "[U]pdate Config" },
+    { "<leader>cjr", "<cmd>JdtRestart<CR>", desc = "[R]estart" },
+    { "<leader>cjj", "<cmd>JdtJshell<CR>", desc = "[J]Shell" },
+  },
+
   opts = function()
     return {
       -- How to find the root dir for a given filename. The default comes from
@@ -24,7 +34,7 @@ return {
       -- How to run jdtls. This can be overridden to a full java command-line
       -- if the Python wrapper script doesn't suffice.
       cmd = {
-        '/home/eslamallam/.config/nvim/jdtls-bin/jdtls',
+        "/home/eslamallam/.config/nvim/jdtls-bin/jdtls",
         "--jvm-arg=-javaagent:" .. os.getenv("MASON") .. "/packages/jdtls/lombok.jar",
       },
 

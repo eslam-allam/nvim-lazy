@@ -75,3 +75,12 @@ vim.api.nvim_create_autocmd({
     require("cmp").setup.buffer({ sources = { { name = "vim-dadbod-completion" } } })
   end,
 })
+
+-- octo 
+vim.api.nvim_create_autocmd("FileType", {
+  pattern = "octo",
+  callback = function ()
+    vim.keymap.set("i", "@", "@<C-x><C-o>", { silent = true, buffer = true })
+    vim.keymap.set("i", "#", "#<C-x><C-o>", { silent = true, buffer = true })
+  end
+})

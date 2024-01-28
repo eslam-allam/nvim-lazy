@@ -11,6 +11,7 @@ return {
       ["<leader>tg"] = { name = "+gradle" },
       ["<leader>tgq"] = { name = "+kill" },
       ["<leader>cj"] = { name = "+jdtls" },
+      ["<leader>gr"] = { name = "+review" },
     },
   },
 }
