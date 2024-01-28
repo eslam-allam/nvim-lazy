@@ -31,6 +31,7 @@ return {
   opts = {
     extensions = {
       file_browser = {
+        no_ignore = true,
         -- disables netrw and use telescope-file-browser in its place
         hijack_netrw = true,
       },
@@ -39,7 +40,6 @@ return {
     defaults = {
       mappings = {
         i = {
-          ["<C-h>"] = "which_key",
           ["<a-f>"] = browse_files,
           ["<a-u>"] = find_all_files,
           ["<a-F>"] = find_root_files,
