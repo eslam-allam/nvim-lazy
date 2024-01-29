@@ -12,6 +12,8 @@ return {
       ["<leader>tgq"] = { name = "+kill" },
       ["<leader>cj"] = { name = "+jdtls" },
       ["<leader>gr"] = { name = "+review" },
+      ["<leader>gp"] = { name = "+pull requests" },
+      ["<leader>gi"] = { name = "+issues" },
     },
   },
 }
