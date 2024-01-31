@@ -13,3 +13,6 @@ vim.g.ray_options = {
 }
 
 vim.g.python3_host_prog = "~/miniconda3/bin/python"
+
+vim.opt.tabstop = 4
+vim.opt.shiftwidth = 4
