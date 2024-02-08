@@ -174,7 +174,7 @@ function M.ReadFile(file)
   return content
 end
 
-local lyaml = require("lyaml")
+local yaml = require("yaml")
 
 function M.Expand_home(path)
   local home = os.getenv("HOME")
@@ -193,7 +193,7 @@ function M.User_configured_root_dir(fileName)
   local exists = M.File_exists(config_path)
   local expanded_fname = M.Expand_home(fileName)
   if exists then
-    local content = lyaml.load(M.ReadFile(config_path))
+    local content = yaml.eval(M.ReadFile(config_path))
 
     for _, v in pairs(content) do
       local working_dir = M.Expand_home(v.working_dir)
@@ -210,7 +210,7 @@ end
 function M.User_configured_gradlew(root)
   local exists = M.File_exists(config_path)
   if exists then
-    local content = lyaml.load(M.ReadFile(config_path))
+    local content = yaml.eval(M.ReadFile(config_path))
 
     for _, v in pairs(content) do
       local conf_root = M.Expand_home(v.root)
