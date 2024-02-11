@@ -6,7 +6,6 @@ vim.api.nvim_create_autocmd({ "VimEnter", "DirChanged" }, {
     local pythonFiles = vim.fn.globpath(vim.fn.getcwd(), "*.py", 0, 1)
     if #pythonFiles > 0 then
       local venvSelector = require("venv-selector")
-      vim.notify_once("Detected " .. #pythonFiles .. " python files in current project.", 2)
       venvSelector.retrieve_from_cache()
       if venvSelector.get_active_venv() == nil then
         local condaEnv = os.getenv("CONDA_DEFAULT_ENV")
