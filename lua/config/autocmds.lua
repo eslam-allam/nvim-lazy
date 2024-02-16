@@ -85,3 +85,29 @@ vim.api.nvim_create_autocmd("FileType", {
     vim.keymap.set("i", "#", "#<C-x><C-o>", { silent = true, buffer = true })
   end,
 })
+
+-- Telescope preview cloak
+local cloak = require("cloak")
+local action_state = require("telescope.actions.state")
+vim.api.nvim_create_autocmd("User", {
+  pattern = "TelescopePreviewerLoaded",
+  callback = function(args)
+    local buffer = require("telescope.state").get_existing_prompt_bufnrs()[1]
+    local base_name = vim.fn.fnamemodify(args.data.bufname, ":t")
+    local ok, _ = pcall(vim.api.nvim_buf_get_var, args.buf, "cloaked")
+    for _, pattern in ipairs(cloak.opts.patterns) do
+      for _, file_pattern in ipairs(pattern.file_pattern) do
+        if vim.fn.match(base_name, file_pattern) >= 0 then
+          cloak.cloak(cloak.opts.patterns[1])
+          vim.api.nvim_buf_set_var(args.buf, "cloaked", true)
+          if ok then
+            return
+          end
+          action_state.get_current_picker(buffer):refresh()
+          return
+        end
+      end
+    end
+  end,
+  group = "cloak",
+})
