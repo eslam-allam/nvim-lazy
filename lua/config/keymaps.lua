@@ -41,3 +41,7 @@ vim.keymap.set("n", "<C-/>", function() Util.terminal(nil, { cwd = Util.root() }
 
 -- diagnostic
 vim.keymap.set("n", "<leader>cD", function() vim.diagnostic.open_float(); vim.diagnostic.open_float() end, { desc = "Line Diagnostics (Focus)"})
+
+-- Plugins
+-- -- Cloak
+vim.keymap.set('n', "<leader>cc", "<cmd>CloakToggle<CR>", { desc = "Toggle Cloak" })

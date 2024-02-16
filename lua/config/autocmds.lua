@@ -1,6 +1,8 @@
 -- Autocmds are automatically loaded on the VeryLazy event
 -- Default autocmds that are always set: https://github.com/LazyVim/LazyVim/blob/main/lua/lazyvim/config/autocmds.lua
 -- Add any additional autocmds here
+local helpers = require("config.helpers")
+
 vim.api.nvim_create_autocmd({ "VimEnter", "DirChanged" }, {
   callback = function()
     local pythonFiles = vim.fn.globpath(vim.fn.getcwd(), "*.py", 0, 1)
@@ -75,11 +77,11 @@ vim.api.nvim_create_autocmd({
   end,
 })
 
--- octo 
+-- octo
 vim.api.nvim_create_autocmd("FileType", {
   pattern = "octo",
-  callback = function ()
+  callback = function()
     vim.keymap.set("i", "@", "@<C-x><C-o>", { silent = true, buffer = true })
     vim.keymap.set("i", "#", "#<C-x><C-o>", { silent = true, buffer = true })
-  end
+  end,
 })
