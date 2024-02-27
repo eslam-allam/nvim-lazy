@@ -201,8 +201,6 @@ function M.User_configured_root_dir(fileName)
         return v.root
       end
     end
-
-    return
   end
   return require("lspconfig.server_configurations.jdtls").default_config.root_dir(fileName)
 end
