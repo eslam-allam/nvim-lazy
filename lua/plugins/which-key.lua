@@ -2,7 +2,7 @@ return {
   "folke/which-key.nvim",
   opts = {
     defaults = {
-      ["<leader>cs"] = { name = "+database" },
+      ["<leader>cS"] = { name = "+database" },
       ["<leader>o"] = { name = "+org" },
       ["<leader>v"] = { name = "+vimux" },
       ["<leader>r"] = { name = "+refactor" },
