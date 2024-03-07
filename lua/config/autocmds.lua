@@ -54,17 +54,6 @@ vim.api.nvim_create_autocmd("TermOpen", {
   end,
 })
 
-vim.api.nvim_create_autocmd({
-  "BufNewFile",
-  "BufRead",
-}, {
-  pattern = { "build.gradle", "gradle.properties" },
-  callback = function()
-    local buf = vim.api.nvim_get_current_buf()
-    vim.api.nvim_set_option_value("filetype", "java", { buf = buf })
-  end,
-})
-
 -- Dadbod Auto complete
 vim.api.nvim_create_autocmd({
   "FileType",

@@ -12,6 +12,8 @@ return {
     { "<leader>cjj", "<cmd>JdtJshell<CR>", desc = "[J]Shell" },
   },
 
+  filetype = { "java", "groovy" },
+
   opts = function()
     return {
       -- How to find the root dir for a given filename. The default comes from
