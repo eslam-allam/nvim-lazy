@@ -58,7 +58,7 @@ vim.api.nvim_create_autocmd({
   "BufNewFile",
   "BufRead",
 }, {
-  pattern = { "*.gradle" },
+  pattern = { "build.gradle", "gradle.properties" },
   callback = function()
     local buf = vim.api.nvim_get_current_buf()
     vim.api.nvim_set_option_value("filetype", "java", { buf = buf })
