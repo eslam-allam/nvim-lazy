@@ -82,9 +82,17 @@ function M.splitStr(inputstr, sep)
   return t
 end
 
-function M.silicon(options)
+function M.contains(array, value)
+  for _, v in ipairs(array) do
+    if v == value then
+      return true
+    end
+  end
+  return false
+end
 
-  if vim.fn.mode() ~= "v" then
+function M.silicon(options)
+  if not M.contains({ "v", "vs", "V", "Vs", "CTRL+V", "CTRL+Vs" }, vim.fn.mode()) then
     vim.notify("[Silicon] not in visual mode!", 4)
     return
   end

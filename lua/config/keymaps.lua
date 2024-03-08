@@ -6,11 +6,17 @@
 
 local helpers = require("config.helpers")
 local Util = require("lazyvim.util")
+local whichKey = require("which-key")
 
 vim.api.nvim_create_user_command("Silicon", helpers.silicon, { nargs = "*"} )
 
-vim.keymap.set("x", "<leader>cc", "<cmd>Silicon<CR>", { desc = "Snap to Clipboard" })
-vim.keymap.set("x", "<leader>cC", "<cmd>Silicon type=file<CR>", { desc = "Snap to file (cwd)" })
+whichKey.register({
+    s = {
+        name = "Snap",
+        c = {"<cmd>Silicon<CR>", "Snap to Clipboard"},
+        f = {"<cmd>Silicon type=file<CR>", "Snap to file (cwd)"}
+    }
+}, {prefix = "<leader>c", mode = "x"})
 
 -- gradle
 vim.keymap.set("n", "<leader>tgqc", function()
