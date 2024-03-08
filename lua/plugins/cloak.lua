@@ -1,5 +1,9 @@
 return {
   "eslam-allam/cloak.nvim",
+  keys = {
+    { "<leader>cc", "<cmd>CloakToggle<cr>", desc = "Toggle Cloak", mode = "n" },
+  },
+  lazy = false,
   opts = {
     enabled = true,
     cloak_character = "*",
@@ -15,7 +19,7 @@ return {
       {
         -- Match any file starting with '.env'.
         -- This can be a table to match multiple file patterns.
-        file_pattern = { '.env*', "gradle.properties" },
+        file_pattern = { ".env*", "gradle.properties" },
         -- Match an equals sign and any character after it.
         -- This can also be a table of patterns to cloak,
         -- example: cloak_pattern = { ':.+', '-.+' } for yaml files.

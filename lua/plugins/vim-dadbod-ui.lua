@@ -19,5 +19,13 @@ return {
   init = function()
     -- Your DBUI configuration
     vim.g.db_ui_use_nerd_fonts = 1
+    local wk = require("which-key")
+    wk.register({
+      S = {
+        name = "Database",
+        t = { "<cmd>DBUIToggle<CR>", "Toggle database client" },
+        a = { "<cmd>DBUIAddConnection<CR>", "Add database client connection" },
+      },
+    }, { prefix = "<leader>c", mode = "n" })
   end,
 }

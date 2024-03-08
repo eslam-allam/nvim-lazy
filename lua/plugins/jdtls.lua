@@ -3,88 +3,56 @@ local helpers = require("config.helpers")
 return {
   "mfussenegger/nvim-jdtls",
 
-  keys = {
-    { "<leader>cjw", "<cmd>JdtWipeDataAndRestart<CR>", desc = "[W]ipe and Restart" },
-    { "<leader>cjc", "<cmd>JdtCompile<CR>", desc = "[C]ompile" },
-    { "<leader>cjs", "<cmd>JdtSetRuntime<CR>", desc = "[S]et Runtime" },
-    { "<leader>cju", "<cmd>JdtUpdateConfig<CR>", desc = "[U]pdate Config" },
-    { "<leader>cjr", "<cmd>JdtRestart<CR>", desc = "[R]estart" },
-    { "<leader>cjj", "<cmd>JdtJshell<CR>", desc = "[J]Shell" },
-  },
-
   filetype = { "java", "groovy" },
 
-  opts = function()
-    return {
-      -- How to find the root dir for a given filename. The default comes from
-      -- lspconfig which provides a function specifically for java projects.
-      root_dir = helpers.User_configured_root_dir,
+  opts = function(_, opts)
+    -- How to find the root dir for a given filename. The default comes from
+    -- lspconfig which provides a function specifically for java projects.
+    opts.root_dir = helpers.User_configured_root_dir
 
-      -- How to find the project name for a given root dir.
-      project_name = function(root_dir)
-        return root_dir and vim.fs.basename(root_dir)
-      end,
-
-      -- Where are the config and workspace dirs for a project?
-      jdtls_config_dir = function(project_name)
-        return vim.fn.stdpath("cache") .. "/jdtls/" .. project_name .. "/config"
-      end,
-      jdtls_workspace_dir = function(project_name)
-        return vim.fn.stdpath("cache") .. "/jdtls/" .. project_name .. "/workspace"
-      end,
-
-      -- How to run jdtls. This can be overridden to a full java command-line
-      -- if the Python wrapper script doesn't suffice.
-      cmd = {
-        "/home/eslamallam/.config/nvim/jdtls-bin/jdtls",
-        "--jvm-arg=-javaagent:" .. os.getenv("MASON") .. "/packages/jdtls/lombok.jar",
-      },
-
-      jdtls = {
-        settings = {
-          java = {
-            configuration = {
-              runtimes = {
-                {
-                  name = "JavaSE-1.8",
-                  path = "/usr/lib/jvm/java-1.8.0-openjdk-amd64/",
-                },
-                {
-                  name = "JavaSE-11",
-                  path = "/usr/lib/jvm/java-11-openjdk-amd64/",
-                },
-                {
-                  name = "JavaSE-17",
-                  path = "/usr/lib/jvm/java-17-openjdk-amd64/",
-                },
-                {
-                  name = "JavaSE-21",
-                  path = "/usr/lib/jvm/java-21-openjdk-amd64/",
-                },
+    -- Where are the config and workspace dirs for a project?
+    opts.cmd = {
+      "/home/eslamallam/.config/nvim/jdtls-bin/jdtls",
+      "--jvm-arg=-javaagent:" .. os.getenv("MASON") .. "/packages/jdtls/lombok.jar",
+    }
+    opts.jdtls = {
+      settings = {
+        java = {
+          configuration = {
+            runtimes = {
+              {
+                name = "JavaSE-1.8",
+                path = "/usr/lib/jvm/java-1.8.0-openjdk-1.8.0.402.b06-1.fc39.x86_64/jre",
+              },
+              {
+                name = "JavaSE-11",
+                path = "/usr/lib/jvm/java-11-openjdk-11.0.22.0.7-1.fc39.x86_64/",
+              },
+              {
+                name = "JavaSE-17",
+                path = "/usr/lib/jvm/java-17-openjdk-17.0.9.0.9-3.fc39.x86_64/",
+              },
+              {
+                name = "JavaSE-21",
+                path = "/usr/lib/jvm/java-21-openjdk-21.0.2.0.13-1.fc39.x86_64/",
               },
             },
           },
         },
       },
-      full_cmd = function(opts)
-        local fname = vim.api.nvim_buf_get_name(0)
-        local root_dir = opts.root_dir(fname)
-        local project_name = opts.project_name(root_dir)
-        local cmd = vim.deepcopy(opts.cmd)
-        if project_name then
-          vim.list_extend(cmd, {
-            "-configuration",
-            opts.jdtls_config_dir(project_name),
-            "-data",
-            opts.jdtls_workspace_dir(project_name),
-          })
-        end
-        return cmd
-      end,
-
-      -- These depend on nvim-dap, but can additionally be disabled by setting false here.
-      dap = { hotcodereplace = "auto", config_overrides = {} },
-      test = true,
     }
+    opts.on_attach = function(args)
+      require("which-key").register({
+        j = {
+          name = "jdtls",
+          w = { "<cmd>JdtWipeDataAndRestart<CR>", "Wipe and Restart" },
+          c = { "<cmd>JdtCompile<CR>", "Compile" },
+          s = { "<cmd>JdtSetRuntime<CR>", "Set Runtime" },
+          u = { "<cmd>JdtUpdateConfig<CR>", "Update Config" },
+          r = { "<cmd>JdtRestart<CR>", "Restart" },
+          j = { "<cmd>JdtJshell<CR>", "JShell" },
+        },
+      }, { mode = "n", prefix = "<leader>c", buffer = args.buf })
+    end
   end,
 }

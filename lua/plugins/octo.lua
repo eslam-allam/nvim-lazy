@@ -5,16 +5,28 @@ return {
     "nvim-telescope/telescope.nvim",
     "nvim-tree/nvim-web-devicons",
   },
-  keys = {
-    { "<leader>gpl", "<cmd>Octo pr list<CR>", desc = "List", mode = { "n" } },
-    { "<leader>gpc", "<cmd>Octo pr create<CR>", desc = "Create", mode = { "n" } },
-    { "<leader>gil", "<cmd>Octo issue list<CR>", desc = "List", mode = { "n" } },
-    { "<leader>gic", "<cmd>Octo issue create<CR>", desc = "Create", mode = { "n" } },
-    { "<leader>grs", "<cmd>Octo review start<CR>", desc = "Start", mode = { "n" } },
-    { "<leader>grr", "<cmd>Octo review resume<CR>", desc = "Resume", mode = { "n" } },
-    { "<leader>grc", "<cmd>Octo review close<CR>", desc = "Close", mode = { "n" } },
-    { "<leader>grd", "<cmd>Octo review discard<CR>", desc = "Discard", mode = { "n" } },
-  },
   cmd = "Octo",
-  opts = {},
+  init = function()
+    local wk = require("which-key")
+    wk.register({
+      p = {
+        name = "Pull Request",
+        l = { "<cmd>Octo pr list<CR>", "List" },
+        c = { "<cmd>Octo pr create<CR>", "Create" },
+      },
+      i = {
+        name = "Issue",
+        l = { "<cmd>Octo issue list<CR>", "List" },
+        c = { "<cmd>Octo issue create<CR>", "Create" },
+      },
+      r = {
+        name = "Review",
+        s = { "<cmd>Octo review start<CR>", "Start" },
+        r = { "<cmd>Octo review resume<CR>", "Resume" },
+        c = { "<cmd>Octo review close<CR>", "Close" },
+        d = { "<cmd>Octo review discard<CR>", "Discard" },
+      },
+    }, { prefix = "<leader>g" })
+  end,
+  config = true,
 }

@@ -1,7 +1,7 @@
 return {
   "ecthelionvi/NeoColumn.nvim",
   keys = {
-    { "<leader>h", "<cmd>ToggleNeoColumn<CR>", desc = "Toggle NeoColumn", mode = { "n" } },
+    { "<leader>ch", "<cmd>ToggleNeoColumn<CR>", desc = "Toggle NeoColumn", mode = { "n" } },
   },
   lazy = false,
   priority = 0,
