@@ -18,25 +18,29 @@ import re
 import subprocess
 from pathlib import Path
 import tempfile
+import json
 
 def get_java_executable(validate_java_version):
-	java_executable = '/lib/jvm/java-21-openjdk-amd64/bin/java'
+    with open(f"{os.getenv('XDG_CONFIG_HOME')}/nvim/jdtls-bin/java-runtimes.json", 'r') as f:
+        java_runtimes = json.load(f)
 
-	if not validate_java_version:
-		return java_executable
+    java_executable = f'{java_runtimes["java21"]}/bin/java'
 
-	out = subprocess.check_output([java_executable, '-version'], stderr = subprocess.STDOUT, universal_newlines=True)
+    if not validate_java_version:
+        return java_executable
 
-	matches = re.finditer(r"(?<=version\s\")(?P<major>\d+)(\.\d+\.\d+(_\d+)?)?", out)
-	for match in matches:
-		java_major_version = int(match.group("major"))
+    out = subprocess.check_output([java_executable, '-version'], stderr = subprocess.STDOUT, universal_newlines=True)
 
-		if java_major_version < 17:
-			raise Exception("jdtls requires at least Java 17")
+    matches = re.finditer(r"(?<=version\s\")(?P<major>\d+)(\.\d+\.\d+(_\d+)?)?", out)
+    for match in matches:
+        java_major_version = int(match.group("major"))
 
-		return java_executable
+        if java_major_version < 17:
+            raise Exception("jdtls requires at least Java 17")
 
-	raise Exception("Could not determine Java version")
+        return java_executable
+
+    raise Exception("Could not determine Java version")
 
 def find_equinox_launcher(jdtls_base_directory):
 	plugins_dir = jdtls_base_directory / "plugins"

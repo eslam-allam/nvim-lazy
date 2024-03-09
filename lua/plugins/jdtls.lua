@@ -15,6 +15,8 @@ return {
       "/home/eslamallam/.config/nvim/jdtls-bin/jdtls",
       "--jvm-arg=-javaagent:" .. os.getenv("MASON") .. "/packages/jdtls/lombok.jar",
     }
+
+    local java_runtimes = vim.json.decode(helpers.ReadFile(vim.env.JAVA_RUNTIMES_JSON))
     opts.jdtls = {
       settings = {
         java = {
@@ -22,19 +24,19 @@ return {
             runtimes = {
               {
                 name = "JavaSE-1.8",
-                path = "/usr/lib/jvm/java-1.8.0-openjdk-1.8.0.402.b06-1.fc39.x86_64/jre",
+                path = java_runtimes.java8,
               },
               {
                 name = "JavaSE-11",
-                path = "/usr/lib/jvm/java-11-openjdk-11.0.22.0.7-1.fc39.x86_64/",
+                path = java_runtimes.java11,
               },
               {
                 name = "JavaSE-17",
-                path = "/usr/lib/jvm/java-17-openjdk-17.0.9.0.9-3.fc39.x86_64/",
+                path = java_runtimes.java17,
               },
               {
                 name = "JavaSE-21",
-                path = "/usr/lib/jvm/java-21-openjdk-21.0.2.0.13-1.fc39.x86_64/",
+                path = java_runtimes.java21,
               },
             },
           },
