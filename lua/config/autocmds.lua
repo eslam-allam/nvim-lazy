@@ -76,3 +76,12 @@ vim.api.nvim_create_autocmd("FileType", {
     vim.keymap.set("i", "#", "#<C-x><C-o>", { silent = true, buffer = true })
   end,
 })
+
+-- Tab Width
+vim.api.nvim_create_autocmd("FileType", {
+  pattern = { "lua", "sh", "zsh", "c", "cpp", "rust" },
+  callback = function()
+    vim.bo.tabstop = 2
+    vim.bo.shiftwidth = 2
+  end,
+})
