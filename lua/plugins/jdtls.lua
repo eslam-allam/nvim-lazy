@@ -3,8 +3,6 @@ local helpers = require("config.helpers")
 return {
   "mfussenegger/nvim-jdtls",
 
-  filetype = { "java", "groovy" },
-
   opts = function(_, opts)
     -- How to find the root dir for a given filename. The default comes from
     -- lspconfig which provides a function specifically for java projects.
