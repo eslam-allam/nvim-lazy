@@ -1,4 +1,3 @@
-local config_path = "/home/eslamallam/.config/nvim/jdtls-custom-roots.yaml"
 local PlenaryPath = require("plenary.path")
 local random = math.random
 
@@ -197,21 +196,6 @@ function M.Expand_home(path)
   return home .. string.sub(path, 2, string.len(path))
 end
 
-function M.User_configured_root_dir(fileName)
-  local exists = M.File_exists(config_path)
-  local expanded_fname = M.Expand_home(fileName)
-  if exists then
-    local content = yaml.eval(M.ReadFile(config_path))
-
-    for _, v in pairs(content) do
-      local working_dir = M.Expand_home(v.working_dir)
-      if string.sub(expanded_fname, 1, string.len(working_dir)) == working_dir then
-        return v.root
-      end
-    end
-  end
-  return require("lspconfig.server_configurations.jdtls").default_config.root_dir(fileName)
-end
 
 function M.User_configured_gradlew(root)
   local exists = M.File_exists(config_path)

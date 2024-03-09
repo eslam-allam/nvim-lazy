@@ -17,4 +17,5 @@ vim.g.python3_host_prog = "~/miniconda3/bin/python"
 vim.opt.tabstop = 4
 vim.opt.shiftwidth = 4
 
-vim.env.JAVA_RUNTIMES_JSON = os.getenv("XDG_CONFIG_HOME") .. "/nvim/jdtls-bin/java-runtimes.json"
+vim.env.JAVA_RUNTIMES_JSON = os.getenv("XDG_CONFIG_HOME") .. "/nvim/config-files/jdtls/java-runtimes.json"
+vim.env.CUSTOM_JAVA_ROOTS = os.getenv("XDG_CONFIG_HOME") .. "/nvim/config-files/jdtls/jdtls-custom-roots.json"
