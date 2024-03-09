@@ -1,4 +1,5 @@
 {
+  "ChatGPT.nvim": { "branch": "main", "commit": "df53728e05129278d6ea26271ec086aa013bed90" },
   "Comment.nvim": { "branch": "master", "commit": "0236521ea582747b58869cb72f70ccfa967d2e89" },
   "LazyVim": { "branch": "main", "commit": "e3bfcb9bf74292dc846f5d1710fbb2e8f36a687a" },
   "LuaSnip": { "branch": "master", "commit": "a7a4b4682c4b3e2ba82b82a4e6e5f5a0e79dec32" },
@@ -48,7 +49,7 @@
   "nvim-dap-virtual-text": { "branch": "master", "commit": "a5fc69240869c0fee8ff176bc9e4efdf8bdfb596" },
   "nvim-jdtls": { "branch": "master", "commit": "8eb5f0dbe6e126b392ddcaf45893358619893e45" },
   "nvim-lint": { "branch": "master", "commit": "e824adb9bc01647f71e55457353a68f0f37f9931" },
-  "nvim-lspconfig": { "branch": "master", "commit": "94cf4adb81158817520e18d2174963d8e1424df9" },
+  "nvim-lspconfig": { "branch": "master", "commit": "16295b79410f131c4fa7870c663b4ace6a761fb2" },
   "nvim-navic": { "branch": "master", "commit": "8649f694d3e76ee10c19255dece6411c29206a54" },
   "nvim-notify": { "branch": "master", "commit": "5371f4bfc1f6d3adf4fe9d62cd3a9d44356bfd15" },
   "nvim-recorder": { "branch": "main", "commit": "f37f8e80b32c2a5dca2bd8f6d9dce278b3f5e434" },
@@ -76,7 +77,7 @@
   "toggleterm.nvim": { "branch": "main", "commit": "193786e0371e3286d3bc9aa0079da1cd41beaa62" },
   "tokyonight.nvim": { "branch": "main", "commit": "610179f7f12db3d08540b6cc61434db2eaecbcff" },
   "trouble.nvim": { "branch": "main", "commit": "f1168feada93c0154ede4d1fe9183bf69bac54ea" },
-  "venv-selector.nvim": { "branch": "main", "commit": "93ee4ac249277571a90db5b50aae83d6f9d036f5" },
+  "venv-selector.nvim": { "branch": "main", "commit": "2ad34f36d498ff5193ea10f79c87688bd5284172" },
   "vim-dadbod": { "branch": "master", "commit": "960bbb7de11b7282a68d579a64e838b487934493" },
   "vim-dadbod-completion": { "branch": "master", "commit": "c920cb0ba3dff4b1b0ed373e1c0b3007dec696c2" },
   "vim-dadbod-ssh": { "branch": "master", "commit": "54aff81b4993c760315c9afbef721bb3ac838ad1" },
