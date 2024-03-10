@@ -1,5 +1,6 @@
 return {
-'nanozuki/tabby.nvim',
+  "nanozuki/tabby.nvim",
+  dependencies = "nvim-tree/nvim-web-devicons",
   config = true,
-  event = 'VimEnter'
+  event = "VimEnter",
 }
