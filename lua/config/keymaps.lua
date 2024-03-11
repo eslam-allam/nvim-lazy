@@ -54,7 +54,7 @@ wk.register({
 
 
 -- terminal
-vim.keymap.set("n", "<leader>fT", function() Util.terminal(nil, { cwd = helpers.cwd() }) end, { desc = "Terminal (buf dir)" })
+vim.keymap.set("n", "<leader>ft", function() Util.terminal(nil, { cwd = helpers.cwd() }) end, { desc = "Terminal (buf dir)" })
 
 -- diagnostic
 vim.keymap.set("n", "<leader>cD", function() vim.diagnostic.open_float()
