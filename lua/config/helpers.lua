@@ -110,7 +110,7 @@ function M.silicon(options)
 
   local defaults = {
     type = "clipboard",
-    file_path = M.cwd() .. "/" .. M.uuid(),
+    file_path = Util.root() .. "/" .. M.uuid(),
   }
 
   if opts == nil then
