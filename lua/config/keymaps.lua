@@ -52,14 +52,9 @@ wk.register({
   },
 }, {prefix = "<leader>", filetype = "java"})
 
--- lazygit
-vim.keymap.set("n", "<leader>gg", function() Util.terminal({ "lazygit" }, {cwd = Util.root(), esc_esc = false, ctrl_hjkl = false}) end, { desc = "Lazygit (Root)" })
-vim.keymap.set("n", "<leader>gG", function() Util.terminal({ "lazygit" }, {cwd = helpers.cwd(), esc_esc = false, ctrl_hjkl = false}) end, { desc = "Lazygit (cwd)" })
 
 -- terminal
-vim.keymap.set("n", "<leader>ft", function() Util.terminal(nil, { cwd = Util.root() }) end, { desc = "Terminal (Root)" })
-vim.keymap.set("n", "<leader>fT", function() Util.terminal(nil, { cwd = helpers.cwd() }) end, { desc = "Terminal (cwd)" })
-vim.keymap.set("n", "<C-/>", function() Util.terminal(nil, { cwd = Util.root() }) end, { desc = "Terminal (Root)" })
+vim.keymap.set("n", "<leader>fT", function() Util.terminal(nil, { cwd = helpers.cwd() }) end, { desc = "Terminal (buf dir)" })
 
 -- diagnostic
 vim.keymap.set("n", "<leader>cD", function() vim.diagnostic.open_float()

@@ -11,3 +11,5 @@ vim.opt.shiftwidth = 4
 
 vim.env.JAVA_RUNTIMES_JSON = os.getenv("XDG_CONFIG_HOME") .. "/nvim/config-files/jdtls/java-runtimes.json"
 vim.env.CUSTOM_JAVA_ROOTS = os.getenv("XDG_CONFIG_HOME") .. "/nvim/config-files/jdtls/jdtls-custom-roots.json"
+
+vim.g.root_spec = { "lsp", { ".git" }, "cwd" }
