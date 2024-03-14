@@ -1,5 +1,5 @@
 return {
-  "eslam-allam/cloak.nvim",
+  "laytan/cloak.nvim",
   keys = {
     { "<leader>cc", "<cmd>CloakToggle<cr>", desc = "Toggle Cloak", mode = "n" },
   },
