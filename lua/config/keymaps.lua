@@ -7,13 +7,12 @@ local helpers = require("config.helpers")
 local Util = require("lazyvim.util")
 local wk = require("which-key")
 
-vim.api.nvim_create_user_command("Silicon", helpers.silicon, { nargs = "*"} )
 
 wk.register({
     s = {
         name = "Snap",
-        c = {"<cmd>Silicon<CR>", "Snap to Clipboard"},
-        f = {"<cmd>Silicon type=file<CR>", "Snap to file (cwd)"}
+        c = {"<cmd>Snap<CR>", "Snap to Clipboard"},
+        f = {"<cmd>Snap type=file<CR>", "Snap to file (cwd)"}
     }
 }, {prefix = "<leader>c", mode = "x"})
 
