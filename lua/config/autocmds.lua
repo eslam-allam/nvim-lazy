@@ -79,7 +79,7 @@ vim.api.nvim_create_autocmd("FileType", {
 
 -- Tab Width
 vim.api.nvim_create_autocmd("FileType", {
-  pattern = { "lua", "sh", "zsh", "c", "cpp", "rust" },
+  pattern = { "lua", "sh", "zsh", "c", "cpp", "rust", "html", "javascript" },
   callback = function()
     vim.bo.tabstop = 2
     vim.bo.shiftwidth = 2
