@@ -1,4 +1,10 @@
-local helpers = require("config.helpers")
+local java_runtimes = vim.json.decode(table.concat(vim.fn.readfile(vim.env.JAVA_RUNTIMES_JSON), "\n"))
+local java_root_config = vim.env.CUSTOM_JAVA_ROOTS
+local java_roots = {}
+
+if vim.fn.filereadable(java_root_config) == 1 then
+  java_roots = vim.json.decode(table.concat(vim.fn.readfile(java_root_config), "\n"))
+end
 
 return {
   "mfussenegger/nvim-jdtls",
@@ -6,18 +12,13 @@ return {
   opts = function(_, opts)
     -- How to find the root dir for a given filename. The default comes from
     -- lspconfig which provides a function specifically for java projects.
-    local java_root_config = vim.env.CUSTOM_JAVA_ROOTS
     opts.root_dir = function(fileName)
-      local exists = helpers.File_exists(java_root_config)
       local expanded_fname = vim.fn.expand(fileName)
-      if exists then
-        local content = vim.json.decode(helpers.ReadFile(java_root_config))
 
-        for _, v in pairs(content) do
-          local working_dir = vim.fn.expand(v.working_dir)
-          if string.sub(expanded_fname, 1, string.len(working_dir)) == working_dir then
-            return v.root
-          end
+      for _, v in pairs(java_roots) do
+        local working_dir = vim.fn.expand(v.working_dir)
+        if string.sub(expanded_fname, 1, string.len(working_dir)) == working_dir then
+          return v.root
         end
       end
       return require("lspconfig.server_configurations.jdtls").default_config.root_dir(fileName)
@@ -27,7 +28,6 @@ return {
     local jdtls_base_path = mason_home .. "/packages/jdtls"
     local shared_config_path = jdtls_base_path .. "/config_linux"
     local plugins_dir = jdtls_base_path .. "/plugins"
-    local java_runtimes = vim.json.decode(helpers.ReadFile(vim.env.JAVA_RUNTIMES_JSON))
 
     opts.cmd = {
       java_runtimes.java21 .. "/bin/java",
