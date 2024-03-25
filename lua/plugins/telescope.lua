@@ -32,7 +32,7 @@ return {
     extensions = {
       file_browser = {
         no_ignore = true,
-        -- disables netrw and use telescope-file-browser in its place
+        collapse_dirs = true,
         hijack_netrw = true,
       },
     },
