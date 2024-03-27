@@ -3,7 +3,7 @@
 -- Add any additional keymaps here
 -- use `vim.keymap.set` instead
 
-local helpers = require("config.helpers")
+local helpers = require("modules.helpers")
 local Util = require("lazyvim.util")
 local wk = require("which-key")
 

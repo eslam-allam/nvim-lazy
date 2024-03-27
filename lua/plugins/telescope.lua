@@ -1,5 +1,5 @@
 local Util = require("lazyvim.util")
-local helpers = require("config.helpers")
+local helpers = require("modules.helpers")
 local browse_files = function()
     require("telescope").extensions.file_browser.file_browser()
   end
