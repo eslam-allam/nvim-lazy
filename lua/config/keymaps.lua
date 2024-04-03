@@ -51,6 +51,11 @@ wk.register({
   },
 }, {prefix = "<leader>", filetype = "java"})
 
+if vim.fn.executable("spring-initializer") == 1 then
+  vim.keymap.set("n", "<leader>js", function()
+    Util.terminal("spring-initializer", { cwd = helpers.cwd() })
+  end, { desc = "Spring Initializer" })
+end
 
 -- terminal
 vim.keymap.set("n", "<leader>ft", function() Util.terminal(nil, { cwd = helpers.cwd() }) end, { desc = "Terminal (buf dir)" })
