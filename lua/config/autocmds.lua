@@ -1,7 +1,10 @@
 -- Autocmds are automatically loaded on the VeryLazy event
 -- Default autocmds that are always set: https://github.com/LazyVim/LazyVim/blob/main/lua/lazyvim/config/autocmds.lua
 -- Add any additional autocmds here
-vim.api.nvim_create_autocmd({ "VimEnter", "DirChanged" }, {
+
+local cmd = vim.api.nvim_create_autocmd
+
+cmd({ "VimEnter", "DirChanged" }, {
   callback = function()
     local pythonFiles = vim.fn.globpath(vim.fn.getcwd(), "*.py", false, 1)
     if #pythonFiles > 0 then
@@ -35,7 +38,7 @@ vim.api.nvim_create_autocmd({ "VimEnter", "DirChanged" }, {
   end,
 })
 
-vim.api.nvim_create_autocmd("TermOpen", {
+cmd("TermOpen", {
   callback = function()
     local envSelector = require("venv-selector")
     local selectedEnv = envSelector.get_active_path()
@@ -55,7 +58,7 @@ vim.api.nvim_create_autocmd("TermOpen", {
 })
 
 -- Dadbod Auto complete
-vim.api.nvim_create_autocmd({
+cmd({
   "FileType",
 }, {
   pattern = {
@@ -69,7 +72,7 @@ vim.api.nvim_create_autocmd({
 })
 
 -- octo
-vim.api.nvim_create_autocmd("FileType", {
+cmd("FileType", {
   pattern = "octo",
   callback = function()
     vim.keymap.set("i", "@", "@<C-x><C-o>", { silent = true, buffer = true })
@@ -78,10 +81,24 @@ vim.api.nvim_create_autocmd("FileType", {
 })
 
 -- Tab Width
-vim.api.nvim_create_autocmd("FileType", {
+cmd("FileType", {
   pattern = { "lua", "sh", "zsh", "c", "cpp", "rust", "html", "javascript", "svelte", "json", "yaml" },
   callback = function()
     vim.bo.tabstop = 2
     vim.bo.shiftwidth = 2
   end,
+})
+
+-- Tmux
+cmd({"VimResume", "VimEnter"}, {
+  callback = function()
+    vim.system({"tmux", "set", "status", "off"})
+  end
+})
+
+
+cmd({"VimLeave", "VimSuspend"}, {
+  callback = function()
+    vim.system({"tmux", "set", "status", "on"})
+  end
 })
