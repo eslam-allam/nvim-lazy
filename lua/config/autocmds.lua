@@ -88,17 +88,3 @@ cmd("FileType", {
     vim.bo.shiftwidth = 2
   end,
 })
-
--- Tmux
-cmd({"VimResume", "VimEnter"}, {
-  callback = function()
-    vim.system({"tmux", "set", "status", "off"})
-  end
-})
-
-
-cmd({"VimLeave", "VimSuspend"}, {
-  callback = function()
-    vim.system({"tmux", "set", "status", "on"})
-  end
-})
