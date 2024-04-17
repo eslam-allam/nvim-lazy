@@ -15,3 +15,4 @@ vim.env.JAVA_RUNTIMES_JSON = config_home .. "/nvim/config-files/jdtls/java-runti
 vim.env.CUSTOM_JAVA_ROOTS = config_home .. "/nvim/config-files/jdtls/jdtls-custom-roots.json"
 
 vim.g.root_spec = { "lsp", { ".git" }, "cwd" }
+vim.g.java_filetypes = { "java", "groovy" }
