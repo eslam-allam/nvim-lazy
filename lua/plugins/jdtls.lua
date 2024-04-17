@@ -82,7 +82,12 @@ return {
           w = { "<cmd>JdtWipeDataAndRestart<CR>", "Wipe and Restart" },
           c = { "<cmd>JdtCompile<CR>", "Compile" },
           s = { "<cmd>JdtSetRuntime<CR>", "Set Runtime" },
-          u = { "<cmd>JdtUpdateConfig<CR>", "Update Config" },
+          u = {
+            function()
+              require("jdtls").update_projects_config({ select_mode = "all" })
+            end,
+            "Update Config",
+          },
           r = { "<cmd>JdtRestart<CR>", "Restart" },
           j = { "<cmd>JdtJshell<CR>", "JShell" },
         },
