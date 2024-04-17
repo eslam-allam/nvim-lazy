@@ -8,7 +8,7 @@ end
 
 return {
   "mfussenegger/nvim-jdtls",
-
+  ft = { "java", "groovy" },
   opts = function(_, opts)
     -- How to find the root dir for a given filename. The default comes from
     -- lspconfig which provides a function specifically for java projects.
