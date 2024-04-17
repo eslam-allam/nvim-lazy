@@ -1,3 +1,4 @@
+local javaExec = require("modules.java").execAt(17)
 return {
   -- Have to configure once per lang as currently languages overlap.
   {
@@ -8,7 +9,9 @@ return {
       require("sonarlint").setup({
         server = {
           cmd = {
-            "sonarlint-language-server",
+            javaExec,
+            "-jar",
+            vim.fn.expand("$MASON/packages/sonarlint-language-server/extension/server/sonarlint-ls.jar"),
             -- Ensure that sonarlint-language-server uses stdio channel
             "-stdio",
             "-analyzers",
@@ -30,7 +33,9 @@ return {
       require("sonarlint").setup({
         server = {
           cmd = {
-            "sonarlint-language-server",
+            javaExec,
+            "-jar",
+            vim.fn.expand("$MASON/packages/sonarlint-language-server/extension/server/sonarlint-ls.jar"),
             -- Ensure that sonarlint-language-server uses stdio channel
             "-stdio",
             "-analyzers",

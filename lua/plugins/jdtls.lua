@@ -1,25 +1,6 @@
--- Utility function to extend or override a config table, similar to the way
--- that Plugin.opts works.
----@param config table
----@param custom function | table | nil
-local function extend_or_override(config, custom, ...)
-  if type(custom) == "function" then
-    config = custom(config, ...) or config
-  elseif custom then
-    config = vim.tbl_deep_extend("force", config, custom) --[[@as table]]
-  end
-  return config
-end
-
-local java_runtimes = vim.json.decode(table.concat(vim.fn.readfile(vim.env.JAVA_RUNTIMES_JSON), "\n"))
-local java_root_config = vim.env.CUSTOM_JAVA_ROOTS
-local java_roots = {}
-
-if vim.fn.filereadable(java_root_config) == 1 then
-  java_roots = vim.json.decode(table.concat(vim.fn.readfile(java_root_config), "\n"))
-end
-
-local java_filetypes = vim.g.java_filetypes
+local javaHelpers = require("modules.java")
+local java_filetypes = javaHelpers.filetypes
+local javaExec = javaHelpers.execAtleast(17)
 
 return {
   "mfussenegger/nvim-jdtls",
@@ -27,17 +8,7 @@ return {
   opts = function(_, opts)
     -- How to find the root dir for a given filename. The default comes from
     -- lspconfig which provides a function specifically for java projects.
-    opts.root_dir = function(fileName)
-      local expanded_fname = vim.fn.expand(fileName)
-
-      for _, v in pairs(java_roots) do
-        local working_dir = vim.fn.expand(v.working_dir)
-        if string.sub(expanded_fname, 1, string.len(working_dir)) == working_dir then
-          return v.root
-        end
-      end
-      return require("lspconfig.server_configurations.jdtls").default_config.root_dir(fileName)
-    end
+    opts.root_dir = require("modules.java").javaRoot
 
     local mason_home = vim.fn.getenv("MASON")
     local jdtls_base_path = mason_home .. "/packages/jdtls"
@@ -45,7 +16,7 @@ return {
     local plugins_dir = jdtls_base_path .. "/plugins"
 
     opts.cmd = {
-      java_runtimes.java21 .. "/bin/java",
+      javaExec,
       "-Declipse.application=org.eclipse.jdt.ls.core.id1",
       "-Dosgi.bundles.defaultStartLevel=4",
       "-Declipse.product=org.eclipse.jdt.ls.core.product",
@@ -68,24 +39,7 @@ return {
       settings = {
         java = {
           configuration = {
-            runtimes = {
-              {
-                name = "JavaSE-1.8",
-                path = java_runtimes.java8,
-              },
-              {
-                name = "JavaSE-11",
-                path = java_runtimes.java11,
-              },
-              {
-                name = "JavaSE-17",
-                path = java_runtimes.java17,
-              },
-              {
-                name = "JavaSE-21",
-                path = java_runtimes.java21,
-              },
-            },
+            runtimes = javaHelpers.runtimesConfig(),
           },
         },
       },
@@ -141,7 +95,7 @@ return {
       local fname = vim.api.nvim_buf_get_name(0)
 
       -- Configuration can be augmented and overridden by opts.jdtls
-      local config = extend_or_override({
+      local config = javaHelpers.extend_or_override({
         cmd = opts.full_cmd(opts),
         root_dir = opts.root_dir(fname),
         init_options = {
