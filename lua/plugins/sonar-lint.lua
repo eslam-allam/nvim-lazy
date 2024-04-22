@@ -3,6 +3,9 @@ return {
   -- Have to configure once per lang as currently languages overlap.
   {
     url = "https://gitlab.com/schrieveslaach/sonarlint.nvim.git",
+    dependencies = {
+      "williamboman/mason.nvim",
+    },
     name = "sonarlint-java",
     ft = "java",
     config = function()
@@ -27,6 +30,9 @@ return {
   },
   {
     url = "https://gitlab.com/schrieveslaach/sonarlint.nvim.git",
+    dependencies = {
+      "williamboman/mason.nvim",
+    },
     name = "sonarlint-python",
     ft = "python",
     config = function()
