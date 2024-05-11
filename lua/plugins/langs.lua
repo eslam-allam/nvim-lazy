@@ -16,6 +16,9 @@ return {
       -- PHP
       vim.list_extend(opts.ensure_installed, { "intelephense" })
 
+      -- GO
+      vim.list_extend(opts.ensure_installed, { "templ" })
+
       -- Config files
       vim.list_extend(
         opts.ensure_installed,
@@ -33,7 +36,7 @@ return {
     "nvim-treesitter/nvim-treesitter",
     opts = function(_, opts)
       if type(opts.ensure_installed) == "table" then
-        vim.list_extend(opts.ensure_installed, { "svelte", "css", "typescript", "javascript", "scss" })
+        vim.list_extend(opts.ensure_installed, { "svelte", "css", "typescript", "javascript", "scss", "templ" })
       end
     end,
   },
