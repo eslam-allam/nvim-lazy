@@ -2,7 +2,6 @@
 -- Default autocmds that are always set: https://github.com/LazyVim/LazyVim/blob/main/lua/lazyvim/config/autocmds.lua
 -- Add any additional autocmds here
 
-
 local function ugroup(name)
   return vim.api.nvim_create_augroup("user_" .. name, { clear = true })
 end
@@ -72,7 +71,7 @@ cmd({
     "plsql",
   },
   callback = function()
-    require("cmp").setup.buffer({ sources = { { name = "vim-dadbod-completion" } } })
+    require("cmp").setup.buffer({ sources = { { name = "vim-dadbod-completion" }, { name = "buffer" } } })
   end,
 })
 
@@ -94,12 +93,11 @@ cmd("FileType", {
   end,
 })
 
-
 -- close some filetypes with <q>
 cmd("FileType", {
   group = ugroup("user_close_with_q"),
   pattern = {
-    "toggleterm"
+    "toggleterm",
   },
   callback = function(event)
     vim.bo[event.buf].buflisted = false
