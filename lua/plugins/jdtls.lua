@@ -35,9 +35,19 @@ return {
       vim.fn.glob(plugins_dir .. "/org.eclipse.equinox.launcher_*.jar"),
     }
 
+    local on_attach = function(_, bufnr)
+      vim.lsp.inlay_hint.enable(true, { bufnr = bufnr })
+    end
+    local extendedClientCapabilities = require("jdtls").extendedClientCapabilities
+    extendedClientCapabilities.onCompletionItemSelectedCommand = "editor.action.triggerParameterHints"
     opts.jdtls = {
+      on_attach = on_attach,
+      init_options = {
+        extendedClientCapabilities = extendedClientCapabilities,
+      },
       settings = {
         java = {
+          inlayHints = { parameterNames = { enabled = "all" } },
           configuration = {
             runtimes = javaHelpers.runtimesConfig(),
           },
@@ -93,7 +103,6 @@ return {
 
     local function attach_jdtls()
       local fname = vim.api.nvim_buf_get_name(0)
-
       -- Configuration can be augmented and overridden by opts.jdtls
       local config = javaHelpers.extend_or_override({
         cmd = opts.full_cmd(opts),
@@ -101,6 +110,7 @@ return {
         init_options = {
           bundles = bundles,
         },
+
         -- enable CMP capabilities
         capabilities = LazyVim.has("cmp-nvim-lsp") and require("cmp_nvim_lsp").default_capabilities() or nil,
       }, opts.jdtls)
