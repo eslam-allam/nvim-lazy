@@ -7,6 +7,12 @@ local helpers = require("modules.helpers")
 local Util = require("lazyvim.util")
 local wk = require("which-key")
 
+wk.register({
+  d = {
+    name = "Delete",
+    q = { "<cmd>cexpr [] | cclose<CR>", "Clear QF list" },
+  },
+}, { prefix = "<leader>x", mode = "n" })
 
 wk.register({
     s = {
