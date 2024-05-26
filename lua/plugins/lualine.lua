@@ -30,6 +30,8 @@ return {
       color = Util.ui.fg("Special"),
     })
 
+    table.insert(opts.sections.lualine_x, "rest")
+
     table.insert(opts.sections.lualine_y, 1, {
       function()
         return require("recorder").displaySlots()
