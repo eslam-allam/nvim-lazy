@@ -1,19 +1,20 @@
 local Util = require("lazyvim.util")
 local helpers = require("modules.helpers")
 local browse_files = function()
-    require("telescope").extensions.file_browser.file_browser()
-  end
+  require("telescope").extensions.file_browser.file_browser()
+end
 local find_all_files = function()
-    local action_state = require("telescope.actions.state")
-    local line = action_state.get_current_line()
-    Util.telescope("find_files", { no_ignore = true, hidden = true, default_text = line })()  end
+  local action_state = require("telescope.actions.state")
+  local line = action_state.get_current_line()
+  Util.telescope("find_files", { no_ignore = true, hidden = true, default_text = line })()
+end
 local find_root_files = function()
-        require("telescope.builtin").find_files({ cwd = Util.root()})
-      end
+  require("telescope.builtin").find_files({ cwd = Util.root() })
+end
 
 local find_cwd_files = function()
-        require("telescope.builtin").find_files({ cwd = helpers.cwd() })
-      end
+  require("telescope.builtin").find_files({ cwd = helpers.cwd() })
+end
 
 return {
   "nvim-telescope/telescope.nvim",
@@ -38,6 +39,7 @@ return {
     },
 
     defaults = {
+      path_display = { filename_first = { reverse_directories = false } },
       mappings = {
         i = {
           ["<a-f>"] = browse_files,
