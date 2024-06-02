@@ -32,7 +32,7 @@ return {
         function()
           require("telescope").extensions.rest.select_env()
         end,
-        desc = "Re-run latest request",
+        desc = "Select Env File",
       },
     },
     config = function()
