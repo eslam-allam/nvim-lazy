@@ -70,4 +70,15 @@ vim.keymap.set("n", "<leader>ft", function() Util.terminal(nil, { cwd = helpers.
 vim.keymap.set("n", "<leader>cD", function() vim.diagnostic.open_float()
 vim.diagnostic.open_float() end, { desc = "Line Diagnostics (Focus)"})
 
+
+-- Disabled
+vim.keymap.del('n', 'grr')
+vim.keymap.del('n', 'gra')
+vim.keymap.del('n', 'grn')
+wk.register({
+  r = "which_key_ignore",
+  a = "which_key_ignore",
+  n = "which_key_ignore",
+}, {prefix = "gr", name = "References"})
+
 -- Plugins
