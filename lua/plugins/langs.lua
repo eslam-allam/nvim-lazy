@@ -13,9 +13,6 @@ return {
       -- Docker
       vim.list_extend(opts.ensure_installed, { "docker-compose-language-service", "dockerfile-language-server" })
 
-      -- PHP
-      vim.list_extend(opts.ensure_installed, { "intelephense" })
-
       -- GO
       vim.list_extend(opts.ensure_installed, { "templ" })
 
@@ -25,18 +22,13 @@ return {
         { "yaml-language-server", "json-lsp", "prettierd", "stylua", "yamllint", "jsonlint", "taplo" }
       )
 
-      -- Svelte
-      vim.list_extend(
-        opts.ensure_installed,
-        { "svelte-language-server", "tailwindcss-language-server", "typescript-language-server" }
-      )
     end,
   },
   {
     "nvim-treesitter/nvim-treesitter",
     opts = function(_, opts)
       if type(opts.ensure_installed) == "table" then
-        vim.list_extend(opts.ensure_installed, { "svelte", "css", "typescript", "javascript", "scss", "templ" })
+        vim.list_extend(opts.ensure_installed, { "css", "typescript", "javascript", "scss", "templ" })
       end
     end,
   },
