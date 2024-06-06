@@ -5,7 +5,7 @@ end
 
 local function pythonEnv()
   -- @type string
-  local activeEnv = require("venv-selector").get_active_venv()
+  local activeEnv = require("venv-selector").venv()
   if activeEnv ~= nil then
     return envSection(activeEnv:match("([%w-]+)$"))
   else

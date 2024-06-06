@@ -1,6 +1,13 @@
 return {
   "linux-cultist/venv-selector.nvim",
   opts = {
-    anaconda_envs_path = os.getenv("CONDA_PREFIX") .. "/envs",
+    settings = {
+      search = {
+        miniconda = {
+          command = "fd '/envs/.*/bin/python$' " .. os.getenv("CONDA_PREFIX") .. " --full-path",
+          type = "anaconda"
+        }
+      }
+    }
   },
 }
