@@ -16,6 +16,7 @@ return {
     -- Whether it should try every pattern to find the best fit or stop after the first.
     try_all_patterns = true,
     cloak_telescope = true,
+    cloak_on_leave = true,
     patterns = {
       {
         -- Match any file starting with '.env'.
