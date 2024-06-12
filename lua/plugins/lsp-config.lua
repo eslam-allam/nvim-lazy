@@ -20,13 +20,6 @@ return {
         gradle_ls = function(_, opts)
           opts.root_dir = require("modules.java").javaRoot
         end,
-        html = function(_, opts)
-          if opts.filetypes == nil then
-            opts.filetypes = { "html" }
-          elseif vim.tbl_contains(opts.filetypes, "templ") then
-            helpers.remove_value(opts.filetypes, "templ")
-          end
-        end,
       },
     },
   },
