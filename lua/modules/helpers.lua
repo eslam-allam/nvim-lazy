@@ -60,4 +60,14 @@ function M.get_gradle_projects(gradlew_root)
   return subprojects
 end
 
+function M.remove_value(tbl, value)
+    for i, v in ipairs(tbl) do
+        if v == value then
+            table.remove(tbl, i)
+            return true  -- Value removed successfully
+        end
+    end
+    return false  -- Value not found in the table
+end
+
 return M
