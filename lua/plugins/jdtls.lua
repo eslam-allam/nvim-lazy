@@ -65,7 +65,6 @@ return {
     end
   end,
   config = function(_, opts)
-
     -- Find the extra bundles that should be passed on the jdtls command-line
     -- if nvim-dap is enabled with java debug/test.
     local mason_registry = require("mason-registry")
@@ -90,6 +89,19 @@ return {
         end
       end
     end
+    -- spring boot support
+    vim.list_extend(
+      bundles,
+      require("spring_boot").java_extensions({
+        jdt_extensions_path = vim.g.spring_cache_dir,
+        jdt_extensions_jars = {
+          "io.projectreactor.reactor-core.jar",
+          "org.reactivestreams.reactive-streams.jar",
+          "jdt-ls-commons.jar",
+          "jdt-ls-extension.jar",
+        },
+      })
+    )
 
     local function attach_jdtls()
       local fname = vim.api.nvim_buf_get_name(0)
