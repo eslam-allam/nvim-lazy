@@ -6,13 +6,14 @@ return {
     },
   },
   {
-    "ellisonleao/gruvbox.nvim",
-    opts = {
-      contrast = "hard",
-    },
+    "catppuccin/nvim",
+    lazy = false,
+    priotity = 1000,
   },
   {
     "LazyVim/LazyVim",
+    lazy = false,
+    priotity = 1000,
     opts = {
       colorscheme = "catppuccin-mocha",
     },

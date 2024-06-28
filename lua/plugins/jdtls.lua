@@ -5,6 +5,10 @@ local javaExec = javaHelpers.execAtleast(17)
 return {
   "mfussenegger/nvim-jdtls",
   ft = java_filetypes,
+  dependencies = {
+    "williamboman/mason.nvim",
+    "eslam-allam/spring-boot.nvim",
+  },
   opts = function(_, opts)
     -- How to find the root dir for a given filename. The default comes from
     -- lspconfig which provides a function specifically for java projects.
@@ -89,19 +93,22 @@ return {
         end
       end
     end
+
     -- spring boot support
-    vim.list_extend(
-      bundles,
-      require("spring_boot").java_extensions({
-        jdt_extensions_path = vim.g.spring_cache_dir,
-        jdt_extensions_jars = {
-          "io.projectreactor.reactor-core.jar",
-          "org.reactivestreams.reactive-streams.jar",
-          "jdt-ls-commons.jar",
-          "jdt-ls-extension.jar",
-        },
-      })
-    )
+    if LazyVim.has("spring-boot.nvim") then
+      vim.list_extend(
+        bundles,
+        require("spring_boot").java_extensions({
+          jdt_extensions_path = vim.g.spring_cache_dir .. "/jars",
+          jdt_extensions_jars = {
+            "io.projectreactor.reactor-core.jar",
+            "org.reactivestreams.reactive-streams.jar",
+            "jdt-ls-commons.jar",
+            "jdt-ls-extension.jar",
+          },
+        })
+      )
+    end
 
     local function attach_jdtls()
       local fname = vim.api.nvim_buf_get_name(0)
