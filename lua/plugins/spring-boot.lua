@@ -2,6 +2,7 @@ local cache_dir = vim.g.spring_cache_dir
 return {
   "eslam-allam/spring-boot.nvim",
   ft = "java",
+  enabled = true,
   dependencies = {
     "mfussenegger/nvim-jdtls", -- or nvim-java, nvim-lspconfig
   },
@@ -13,17 +14,34 @@ return {
       error("failed to fetch latest spring_ls release: " .. release.stderr, vim.log.levels.ERROR)
     end
     local response_table = vim.json.decode(release.stdout, { luanil = { object = true, array = true } })
+    local version_file = cache_dir .. '/version.txt'
+    coroutine.yield("checking for existing installation")
+    local latest_downloaded_version = nil
+    if vim.fn.filereadable(version_file) == 1 then
+      coroutine.yield("found previous installation, checking version")
+      latest_downloaded_version = tonumber(vim.fn.readfile(version_file)[1])
+    end
 
     coroutine.yield("finding target asset...")
     local download_link = nil
+    local size = nil
+    local latest_version = nil
     for _, asset in ipairs(response_table.assets) do
       if asset.browser_download_url then
         if type(asset.browser_download_url) == "string" and asset.browser_download_url:sub(-4) == "vsix" then
           download_link = asset.browser_download_url
+          size = asset.size
+          latest_version = asset.id
           break
         end
       end
     end
+
+    if latest_downloaded_version ~= nil and latest_version == latest_downloaded_version then
+      coroutine.yield("already at latest version")
+      return
+    end
+
     if download_link == nil then
       error("failed to get bundle link", vim.log.levels.ERROR)
     end
@@ -39,7 +57,7 @@ return {
       end
     end
     local job_complete = false
-    local job_code = 0
+    local job_code = 1
     local function on_exit(result)
       vim.schedule(function()
         job_complete = true
@@ -61,9 +79,15 @@ return {
         output = {}
       end
     end
-
-    if job_code ~= 0 then
+    
+    coroutine.yield("download returned with code: " .. job_code)
+    if job_code ~= 0 or vim.fn.filereadable(tmp_file) == 0 then
       error("failed to download asset", vim.log.levels.ERROR)
+    end
+
+    local downloaded_size = require("modules.helpers").get_file_size(tmp_file)
+    if  downloaded_size ~= size then
+      error("downloaded file size is incorrect. expected: " .. size .. ", recieved: " .. downloaded_size, vim.log.levels.ERROR)
     end
 
     coroutine.yield("unzipping asset " .. tmp_file)
@@ -86,13 +110,19 @@ return {
     end
     coroutine.yield("unpacking files from extension folder")
 
-    local out = vim.fn.system(table.concat({ "mv", cache_dir .. "/extension/*", cache_dir }, " "))
-    coroutine.yield(out)
+    vim.fn.system(table.concat({ "mv", cache_dir .. "/extension/*", cache_dir }, " "))
 
     coroutine.yield("deleting extension folder")
     if vim.fn.delete(cache_dir .. "/extension", "d") ~= 0 then
       error("failed to delete extension folder", vim.log.levels.ERROR)
     end
+
+    coroutine.yield("saving version information")
+
+    if vim.fn.writefile({latest_version}, version_file) ~= 0 then
+      error("failed to save version information", vim.log.levels.ERROR)
+    end
+
     vim.notify("Succesfully built Spring-ls")
   end,
   config = function(_, opts)

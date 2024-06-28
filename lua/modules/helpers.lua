@@ -18,6 +18,14 @@ function M.uuid()
   )
 end
 
+function M.get_file_size(file_path)
+  local file = io.open(file_path, "r")
+  if not file then return nil, "File not found" end
+  local size = file:seek("end")
+  file:close()
+  return size
+end
+
 function M.splitStr(inputstr, sep)
   if sep == nil then
     sep = "%s"
