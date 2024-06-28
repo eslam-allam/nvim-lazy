@@ -46,7 +46,7 @@ return {
         job_code = result.code
       end)
     end
-    local command = { "wget", "--output-document", tmp_file, download_link }
+    local command = { "curl", "-L", "-o", tmp_file, download_link }
     vim.system(command, {
       stdout = on_output,
       stderr = on_output,
@@ -57,7 +57,7 @@ return {
       if vim.tbl_isempty(output) then
         coroutine.yield()
       else
-        coroutine.yield(table.concat(output, "\n"))
+        coroutine.yield(table.concat(output, ""))
         output = {}
       end
     end
