@@ -14,7 +14,7 @@ return {
       error("failed to fetch latest spring_ls release: " .. release.stderr, vim.log.levels.ERROR)
     end
     local response_table = vim.json.decode(release.stdout, { luanil = { object = true, array = true } })
-    local version_file = cache_dir .. '/version.txt'
+    local version_file = cache_dir .. "/version.txt"
     coroutine.yield("checking for existing installation")
     local latest_downloaded_version = nil
     if vim.fn.filereadable(version_file) == 1 then
@@ -79,15 +79,18 @@ return {
         output = {}
       end
     end
-    
+
     coroutine.yield("download returned with code: " .. job_code)
     if job_code ~= 0 or vim.fn.filereadable(tmp_file) == 0 then
       error("failed to download asset", vim.log.levels.ERROR)
     end
 
     local downloaded_size = require("modules.helpers").get_file_size(tmp_file)
-    if  downloaded_size ~= size then
-      error("downloaded file size is incorrect. expected: " .. size .. ", recieved: " .. downloaded_size, vim.log.levels.ERROR)
+    if downloaded_size ~= size then
+      error(
+        "downloaded file size is incorrect. expected: " .. size .. ", recieved: " .. downloaded_size,
+        vim.log.levels.ERROR
+      )
     end
 
     coroutine.yield("unzipping asset " .. tmp_file)
@@ -119,7 +122,7 @@ return {
 
     coroutine.yield("saving version information")
 
-    if vim.fn.writefile({latest_version}, version_file) ~= 0 then
+    if vim.fn.writefile({ latest_version }, version_file) ~= 0 then
       error("failed to save version information", vim.log.levels.ERROR)
     end
 
@@ -130,6 +133,10 @@ return {
     opts.server = {
       root_dir = require("modules.java").javaRoot(vim.api.nvim_buf_get_name(0)),
       java_bin = require("modules.java").execAt(17),
+      on_init = function(client)
+        local rc = client.server_capabilities
+        rc.inlayHintProvider = false
+      end,
     }
     require("spring_boot").setup(opts)
   end,
