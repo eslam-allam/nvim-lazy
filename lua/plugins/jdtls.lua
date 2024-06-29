@@ -98,15 +98,7 @@ return {
     if LazyVim.has("spring-boot.nvim") then
       vim.list_extend(
         bundles,
-        require("spring_boot").java_extensions({
-          jdt_extensions_path = vim.g.spring_cache_dir .. "/jars",
-          jdt_extensions_jars = {
-            "io.projectreactor.reactor-core.jar",
-            "org.reactivestreams.reactive-streams.jar",
-            "jdt-ls-commons.jar",
-            "jdt-ls-extension.jar",
-          },
-        })
+        require("spring_boot").java_extensions(vim.g.spring_cache_dir .. "/jars")
       )
     end
 
