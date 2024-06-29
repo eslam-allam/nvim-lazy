@@ -64,18 +64,18 @@ return {
         job_code = result.code
       end)
     end
-    local command = { "curl", "-L", "-o", tmp_file, download_link }
+    local command = { "curl", "-L", "--progress-bar", "-o", tmp_file, download_link }
     vim.system(command, {
       stdout = on_output,
       stderr = on_output,
     }, on_exit)
 
     while not job_complete do
-      vim.wait(10, function() end)
+      vim.wait(10, function() return job_complete end)
       if vim.tbl_isempty(output) then
         coroutine.yield()
       else
-        coroutine.yield(table.concat(output, ""))
+        coroutine.yield({msg = table.concat(output, ""), level = vim.log.levels.TRACE})
         output = {}
       end
     end
