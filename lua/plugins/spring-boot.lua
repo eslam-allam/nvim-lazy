@@ -71,11 +71,13 @@ return {
     }, on_exit)
 
     while not job_complete do
-      vim.wait(10, function() return job_complete end)
+      vim.wait(10, function()
+        return job_complete
+      end)
       if vim.tbl_isempty(output) then
         coroutine.yield()
       else
-        coroutine.yield({msg = table.concat(output, ""), level = vim.log.levels.TRACE})
+        coroutine.yield({ msg = table.concat(output, ""), level = vim.log.levels.TRACE })
         output = {}
       end
     end

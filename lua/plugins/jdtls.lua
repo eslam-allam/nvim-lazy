@@ -7,7 +7,6 @@ return {
   ft = java_filetypes,
   dependencies = {
     "williamboman/mason.nvim",
-    "eslam-allam/spring-boot.nvim",
   },
   opts = function(_, opts)
     -- How to find the root dir for a given filename. The default comes from

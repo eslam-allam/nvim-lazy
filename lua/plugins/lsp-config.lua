@@ -11,16 +11,19 @@ end
 return {
   {
     "neovim/nvim-lspconfig",
-    opts = {
-      -- make sure mason installs the server
-      servers = {
-        gradle_ls = {},
-      },
-      setup = {
-        gradle_ls = function(_, opts)
-          opts.root_dir = require("modules.java").javaRoot
+    opts = function(_, opts)
+      local keys = require("lazyvim.plugins.lsp.keymaps").get()
+      keys[#keys + 1] = {
+        "K",
+        function()
+          require("modules.helpers").hoverExcludeLsps(vim.g.hover_exclude_lsps)
         end,
-      },
-    },
+      }
+      -- make sure mason installs the server
+      opts.servers.gradle_ls = {}
+      opts.setup.gradle_ls = function(_, optss)
+        optss.root_dir = require("modules.java").javaRoot
+      end
+    end,
   },
 }
