@@ -20,7 +20,9 @@ end
 
 function M.get_file_size(file_path)
   local file = io.open(file_path, "r")
-  if not file then return nil, "File not found" end
+  if not file then
+    return nil, "File not found"
+  end
   local size = file:seek("end")
   file:close()
   return size
@@ -48,7 +50,7 @@ end
 
 ---check if any item matches condition
 ---@param items any[]
----@param predicate function 
+---@param predicate function
 function M.anyMatch(items, predicate)
   for _, v in ipairs(items) do
     if predicate(v) then
@@ -58,11 +60,9 @@ function M.anyMatch(items, predicate)
   return false
 end
 
-
 function M.stringEndsWith(str, suffix)
   return str:sub(-#suffix) == suffix
 end
-
 
 function M.get_gradle_projects(gradlew_root)
   local output = vim.fn.system({
@@ -81,13 +81,13 @@ function M.get_gradle_projects(gradlew_root)
 end
 
 function M.remove_value(tbl, value)
-    for i, v in ipairs(tbl) do
-        if v == value then
-            table.remove(tbl, i)
-            return true  -- Value removed successfully
-        end
+  for i, v in ipairs(tbl) do
+    if v == value then
+      table.remove(tbl, i)
+      return true -- Value removed successfully
     end
-    return false  -- Value not found in the table
+  end
+  return false -- Value not found in the table
 end
 
 ---perform hover but prioritize given lsp name
@@ -96,9 +96,9 @@ end
 function M.hoverPrioritizeLsp(name, ...)
   local bufnr = vim.api.nvim_get_current_buf()
   local filetype = vim.api.nvim_get_option_value("filetype", { buf = bufnr })
-  local clients = vim.lsp.get_clients({name = name, method = "textDocument/hover", bufnr = bufnr })
+  local clients = vim.lsp.get_clients({ name = name, method = "textDocument/hover", bufnr = bufnr })
   for _, client in pairs(clients) do
-    if ... == nil or M.contains({...}, filetype) then
+    if ... == nil or M.contains({ ... }, filetype) then
       -- Use the hover method of the preferred client
       client.request("textDocument/hover", vim.lsp.util.make_position_params())
       return
@@ -111,6 +111,7 @@ end
 ---@class excludedLsp
 ---@field name string
 ---@field filetypes string[]?
+---@field ts_captures string[]? optional list of tree sitter capture groups. Include ! in the begging of one to negate it
 
 ---perform hover but exclude given lsp names
 ---@param lsps excludedLsp[]
@@ -128,6 +129,52 @@ function M.hoverExcludeLsps(lsps)
       client.request("textDocument/hover", vim.lsp.util.make_position_params())
       return
     end
+  end
+end
+
+---comment
+---@param tsCapatures string[]
+---@param targetCapture string
+local function matchTsCapture(tsCapatures, targetCapture)
+  local invert = targetCapture:sub(1, 1) == "!"
+  if invert then
+    targetCapture = targetCapture:sub(2, #targetCapture)
+  end
+  local matched = M.contains(tsCapatures, targetCapture)
+  if invert then
+    matched = not matched
+  end
+  return matched
+end
+
+---make a request but exclude given lsps
+---@param lsps excludedLsp
+---@param request string
+function M.lspRequestExcludeLsps(request, lsps)
+  local bufnr = vim.api.nvim_get_current_buf()
+  local filetype = vim.api.nvim_get_option_value("filetype", { buf = bufnr })
+  local clients = vim.lsp.get_clients({ method = request, bufnr = bufnr })
+  local captures = vim.treesitter.get_captures_at_cursor(0)
+  local found_one = false
+  for _, client in ipairs(clients) do
+    if
+      not M.anyMatch(lsps, function(lsp)
+        return lsp.name == client.name
+          and (lsp.filetypes == nil or M.contains(lsp.filetypes, filetype))
+          and (
+            lsp.ts_captures == nil
+            or M.anyMatch(lsp.ts_captures, function(tsCapture)
+              return matchTsCapture(captures, tsCapture)
+            end)
+          )
+      end)
+    then
+      found_one = true
+      client.request(request, vim.lsp.util.make_position_params())
+    end
+  end
+  if not found_one then
+    vim.notify("No matching Lsps found for " .. request, vim.log.levels.WARN)
   end
 end
 

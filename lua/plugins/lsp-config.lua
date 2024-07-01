@@ -16,8 +16,14 @@ return {
       keys[#keys + 1] = {
         "K",
         function()
-          require("modules.helpers").hoverExcludeLsps(vim.g.hover_exclude_lsps)
+          require("modules.helpers").lspRequestExcludeLsps(vim.lsp.protocol.Methods.textDocument_hover, vim.g.hover_exclude_lsps)
         end,
+      }
+      keys[#keys+1] = {
+        "gd",
+        function ()
+          require("modules.helpers").lspRequestExcludeLsps(vim.lsp.protocol.Methods.textDocument_definition, vim.g.definition_exclude_lsps)
+        end
       }
       -- make sure mason installs the server
       opts.servers.gradle_ls = {}

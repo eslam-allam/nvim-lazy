@@ -18,3 +18,7 @@ vim.g.java_filetypes = { "java" }
 vim.g.spring_cache_dir = vim.fn.expand("~/.local/share/nvim/spring-boot")
 
 vim.g.hover_exclude_lsps = { { name = "spring-boot", filetypes = { "java" } } }
+vim.g.definition_exclude_lsps = {
+  { name = "spring-boot", filetypes = { "java" }, ts_captures = { "!string" } },
+  { name = "jdtls", filetypes = { "java" }, ts_captures = { "string" } },
+}

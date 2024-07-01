@@ -11,6 +11,13 @@ return {
     local home = vim.fn.getenv("HOME")
     require("chatgpt").setup({
       api_key_cmd = "gpg --decrypt " .. home .. "/.secrets/open-ai-key.gpg",
+      openai_params = {
+        model = "gpt-4o",
+        frequency_penalty = 0,
+        presence_penalty = 0,
+        max_tokens = 4096,
+      }
+
     })
     require("which-key").register({
       g = {
