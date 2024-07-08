@@ -6,7 +6,9 @@ return {
   event = "VeryLazy",
   opts = {
     options = {
-      overflow = "wrap"
+      overflow = {
+        mode = "wrap"
+      }
     }
   },
   config = function(_, opts)
