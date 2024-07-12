@@ -20,7 +20,9 @@ return {
     version = "*",
     opts = {
       formatter_opts = {
-        max_slots = 5,
+        default = {
+          max_slots = 5,
+        },
       },
       on_update = function()
         require("lualine").refresh()
@@ -28,7 +30,7 @@ return {
     },
   },
   opts = function(_, opts)
-    table.insert(opts.sections.lualine_c, 1, require("harpoonline").format)
+    table.insert(opts.sections.lualine_b, 2, require("harpoonline").format)
 
     table.insert(opts.sections.lualine_z, 1, {
       pythonEnv,
