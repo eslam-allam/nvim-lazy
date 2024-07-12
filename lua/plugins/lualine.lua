@@ -15,7 +15,21 @@ end
 
 return {
   "nvim-lualine/lualine.nvim",
+  dependencies = {
+    "abeldekat/harpoonline",
+    version = "*",
+    opts = {
+      formatter_opts = {
+        max_slots = 5,
+      },
+      on_update = function()
+        require("lualine").refresh()
+      end,
+    },
+  },
   opts = function(_, opts)
+    table.insert(opts.sections.lualine_c, 1, require("harpoonline").format)
+
     table.insert(opts.sections.lualine_z, 1, {
       pythonEnv,
       cond = function()
