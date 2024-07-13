@@ -142,6 +142,7 @@ return {
             {
               "<leader>cx",
               group = "extract",
+              icon = {cat = "filetype", name = "java"},
               {
                 "<leader>cxm",
                 mode = "x",
