@@ -49,22 +49,24 @@ return {
       },
     }
     opts.on_attach = function(args)
-      require("which-key").register({
-        j = {
-          name = "jdtls",
-          w = { "<cmd>JdtWipeDataAndRestart<CR>", "Wipe and Restart" },
-          c = { "<cmd>JdtCompile<CR>", "Compile" },
-          s = { "<cmd>JdtSetRuntime<CR>", "Set Runtime" },
-          u = {
-            function()
-              require("jdtls").update_projects_config({ select_mode = "all" })
-            end,
-            "Update Config",
-          },
-          r = { "<cmd>JdtRestart<CR>", "Restart" },
-          j = { "<cmd>JdtJshell<CR>", "JShell" },
+      require("which-key").add({
+        "<leader>cj",
+        icon = { icon = "", color = "orange" },
+        buffer = args.buf,
+        group = "jdtls",
+        { "<leader>cjw", "<cmd>JdtWipeDataAndRestart<CR>", desc = "Wipe and Restart" },
+        { "<leader>cjc", "<cmd>JdtCompile<CR>", desc = "Compile" },
+        { "<leader>cjs", "<cmd>JdtSetRuntime<CR>", desc = "Set Runtime" },
+        {
+          "<leader>cju",
+          rhs = function()
+            require("jdtls").update_projects_config({ select_mode = "all" })
+          end,
+          desc = "Update Config",
         },
-      }, { mode = "n", prefix = "<leader>c", buffer = args.buf })
+        { "<leader>cjr", "<cmd>JdtRestart<CR>", desc = "Restart" },
+        { "<leader>cjj", "<cmd>JdtJshell<CR>", desc = "JShell" },
+      })
     end
   end,
   config = function(_, opts)
@@ -95,10 +97,7 @@ return {
 
     -- spring boot support
     if LazyVim.has("spring-boot.nvim") then
-      vim.list_extend(
-        bundles,
-        require("spring_boot").java_extensions(vim.g.spring_cache_dir .. "/jars")
-      )
+      vim.list_extend(bundles, require("spring_boot").java_extensions(vim.g.spring_cache_dir .. "/jars"))
     end
 
     local function attach_jdtls()
@@ -136,30 +135,40 @@ return {
         local client = vim.lsp.get_client_by_id(args.data.client_id)
         if client and client.name == "jdtls" then
           local wk = require("which-key")
-          wk.register({
-            ["<leader>cx"] = { name = "+extract" },
-            ["<leader>cxv"] = { require("jdtls").extract_variable_all, "Extract Variable" },
-            ["<leader>cxc"] = { require("jdtls").extract_constant, "Extract Constant" },
-            ["gs"] = { require("jdtls").super_implementation, "Goto Super" },
-            ["gS"] = { require("jdtls.tests").goto_subjects, "Goto Subjects" },
-            ["<leader>co"] = { require("jdtls").organize_imports, "Organize Imports" },
-          }, { mode = "n", buffer = args.buf })
-          wk.register({
-            ["<leader>c"] = { name = "+code" },
-            ["<leader>cx"] = { name = "+extract" },
-            ["<leader>cxm"] = {
-              [[<ESC><CMD>lua require('jdtls').extract_method(true)<CR>]],
-              "Extract Method",
+          wk.add({
+            "<leader>c",
+            group = "code",
+            buffer = args.buf,
+            {
+              "<leader>cx",
+              group = "extract",
+              {
+                "<leader>cxm",
+                mode = "x",
+                rhs = function()
+                  require("jdtls").extract_method({ visual = true })
+                end,
+                desc = "Extract Method",
+              },
+              {
+                "<leader>cxv",
+                rhs = function()
+                  require("jdtls").extract_variable_all({ visual = false })
+                end,
+                desc = "Extract Variable",
+              },
+              {
+                "<leader>cxc",
+                rhs = function()
+                  require("jdtls").extract_constant({ visual = false })
+                end,
+                desc = "Extract Constant",
+              },
             },
-            ["<leader>cxv"] = {
-              [[<ESC><CMD>lua require('jdtls').extract_variable_all(true)<CR>]],
-              "Extract Variable",
-            },
-            ["<leader>cxc"] = {
-              [[<ESC><CMD>lua require('jdtls').extract_constant(true)<CR>]],
-              "Extract Constant",
-            },
-          }, { mode = "v", buffer = args.buf })
+            { "gs", rhs = require("jdtls").super_implementation, desc = "Goto Super" },
+            { "gS", rhs = require("jdtls").goto_subjects, desc = "Goto Subjects" },
+            { "<leader>co", rhs = require("jdtls").organize_imports, desc = "Organize Imports" },
+          })
 
           if opts.dap and LazyVim.has("nvim-dap") and mason_registry.is_installed("java-debug-adapter") then
             -- custom init for Java debugger
@@ -169,12 +178,30 @@ return {
             -- Java Test require Java debugger to work
             if opts.test and mason_registry.is_installed("java-test") then
               -- custom keymaps for Java test runner (not yet compatible with neotest)
-              wk.register({
-                ["<leader>t"] = { name = "+test" },
-                ["<leader>tt"] = { require("jdtls.dap").test_class, "Run All Test" },
-                ["<leader>tr"] = { require("jdtls.dap").test_nearest_method, "Run Nearest Test" },
-                ["<leader>tT"] = { require("jdtls.dap").pick_test, "Run Test" },
-              }, { mode = "n", buffer = args.buf })
+              wk.add({
+                "<leader>t",
+                group = "test",
+                buffer = args.buf,
+                {
+                  "<leader>tt",
+                  rhs = function()
+                    require("jdtls.dap").test_class({
+                      config_overrides = type(opts.test) ~= "boolean" and opts.test.config_overrides or nil,
+                    })
+                  end,
+                  desc = "Run All test",
+                },
+                {
+                  "<leader>tr",
+                  rhs = function()
+                    require("jdtls.dap").test_nearest_method({
+                      config_overrides = type(opts.test) ~= "boolean" and opts.test.config_overrides or nil,
+                    })
+                  end,
+                  desc = "Run Nearest Test",
+                },
+                { "<leader>tT", rhs = require("jdtls.dap").pick_test, desc = "Run Test" },
+              })
             end
           end
 
