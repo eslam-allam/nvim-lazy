@@ -52,7 +52,7 @@ cmd("FileType", {
 
 -- Tab Width
 cmd("FileType", {
-  pattern = { "lua", "sh", "zsh", "c", "cpp", "rust", "html", "javascript", "svelte", "json", "yaml", "templ" },
+  pattern = { "lua", "sh", "zsh", "c", "cpp", "rust", "html", "javascript", "svelte", "json", "yaml", "xml", "xsd", "templ" },
   callback = function()
     vim.bo.tabstop = 2
     vim.bo.shiftwidth = 2
