@@ -22,6 +22,8 @@ return {
         { "yaml-language-server", "json-lsp", "prettierd", "stylua", "yamllint", "jsonlint", "taplo" }
       )
 
+      -- Formatters
+      vim.list_extend(opts.ensure_installed, { "google-java-format" })
     end,
   },
   {

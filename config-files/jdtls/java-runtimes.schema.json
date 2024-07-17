@@ -1,0 +1,33 @@
+{
+  "title": "Jdtls java runtimes",
+  "description": "Defines paths to runtimes used by jdtls",
+  "type": "object",
+  "properties": {
+    "java8": {
+      "description": "Path to java 8 jre",
+      "type": "string",
+      "pattern": "^(?:\\/[\\w\\-_]+)+$"
+    },
+    "java11": {
+      "description": "Path to java 11 jre",
+      "type": "string",
+      "pattern": "^(?:\\/[\\w\\-_]+)+$"
+    },
+    "java17": {
+      "description": "Path to java 17 jre",
+      "type": "string",
+      "pattern": "^(?:\\/[\\w\\-_]+)+$"
+    },
+    "java21": {
+      "description": "Path to java 21 jre",
+      "type": "string",
+      "pattern": "^(?:\\/[\\w\\-_]+)+$"
+    },
+    "java22": {
+      "description": "Path to java 22 jre",
+      "type": "string",
+      "pattern": "^(?:\\/[\\w\\-_]+)+$"
+    }
+  },
+  "required": ["java17"]
+}

@@ -1,0 +1,23 @@
+{
+  "description": "Config for google-java-format",
+  "type": "object",
+  "properties": {
+    "format": {
+      "description": "Specification used for formatting",
+      "type": "string",
+      "enum": ["google", "aosp"]
+    },
+    "sort-imports": {
+      "description": "Sort package imports when formatting",
+      "type": "boolean"
+    },
+    "remove-unused-imports": {
+      "description": "Remove unused package imports when formatting",
+      "type": "boolean"
+    },
+    "format-javadoc": {
+      "description": "Format javadoc blocks",
+      "type": "boolean"
+    }
+  }
+}
