@@ -1,8 +1,5 @@
 return {
   {
-    "b0o/schemastore.nvim",
-  },
-  {
     "neovim/nvim-lspconfig",
     opts = function(_, opts)
       local helpers = require("modules.helpers")
@@ -35,22 +32,20 @@ return {
       opts.setup.jsonls = function(_, sopts)
         sopts.settings = {
           json = {
-            schemas = require("schemastore").json.schemas({
-              extra = {
-                {
-                  description = "Custom schema for neovim jdtls runtimes",
-                  name = "java-runtimes.json",
-                  fileMatch = { "java-runtimes.json" },
-                  url = "file://" .. vim.env.JAVA_RUNTIMES_JSON_SCHEMA,
-                },
-                {
-                  description = "Custom schema for google-java-format",
-                  name = "Google Java Format config",
-                  fileMatch = { "google-java-format.json", ".google-java-format.json" },
-                  url = "file://" .. vim.env.FORMATTER_SCHEMA_DIR .. "/google-java-format.schema.json",
-                },
+            schemas = {
+              {
+                description = "Custom schema for neovim jdtls runtimes",
+                name = "java-runtimes.json",
+                fileMatch = { "java-runtimes.json" },
+                url = "file://" .. vim.env.JAVA_RUNTIMES_JSON_SCHEMA,
               },
-            }),
+              {
+                description = "Custom schema for google-java-format",
+                name = "Google Java Format config",
+                fileMatch = { "google-java-format.json", ".google-java-format.json" },
+                url = "file://" .. vim.env.FORMATTER_SCHEMA_DIR .. "/google-java-format.schema.json",
+              },
+            },
             validate = { enable = true },
           },
         }
