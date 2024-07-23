@@ -1,4 +1,3 @@
-local Util = require("lazyvim.util")
 return {
   "nvim-telescope/telescope-file-browser.nvim",
   dependencies = { "nvim-telescope/telescope.nvim", "nvim-lua/plenary.nvim", "nvim-tree/nvim-web-devicons" },
@@ -12,7 +11,7 @@ return {
       mode = "n",
     },
   },
-init = function()
+  init = function()
     if vim.fn.argc(-1) == 1 then
       local stat = vim.loop.fs_stat(vim.fn.argv(0))
       if stat and stat.type == "directory" then
@@ -21,6 +20,7 @@ init = function()
     end
   end,
   config = function()
+    local Util = require("lazyvim.util")
     Util.on_load("telescope.nvim", function()
       require("telescope").load_extension("file_browser")
     end)

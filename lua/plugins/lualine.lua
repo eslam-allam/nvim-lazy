@@ -1,18 +1,3 @@
-Util = require("lazyvim.util")
-local function envSection(envName)
-  return " " .. envName
-end
-
-local function pythonEnv()
-  -- @type string
-  local activeEnv = require("venv-selector").venv()
-  if activeEnv ~= nil then
-    return envSection(activeEnv:match("([%w-]+)$"))
-  else
-    return ""
-  end
-end
-
 return {
   "nvim-lualine/lualine.nvim",
   dependencies = {
@@ -30,6 +15,21 @@ return {
     },
   },
   opts = function(_, opts)
+    local util = require("lazyvim.util")
+    local function envSection(envName)
+      return " " .. envName
+    end
+
+    local function pythonEnv()
+      -- @type string
+      local activeEnv = require("venv-selector").venv()
+      if activeEnv ~= nil then
+        return envSection(activeEnv:match("([%w-]+)$"))
+      else
+        return ""
+      end
+    end
+
     table.insert(opts.sections.lualine_b, 2, require("harpoonline").format)
 
     table.insert(opts.sections.lualine_z, 1, {
@@ -43,7 +43,7 @@ return {
       function()
         return require("recorder").recordingStatus()
       end,
-      color = Util.ui.fg("Special"),
+      color = util.ui.fg("Special"),
     })
 
     table.insert(opts.sections.lualine_x, "rest")
@@ -52,7 +52,7 @@ return {
       function()
         return require("recorder").displaySlots()
       end,
-      color = Util.ui.fg("Special"),
+      color = util.ui.fg("Special"),
     })
   end,
 }

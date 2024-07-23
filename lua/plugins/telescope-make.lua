@@ -11,7 +11,7 @@ return {
     })
   end,
   config = function()
-    Util.on_load("telescope.nvim", function()
+    require("lazyvim.util").on_load("telescope.nvim", function()
       require("telescope").load_extension("make")
     end)
   end,
