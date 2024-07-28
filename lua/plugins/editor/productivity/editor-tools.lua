@@ -24,4 +24,23 @@ return {
       }
     end,
   },
+  {
+    "stevearc/dressing.nvim",
+    -- Don't replace vim.ui.select
+    init = function()
+      ---@diagnostic disable-next-line: duplicate-set-field
+      vim.ui.input = function(...)
+        require("lazy").load({ plugins = { "dressing.nvim" } })
+        return vim.ui.input(...)
+      end
+    end,
+  },
+  {
+    "Chaitanyabsprip/fastaction.nvim",
+    config = true,
+    init = function()
+      ---@diagnostic disable-next-line: duplicate-set-field
+      vim.ui.select = require("fastaction").select
+    end,
+  },
 }
