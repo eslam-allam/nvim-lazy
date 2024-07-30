@@ -23,6 +23,7 @@
   "friendly-snippets": { "branch": "main", "commit": "00ebcaa159e817150bd83bfe2d51fa3b3377d5c4" },
   "gitpad.nvim": { "branch": "main", "commit": "1e0f6fa335c72c05d1d3635120c572e198e5ae0d" },
   "gitsigns.nvim": { "branch": "main", "commit": "f074844b60f9e151970fbcdbeb8a2cd52b6ef25a" },
+  "goplements.nvim": { "branch": "main", "commit": "d53d78986af111396f93c21ee9ff75ffd6cccf57" },
   "grug-far.nvim": { "branch": "main", "commit": "16091184639ca7f2c76734e3a8641d388aebc4e7" },
   "harpoon": { "branch": "harpoon2", "commit": "0378a6c428a0bed6a2781d459d7943843f374bce" },
   "harpoonline": { "branch": "main", "commit": "6ba9dca0fc42781c4a0ff89932bd386d6bbd75f8" },
