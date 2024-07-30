@@ -43,4 +43,17 @@ return {
       vim.ui.select = require("fastaction").select
     end,
   },
+
+  {
+    "dmtrKovalenko/caps-word.nvim",
+    lazy = true,
+    opts = {},
+    keys = {
+      {
+        mode = { "i", "n" },
+        "<M-s>",
+        "<cmd>lua require('caps-word').toggle()<CR>",
+      },
+    },
+  },
 }
