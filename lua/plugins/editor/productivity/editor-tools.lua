@@ -36,12 +36,27 @@ return {
     end,
   },
   {
-    "Chaitanyabsprip/fastaction.nvim",
-    config = true,
-    init = function()
-      ---@diagnostic disable-next-line: duplicate-set-field
-      vim.ui.select = require("fastaction").select
+    "eslam-allam/fastaction.nvim",
+    config = function(_, opts)
+      require("fastaction").setup(opts)
+
+      local keys = require("lazyvim.plugins.lsp.keymaps").get()
+
+      keys[#keys + 1] = {
+        "<leader>ca",
+        require("fastaction").code_action,
+        mode = "n",
+      }
+      keys[#keys + 1] = {
+        "<leader>ca",
+        require("fastaction").range_code_action,
+        mode = "x",
+      }
     end,
+    opts = {
+      keys = "qwertyuopasdfghlzxcvbnm",
+      register_ui_select = true,
+    },
   },
 
   {
