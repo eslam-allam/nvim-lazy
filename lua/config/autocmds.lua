@@ -52,7 +52,22 @@ cmd("FileType", {
 
 -- Tab Width
 cmd("FileType", {
-  pattern = { "lua", "sh", "zsh", "c", "cpp", "rust", "html", "javascript", "svelte", "json", "yaml", "xml", "xsd", "templ" },
+  pattern = {
+    "lua",
+    "sh",
+    "zsh",
+    "c",
+    "cpp",
+    "rust",
+    "html",
+    "javascript",
+    "svelte",
+    "json",
+    "yaml",
+    "xml",
+    "xsd",
+    "templ",
+  },
   callback = function()
     vim.bo.tabstop = 2
     vim.bo.shiftwidth = 2
@@ -64,9 +79,18 @@ cmd("FileType", {
   group = ugroup("user_close_with_q"),
   pattern = {
     "toggleterm",
+    "http",
   },
   callback = function(event)
-    vim.bo[event.buf].buflisted = false
-    vim.keymap.set("n", "q", "<cmd>close<cr>", { buffer = event.buf, silent = true })
+    ---@type string|function
+    local closeCommand = "<cmd>close<cr>"
+    if LazyVim.has("kulala.nvim") and event.match == "http" then
+      closeCommand = function()
+        require("kulala").close()
+      end
+    else
+      vim.bo[event.buf].buflisted = false
+    end
+    vim.keymap.set("n", "q", closeCommand, { buffer = event.buf, silent = true })
   end,
 })
