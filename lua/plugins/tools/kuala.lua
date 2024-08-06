@@ -3,13 +3,12 @@ return {
   keys = function()
     return {}
   end,
-  config = function(_, opts)
-    require("kulala").setup(opts)
+  init = function()
     require("which-key").add({
       "<leader>R",
       desc = "Rest",
       icon = { cat = "filetype", name = "http" },
-      {
+{
         "<leader>Rc",
         function()
           require("kulala").close()
