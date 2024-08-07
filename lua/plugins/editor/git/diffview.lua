@@ -4,5 +4,12 @@ return {
     { "<leader>gd", "<cmd>DiffviewOpen<CR>", desc = "Diff View", mode = "n" },
     { "<leader>gf", "<cmd>DiffviewFileHistory %<CR>", desc = "File History (This)", mode = "n" },
     { "<leader>gF", "<cmd>DiffviewFileHistory<CR>", desc = "File History (All)", mode = "n" },
-  }
+  },
+  opts = {
+    keymaps = {
+      view = {
+        q = "<cmd>DiffviewClose<CR>",
+      },
+    },
+  },
 }
