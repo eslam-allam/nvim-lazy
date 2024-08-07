@@ -2,9 +2,7 @@
 -- Default autocmds that are always set: https://github.com/LazyVim/LazyVim/blob/main/lua/lazyvim/config/autocmds.lua
 -- Add any additional autocmds here
 
-local function ugroup(name)
-  return vim.api.nvim_create_augroup("user_" .. name, { clear = true })
-end
+local ugroup = require("modules.helpers").ugroup
 
 local cmd = vim.api.nvim_create_autocmd
 
@@ -76,7 +74,7 @@ cmd("FileType", {
 
 -- close some filetypes with <q>
 cmd("FileType", {
-  group = ugroup("user_close_with_q"),
+  group = ugroup("close_with_q"),
   pattern = {
     "toggleterm",
     "http",
