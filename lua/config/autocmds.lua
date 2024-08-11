@@ -78,10 +78,13 @@ cmd("FileType", {
   pattern = {
     "toggleterm",
     "http",
+    "gitgraph",
   },
   callback = function(event)
     ---@type string|function
-    local closeCommand = "<cmd>close<cr>"
+    local closeCommand = function ()
+      vim.api.nvim_buf_delete(event.buf, {})
+    end
     if LazyVim.has("kulala.nvim") and event.match == "http" then
       closeCommand = function()
         require("kulala").close()
