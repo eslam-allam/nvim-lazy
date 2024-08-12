@@ -1,5 +1,25 @@
 return {
   {
+    "mosheavni/yaml-companion.nvim",
+    ft = "yaml",
+    dependencies = {
+      { "neovim/nvim-lspconfig" },
+      { "nvim-lua/plenary.nvim" },
+      { "nvim-telescope/telescope.nvim" },
+    },
+    config = function()
+      local cfg = require("yaml-companion").setup({})
+      require("lspconfig")["yamlls"].setup(cfg)
+      require("telescope").load_extension("yaml_schema")
+      local keys = require("lazyvim.plugins.lsp.keymaps").get()
+      keys[#keys + 1] = {
+        "<leader>ys",
+        "<cmd>Telescope yaml_schema<CR>",
+        desc = "Yaml Schema",
+      }
+    end,
+  },
+  {
     "neovim/nvim-lspconfig",
     opts = function(_, opts)
       local helpers = require("modules.helpers")
@@ -16,6 +36,7 @@ return {
           helpers.lspRequestExcludeLsps(vim.lsp.protocol.Methods.textDocument_definition, vim.g.definition_exclude_lsps)
         end,
       }
+
       -- make sure mason installs the server
       opts.servers.gradle_ls = {}
       opts.setup.gradle_ls = function(_, sopts)

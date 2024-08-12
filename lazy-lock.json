@@ -105,5 +105,6 @@
   "vim-dadbod-ui": { "branch": "master", "commit": "0f51d8de368c8c6220973e8acd156d17da746f4c" },
   "vim-repeat": { "branch": "master", "commit": "65846025c15494983dafe5e3b46c8f88ab2e9635" },
   "which-key.nvim": { "branch": "main", "commit": "6c1584eb76b55629702716995cca4ae2798a9cca" },
+  "yaml-companion.nvim": { "branch": "main", "commit": "1944149e6ec14508a8c81235e000bf333e790e40" },
   "yanky.nvim": { "branch": "main", "commit": "73215b77d22ebb179cef98e7e1235825431d10e4" }
 }
