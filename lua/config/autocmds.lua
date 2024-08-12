@@ -79,16 +79,19 @@ cmd("FileType", {
     "toggleterm",
     "http",
     "gitgraph",
+    "DiffviewFiles",
   },
   callback = function(event)
     ---@type string|function
-    local closeCommand = function ()
+    local closeCommand = function()
       vim.api.nvim_buf_delete(event.buf, {})
     end
     if LazyVim.has("kulala.nvim") and event.match == "http" then
       closeCommand = function()
         require("kulala").close()
       end
+    elseif event.match == "DiffviewFiles" then
+      closeCommand = "<cmd>DiffviewClose<CR>"
     else
       vim.bo[event.buf].buflisted = false
     end
