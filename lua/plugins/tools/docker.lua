@@ -22,7 +22,7 @@ return {
   },
   {
     "ramilito/kubectl.nvim",
-    keys = { "<leader>kk" },
+    lazy = true,
     init = function()
       require("which-key").add({
         "<leader>k",
@@ -32,8 +32,6 @@ return {
         { "<leader>kk", function () require("kubectl").open() end, desc = "Open Kubectl", mode = { "n" } },
       }, {})
     end,
-    config = function()
-      require("kubectl").setup()
-    end,
+    config = true,
   },
 }
