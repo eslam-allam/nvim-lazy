@@ -8,7 +8,7 @@ return {
       "<leader>R",
       desc = "Rest",
       icon = { cat = "filetype", name = "http" },
-{
+      {
         "<leader>Rc",
         function()
           require("kulala").close()
@@ -25,7 +25,7 @@ return {
         icon = { icon = "󰎚", color = "yellow" },
       },
       {
-        "<leader>Rv",
+        "<leader>Re",
         function()
           require("kulala").set_selected_env()
         end,
@@ -63,6 +63,14 @@ return {
         end,
         desc = "Send the request",
         icon = { icon = "", color = "green" },
+      },
+      {
+        "<leader>Rv",
+        function()
+          require("kulala").toggle_view()
+        end,
+        desc = "Toggle View",
+        icon = { icon = "", color = "orange" },
       },
     })
   end,
