@@ -80,6 +80,7 @@ cmd("FileType", {
     "http",
     "gitgraph",
     "DiffviewFiles",
+    "k8s_pods",
   },
   callback = function(event)
     ---@type string|function
