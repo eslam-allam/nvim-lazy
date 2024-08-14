@@ -37,11 +37,28 @@ return {
         end,
       }
 
+      local mason_home = vim.fn.getenv("MASON")
+
       -- make sure mason installs the server
       opts.servers.gradle_ls = {}
       opts.setup.gradle_ls = function(_, sopts)
+        sopts.cmd = {
+          require("modules.java").execAtleast(17),
+          "-jar",
+          mason_home .. "/packages/gradle-language-server/extension/lib/gradle-language-server.jar",
+        }
         sopts.root_dir = require("modules.java").javaRoot
       end
+
+      opts.servers.groovyls = {}
+      opts.setup.groovyls = function(_, sopts)
+        sopts.cmd = {
+          require("modules.java").execAtleast(17),
+          "-jar",
+          mason_home .. "/packages/groovy-language-server/build/libs/groovy-language-server-all.jar",
+        }
+      end
+
       opts.setup.tailwindcss = function(_, sopts)
         sopts.settings = {
           tailwindCSS = {
