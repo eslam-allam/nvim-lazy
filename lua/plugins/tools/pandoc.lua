@@ -1,6 +1,8 @@
-local plenaryPath = require("plenary.path")
 return {
   "aspeddro/pandoc.nvim",
+  init = function()
+    require("modules.pandoc").setup()
+  end,
   keys = {
     {
       "<leader>P",
@@ -27,13 +29,9 @@ return {
 
         vim.system({ "mkdir", "-p", outputDirectory })
 
-        require("pandoc.render").file({
-          { "--variable", "geometry:margin=1in" },
-          { "--variable", "mainfont:Cantrarell" },
-          { "--variable", "monofont:'JetBrainsMono NF'" },
-          { "--highlight-style", "zenburn" },
-          { "--output", outputDirectory .. "/" .. newName },
-        })
+        require("pandoc.render").file(
+          require("modules.pandoc").command({ ["--output"] = outputDirectory .. "/" .. newName })
+        )
       end,
       desc = "Render PDF (Documents Dir)",
       mode = { "n" },
@@ -42,12 +40,7 @@ return {
     {
       "<leader>p",
       function()
-        require("pandoc.render").file({
-          { "--variable", "geometry:margin=1in" },
-          { "--variable", "mainfont:Cantrarell" },
-          { "--variable", "monofont:'JetBrainsMono NF'" },
-          { "--highlight-style", "zenburn" },
-        })
+        require("pandoc.render").file(require("modules.pandoc").command())
       end,
       desc = "Render PDF (cwd)",
       mode = { "n" },
