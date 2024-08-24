@@ -57,6 +57,13 @@ return {
           },
         }
       end
+      local new_ft = {}
+      for _, value in ipairs(require("lspconfig.server_configurations.tailwindcss").default_config.filetypes) do
+        if value ~= "markdown" then
+          table.insert(new_ft, value)
+        end
+      end
+      opts.servers.tailwindcss.filetypes = new_ft
 
       opts.setup.jsonls = function(_, sopts)
         sopts.settings = {
