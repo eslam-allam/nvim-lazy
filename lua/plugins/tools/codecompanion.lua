@@ -1,7 +1,6 @@
 return {
   "olimorris/codecompanion.nvim",
-  lazy = true,
-  cmd = { "CodeCompanion", "CodeCompanionChat", "CodeCompanionToggle", "CodeCompanionActions", "CodeCompanionAdd" },
+  event = "VeryLazy",
   dependencies = {
     "nvim-lua/plenary.nvim",
     "nvim-treesitter/nvim-treesitter",
@@ -19,6 +18,24 @@ return {
   },
   config = function(_, opts)
     require("codecompanion").setup(opts)
+    require("which-key").add({
+      "<leader>cg",
+      group = "CodeCompanion",
+      icon = { icon = "󰁤", color = "green" },
+      mode = { "n", "v" },
+      { "<leader>cgc", "<cmd>CodeCompanionChat<CR>", desc = "Chat" },
+      { "<leader>cga", "<cmd>CodeCompanionActions<CR>", desc = "Display Actions" },
+      { "<leader>cgt", "<cmd>CodeCompanionToggle<CR>", desc = "Toggle Chat" },
+      { "ga", "<cmd>CodeCompanionAdd<CR>", desc = "Add code", mode = "v" },
+      {
+        "<leader>cgA",
+        desc = "Quick Actions",
+        { "<leader>cgAe", "<cmd>CodeCompanion /explain<CR>", desc = "Explain Code", mode = "v" },
+        { "<leader>cgAE", "<cmd>CodeCompanion /lsp<CR>", desc = "Explain Code Using LSP", mode = "v" },
+        { "<leader>cgAf", "<cmd>CodeCompanion /fix<CR>", desc = "Fix Code", mode = "v" },
+        { "<leader>cgAc", "<cmd>CodeCompanion /commit<CR>", desc = "Generate Commit" },
+      },
+    })
   end,
   opts = {
     log_level = "TRACE",
@@ -36,7 +53,6 @@ return {
     adapters = {
 
       llama_remote = function()
-
         local home = vim.fn.getenv("HOME")
         return require("codecompanion.adapters").extend("ollama", {
           name = "llama_remote", -- Ensure the model is differentiated from Ollama
@@ -51,7 +67,7 @@ return {
           },
           schema = {
             model = {
-              default = "llama3.1:8b",
+              default = "llama3.1:70b",
             },
           },
         })
