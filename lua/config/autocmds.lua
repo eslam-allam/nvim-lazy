@@ -65,6 +65,7 @@ cmd("FileType", {
     "xml",
     "xsd",
     "templ",
+    "markdown"
   },
   callback = function()
     vim.bo.tabstop = 2
