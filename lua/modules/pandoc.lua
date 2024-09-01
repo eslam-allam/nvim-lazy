@@ -4,8 +4,12 @@ local base_command = {
   { "--variable", "geometry:margin=1in" },
   { "--variable", "mainfont:Times New Roman" },
   { "--variable", "monofont:JetBrainsMono Nerd Font Mono" },
+  { "--variable", "fontsize=12pt" },
   { "--variable", "linkcolor:blue" },
   { "--variable", "geometry:a4paper" },
+  { "--toc" },
+  { "--variable", "toc-title:Table of Contents" },
+  { "--variable", "toc-depth:5" },
   { "--pdf-engine", "xelatex" },
 }
 ---Notify with pandoc prefix
