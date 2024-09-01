@@ -2,7 +2,7 @@ return {
   "NStefan002/speedtyper.nvim",
   cmd = "Speedtyper",
   keys = {
-    { "<leader>pt", "<cmd>Speedtyper<CR>", mode = "n", desc = "Typing Test" },
+    { "<localleader>t", "<cmd>Speedtyper<CR>", mode = "n", desc = "Typing Test" },
   },
   opts = {
     window = {
