@@ -354,9 +354,9 @@ return {
     end,
     config = function(_, opts)
       opts.ls_path = cache_dir .. "/language-server"
+      opts.java_cmd = require("modules.java").execAt(17)
       opts.server = {
         root_dir = require("modules.java").javaRoot(vim.api.nvim_buf_get_name(0)),
-        java_bin = require("modules.java").execAt(17),
         on_init = function(client)
           local rc = client.server_capabilities
           rc.inlayHintProvider = false
