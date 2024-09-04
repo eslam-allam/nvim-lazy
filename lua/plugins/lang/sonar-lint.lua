@@ -9,7 +9,7 @@ return {
       "mfussenegger/nvim-jdtls",
     },
     ft = "java",
-    enabled = false,
+    enabled = true,
     config = function()
       require("sonarlint").setup({
         server = {
