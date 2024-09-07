@@ -36,7 +36,7 @@ return {
     end,
   },
   {
-    "Chaitanyabsprip/fastaction.nvim",
+    "eslam-allam/fastaction.nvim",
     config = function(_, opts)
       require("fastaction").setup(opts)
 
