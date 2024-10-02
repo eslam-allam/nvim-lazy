@@ -24,7 +24,7 @@ function M.javaRoot(fileName)
       return v.root
     end
   end
-  return require("lspconfig.server_configurations.jdtls").default_config.root_dir(fileName)
+  return require("lspconfig.configs.jdtls").default_config.root_dir(fileName)
 end
 
 -- Utility function to extend or override a config table, similar to the way
