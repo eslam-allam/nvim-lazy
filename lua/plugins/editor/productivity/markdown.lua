@@ -18,13 +18,6 @@ return {
         ft = { "markdown" },
         mode = { "n", "v" },
       },
-      {
-        "<S-CR>",
-        "<Cmd>CheckboxCyclePrev<CR>",
-        desc = "Checkbox Previous",
-        ft = { "markdown" },
-        mode = { "n", "v" },
-      },
     },
   },
 }
