@@ -30,12 +30,6 @@ return {
           helpers.lspRequestExcludeLsps(vim.lsp.protocol.Methods.textDocument_hover, vim.g.hover_exclude_lsps)
         end,
       }
-      keys[#keys + 1] = {
-        "gd",
-        function()
-          helpers.lspRequestExcludeLsps(vim.lsp.protocol.Methods.textDocument_definition, vim.g.definition_exclude_lsps)
-        end,
-      }
 
       local mason_home = vim.fn.getenv("MASON")
 
