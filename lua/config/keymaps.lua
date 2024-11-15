@@ -4,7 +4,7 @@
 -- use `vim.keymap.set` instead
 
 local helpers = require("modules.helpers")
-local Util = require("lazyvim.util")
+local Util = require("snacks")
 local wk = require("which-key")
 
 wk.add({
