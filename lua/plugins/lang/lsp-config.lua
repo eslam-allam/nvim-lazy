@@ -48,6 +48,16 @@ return {
         sopts.settings = {
           tailwindCSS = {
             includeLanguages = { templ = "html" },
+            experimental = {
+              classRegex = {
+                "[a-zA-Z]*Class='([^']+)'",
+                '[a-zA-Z]*Class="([^"]+)"',
+                "[a-zA-Z]*Class={`([^`]+)`}",
+                "[a-zA-Z]*ClassName='([^']+)'",
+                '[a-zA-Z]*ClassName="([^"]+)"',
+                "[a-zA-Z]*ClassName={`([^`]+)`}",
+              },
+            },
           },
         }
       end
