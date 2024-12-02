@@ -2,7 +2,7 @@
 -- Default options that are always set: https://github.com/LazyVim/LazyVim/blob/main/lua/lazyvim/config/options.lua
 -- Add any additional options here
 
-vim.o.guifont = "JetBrainsMono Nerd Font Mono:h16"
+vim.o.guifont = "JetBrainsMono Nerd Font Mono:h12"
 
 if vim.fn.has("windows") == 1 then
   vim.opt.shell = '"C:/Program Files/Git/bin/bash.exe"'
