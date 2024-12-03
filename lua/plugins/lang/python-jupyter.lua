@@ -1,7 +1,7 @@
 return {
   {
     "benlubas/molten-nvim",
-    enabled = vim.fn.has("windows") == 0,
+    enabled = vim.fn.has("win32") == 0,
     dependencies = {
       {
         "chrisgrieser/nvim-various-textobjs",
