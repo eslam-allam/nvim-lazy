@@ -4,7 +4,7 @@
 
 vim.o.guifont = "JetBrainsMono Nerd Font Mono:h12"
 
-if vim.fn.has("windows") == 1 then
+if vim.fn.has("win32") == 1 then
   vim.opt.shell = '"C:/Program Files/Git/bin/bash.exe"'
 end
 
