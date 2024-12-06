@@ -95,7 +95,7 @@ cmd("FileType", {
       end
     elseif event.match == "DiffviewFiles" then
       closeCommand = "<cmd>DiffviewClose<CR>"
-    elseif event.match:match("k8s_.*") ~= "" then
+    elseif event.match:match("k8s_.*") then
       closeCommand = function() require("kubectl").close() end
     else
       vim.bo[event.buf].buflisted = false
