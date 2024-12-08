@@ -77,6 +77,7 @@ return {
 
     defaults = {
       preview = {
+        check_mime_type = true,
         mime_hook = function(filepath, bufnr, opts)
           local chafa_installed = vim.fn.executable("chafa")
           if not chafa_installed then
