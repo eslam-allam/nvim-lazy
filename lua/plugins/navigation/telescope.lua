@@ -51,6 +51,8 @@ local function copy_selected_path(mode)
   vim.notify("[Telescope] " .. mode_name .. " copied to clipboard")
 end
 
+local group = vim.api.nvim_create_augroup("TelescopeImageView", { clear = true })
+
 return {
   "nvim-telescope/telescope.nvim",
   keys = {
@@ -85,6 +87,40 @@ return {
             local split_path = vim.split(filepath:lower(), ".", { plain = true })
             local extension = split_path[#split_path]
             return vim.tbl_contains(image_extensions, extension)
+          end
+          if is_image(filepath) and LazyVim.has("image.nvim") then
+            local image = require("image").from_file(
+              filepath,
+              { window = opts.winid, width = vim.api.nvim_win_get_width(opts.winid), with_virtual_padding = true }
+            )
+            if not image then
+              return
+            end
+            image:render()
+            local autocmd = vim.api.nvim_create_autocmd("User", {
+              pattern = "TelescopePreviewerLoaded",
+              group = group,
+              callback = function(ev)
+                if ev.buf == bufnr and image then
+                  image:render()
+                  return
+                end
+                image:clear(true)
+              end,
+            })
+            local autocmd2 = nil
+            autocmd2 = vim.api.nvim_create_autocmd("WinClosed", {
+              pattern = tostring(opts.winid),
+              group = group,
+              callback = function(ev)
+                image:clear(false)
+                vim.api.nvim_del_autocmd(autocmd)
+                if autocmd2 then
+                  vim.api.nvim_del_autocmd(autocmd2)
+                end
+              end,
+            })
+            return
           end
           if chafa_installed and is_image(filepath) then
             local term = vim.api.nvim_open_term(bufnr, {})
