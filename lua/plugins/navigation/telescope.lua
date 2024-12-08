@@ -134,6 +134,10 @@ return {
               "chafa",
               "-f",
               "symbols",
+              "-s",
+              tostring(vim.api.nvim_win_get_width(opts.winid)) .. "x" .. tostring(
+                vim.api.nvim_win_get_height(opts.winid)
+              ),
               filepath, -- Terminal image viewer command
             }, { on_stdout = send_output, stdout_buffered = true, pty = true })
           else
