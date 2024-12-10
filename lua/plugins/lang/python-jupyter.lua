@@ -6,7 +6,7 @@ return {
       {
         "chrisgrieser/nvim-various-textobjs",
         event = "UIEnter",
-        opts = { useDefaultKeymaps = false },
+        opts = { keymaps = { useDefaults = false } },
       },
       {
         "3rd/image.nvim",
