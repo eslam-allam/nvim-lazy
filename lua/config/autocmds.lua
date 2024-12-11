@@ -9,16 +9,18 @@ local cmd = vim.api.nvim_create_autocmd
 cmd("TermOpen", {
   callback = function()
     local envSelector = require("venv-selector")
-    local selectedEnv = envSelector.venv()
+    local selectedEnv = envSelector.python()
+    local pythonExec = vim.fn.has("win32") == 1 and '\\python%.exe' or '/python'
+    local activator = vim.fn.has("win32") == 1 and '\\activate.bat' or '/activate'
     if selectedEnv ~= nil then
-      local activateCommand = 'source "' .. selectedEnv:match("(.*/)") .. 'activate"'
+      local activateCommand = 'source "' .. selectedEnv:match("(.*)" .. pythonExec) .. activator .. '"'
       local condaPrefix = os.getenv("CONDA_PREFIX")
       if type(condaPrefix) ~= "string" then
         vim.notify_once("[TermEnv] Invalid conda prefix!")
         return
       end
       if selectedEnv:sub(0, string.len(condaPrefix)) == condaPrefix then
-        activateCommand = "conda activate " .. envSelector.venv()
+        activateCommand = "conda activate " .. envSelector.python():match("([%w-_]+)" .. pythonExec .. "$")
       end
       vim.cmd('call chansend(b:terminal_job_id, "' .. activateCommand .. ' \\<cr>")')
     end
