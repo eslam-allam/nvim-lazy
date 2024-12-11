@@ -5,7 +5,7 @@
 vim.o.guifont = "JetBrainsMono Nerd Font Mono:h12"
 
 if vim.fn.has("win32") == 1 then
-  vim.opt.shell = '"C:/Program Files/Git/bin/bash.exe"'
+  vim.opt.shell = vim.fn.expand('~\\AppData\\Local\\Programs\\nu\\bin\\nu.exe')
 end
 
 vim.g.python3_host_prog = "~/miniconda3/envs/nvim/bin/python"
