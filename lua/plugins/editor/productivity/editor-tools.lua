@@ -46,11 +46,13 @@ return {
         "<leader>ca",
         require("fastaction").code_action,
         mode = "n",
+        desc = "Code Action",
       }
       keys[#keys + 1] = {
         "<leader>ca",
         require("fastaction").range_code_action,
         mode = "x",
+        desc = "Code Action",
       }
     end,
     opts = {
