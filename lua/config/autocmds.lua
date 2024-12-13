@@ -10,8 +10,8 @@ cmd("TermOpen", {
   callback = function()
     local envSelector = require("venv-selector")
     local selectedEnv = envSelector.python()
-    local pythonExec = vim.fn.has("win32") == 1 and '\\python%.exe' or '/python'
-    local activator = vim.fn.has("win32") == 1 and '\\activate.bat' or '/activate'
+    local pythonExec = vim.fn.has("win32") == 1 and "\\python%.exe" or "/bin/python"
+    local activator = vim.fn.has("win32") == 1 and "\\activate.bat" or "/bin/activate"
     if selectedEnv ~= nil then
       local activateCommand = 'source "' .. selectedEnv:match("(.*)" .. pythonExec) .. activator .. '"'
       local condaPrefix = os.getenv("CONDA_PREFIX")
@@ -22,7 +22,10 @@ cmd("TermOpen", {
       if selectedEnv:sub(0, string.len(condaPrefix)) == condaPrefix then
         activateCommand = "conda activate " .. envSelector.python():match("([%w-_]+)" .. pythonExec .. "$")
       end
-      vim.cmd('call chansend(b:terminal_job_id, "' .. activateCommand .. ' \\<cr>")')
+      local term = vim.o.channel
+      vim.fn.timer_start(100, function()
+        vim.api.nvim_chan_send(term, activateCommand .. "\r\n")
+      end)
     end
   end,
 })
@@ -67,7 +70,7 @@ cmd("FileType", {
     "xml",
     "xsd",
     "templ",
-    "markdown"
+    "markdown",
   },
   callback = function()
     vim.bo.tabstop = 2
@@ -98,7 +101,9 @@ cmd("FileType", {
     elseif event.match == "DiffviewFiles" then
       closeCommand = "<cmd>DiffviewClose<CR>"
     elseif event.match:match("k8s_.*") then
-      closeCommand = function() require("kubectl").close() end
+      closeCommand = function()
+        require("kubectl").close()
+      end
     else
       vim.bo[event.buf].buflisted = false
     end
