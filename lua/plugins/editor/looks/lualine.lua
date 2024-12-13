@@ -44,7 +44,9 @@ return {
       function()
         return require("recorder").recordingStatus()
       end,
-      color = util.ui.fg("Special"),
+      color = function ()
+        return { fg = Snacks.util.color("Special")}
+      end
     })
 
     table.insert(opts.sections.lualine_x, "rest")
@@ -53,7 +55,9 @@ return {
       function()
         return require("recorder").displaySlots()
       end,
-      color = util.ui.fg("Special"),
+      color = function ()
+        return { fg = Snacks.util.color("Special") }
+      end,
     })
   end,
 }

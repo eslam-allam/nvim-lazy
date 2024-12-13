@@ -7,6 +7,9 @@ return {
   },
   {
     "catppuccin/nvim",
+    config = function (_, opts) 
+      require("catppuccin").setup(opts)
+    end,
     lazy = false,
     priotity = 1000,
     opts = function(_, opts)

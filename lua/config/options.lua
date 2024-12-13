@@ -38,3 +38,6 @@ vim.g.definition_exclude_lsps = {
 }
 
 vim.g.custom_formater_exec_folder = vim.fn.expand("~/.local/share/nvim/conform/custom_formatters")
+
+vim.g.lazyvim_picker = "telescope"
+vim.g.lazyvim_cmp = "nvim-cmp"
