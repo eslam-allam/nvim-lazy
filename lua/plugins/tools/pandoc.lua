@@ -17,7 +17,7 @@ return {
         "<leader>PP",
         function()
           local directory = vim.fn.expand("%:p:h")
-          local home = os.getenv("HOME")
+          local home = vim.env.HOME
 
           if home == nil then
             vim.notify("Could not find home directory", 4)

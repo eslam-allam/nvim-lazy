@@ -54,6 +54,8 @@ function M.setup(opts)
     return
   end
 
+  pandoc_home = vim.fn.expand(pandoc_home)
+
   if vim.fn.isdirectory(pandoc_home) == 0 then
     error("Pandoc home defined but does not exist.")
     return
