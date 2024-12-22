@@ -8,6 +8,7 @@ return {
       {
         "<leader>Pp",
         function()
+          vim.notify("[Pandoc] Rendering PDF to current directory", vim.log.levels.INFO)
           require("pandoc.render").file(require("modules.pandoc").command())
         end,
         desc = "Render PDF (cwd)",
@@ -25,7 +26,8 @@ return {
           end
           local directoryWithoutHome = string.sub(directory, string.len(home) + 2)
 
-          local outputDirectory = home .. "/Documents/pandoc/" .. directoryWithoutHome
+          local outputDirectory =
+            require("plenary.path"):new(home):joinpath("Documents", "pandoc", directoryWithoutHome)
           local fileName = vim.fn.expand("%:t")
 
           local extension = string.sub(fileName, string.len(fileName) - 1)
@@ -36,10 +38,12 @@ return {
           end
           local newName = string.sub(fileName, 0, string.len(fileName) - 2) .. "pdf"
 
-          vim.system({ "mkdir", "-p", outputDirectory })
+          outputDirectory:mkdir({ parents = true })
+
+          vim.notify("[Pandoc] Rendering PDF to " .. outputDirectory:joinpath(newName):absolute(), vim.log.levels.INFO)
 
           require("pandoc.render").file(
-            require("modules.pandoc").command({ ["--output"] = outputDirectory .. "/" .. newName })
+            require("modules.pandoc").command({ ["--output"] = outputDirectory:joinpath(newName):absolute() })
           )
         end,
         desc = "Render PDF (Documents Dir)",
