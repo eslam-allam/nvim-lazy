@@ -1,4 +1,5 @@
 local M = {}
+local path = require("plenary.path")
 
 local function versionFromKey(key)
   return tonumber(key:match("java(%d+)"))
@@ -59,11 +60,11 @@ function M.runtimesAt(version)
 end
 
 function M.execAt(version)
-  return M.runtimesAt(version) .. "/bin/java"
+  return path:new(M.runtimesAt(version)):joinpath("bin", "java"):absolute()
 end
 
 function M.execAtleast(version)
-  return M.runtimesAtleast(version) .. "/bin/java"
+  return path:new(M.runtimesAtleast(version)):joinpath("bin", "java"):absolute()
 end
 
 function M.runtimesConfig()

@@ -1,11 +1,14 @@
 -- Options are automatically loaded before lazy.nvim startup
 -- Default options that are always set: https://github.com/LazyVim/LazyVim/blob/main/lua/lazyvim/config/options.lua
 -- Add any additional options here
+--
+local path = require("plenary.path")
+local data_dir = path:new(vim.fn.stdpath("data"))
 
 vim.o.guifont = "JetBrainsMono Nerd Font Mono:h12"
 
 if vim.fn.has("win32") == 1 then
-  vim.opt.shell = vim.fn.expand('~\\AppData\\Local\\Programs\\nu\\bin\\nu.exe')
+  vim.opt.shell = vim.fn.expand("~\\AppData\\Local\\Programs\\nu\\bin\\nu.exe")
 end
 
 vim.g.python3_host_prog = "~/miniconda3/envs/nvim/bin/python"
@@ -29,7 +32,7 @@ vim.env.CUSTOM_JAVA_ROOTS = jdtls_config_dir .. "/jdtls-custom-roots.json"
 vim.g.root_spec = { "lsp", { ".git" }, "cwd" }
 vim.g.java_filetypes = { "java" }
 
-vim.g.spring_cache_dir = vim.fn.expand("~/.local/share/nvim/spring-boot")
+vim.g.spring_cache_dir = data_dir:joinpath("spring-boot"):absolute()
 
 vim.g.hover_exclude_lsps = { { name = "spring-boot", filetypes = { "java" } } }
 vim.g.definition_exclude_lsps = {
@@ -37,6 +40,6 @@ vim.g.definition_exclude_lsps = {
   { name = "jdtls", filetypes = { "java" }, ts_captures = { "string" } },
 }
 
-vim.g.custom_formater_exec_folder = vim.fn.expand("~/.local/share/nvim/conform/custom_formatters")
+vim.g.custom_formater_exec_folder = data_dir:joinpath("conform", "custom_formatters"):absolute()
 
 vim.g.lazyvim_picker = "telescope"

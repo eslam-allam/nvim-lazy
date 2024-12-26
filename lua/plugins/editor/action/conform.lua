@@ -1,6 +1,8 @@
 return {
   "stevearc/conform.nvim",
   build = function()
+    local path = require("plenary.path")
+
     if vim.fn.isdirectory(vim.g.custom_formater_exec_folder) == 0 then
       coroutine.yield("Creating custom formatter exec folder")
       if vim.fn.mkdir(vim.g.custom_formater_exec_folder, "p") == 0 then
@@ -11,26 +13,47 @@ return {
 
     coroutine.yield("Finding google-java-format installation")
     local java_formatter_jar_dir = require("mason-registry").get_package("google-java-format"):get_install_path()
-    local java_formatter_jar = vim.fn.glob(java_formatter_jar_dir .. "/google-java-format-*.jar")
+    local java_formatter_jar =
+      vim.fn.glob(path:new(java_formatter_jar_dir):joinpath("google-java-format-*.jar"):absolute())
     if java_formatter_jar == "" then
       coroutine.yield({ msg = "Google java formatter not found!", level = vim.log.levels.WARN })
       return false
     end
 
     local java_exec = require("modules.java").execAtleast(11)
-    local command = { "exec", java_exec, "-jar", '"' .. java_formatter_jar .. '"', '"$@"' }
+    local commands = {}
+    local is_linux = vim.fn.has("linux") == 1
+    local exec_file_name = "google-java-format"
 
-    local java_formatter_exec_path = vim.g.custom_formater_exec_folder .. "/google-java-format"
+    if is_linux then
+      table.insert(commands, { "#!/usr/bin/env bash", "" })
+      table.insert(commands, { "exec", java_exec, "-jar", '"' .. java_formatter_jar .. '"', '"$@"' })
+    else
+      exec_file_name = "google-java-format.cmd"
+      table.insert(commands, { "@ECHO OFF" })
+      table.insert(commands, { '"' .. java_exec .. '"', "-jar", '"' .. java_formatter_jar .. '"', "%*" })
+    end
+
+    local java_formatter_exec_folder = path:new(vim.g.custom_formater_exec_folder)
+
+    local script_lines = {}
+    for _, line in ipairs(commands) do
+      table.insert(script_lines, table.concat(line, " "))
+    end
+
+    local java_formatter_exec_path = java_formatter_exec_folder:joinpath(exec_file_name):absolute()
     coroutine.yield("Generating exec file " .. java_formatter_exec_path)
-    if vim.fn.writefile({ "#!/usr/bin/env bash", "", table.concat(command, " ") }, java_formatter_exec_path) ~= 0 then
+    if vim.fn.writefile(script_lines, java_formatter_exec_path) ~= 0 then
       coroutine.yield({ msg = "Failed to write exec file", level = vim.log.levels.ERROR })
       return false
     end
 
-    coroutine.yield("Altering file permissions")
-    if vim.system({ "chmod", "+x", java_formatter_exec_path }):wait().code ~= 0 then
-      coroutine.yield({ msg = "Failed to modify file permissions", level = vim.log.levels.ERROR })
-      return false
+    if vim.fn.has("linux") == 1 then
+      coroutine.yield("Altering file permissions")
+      if vim.system({ "chmod", "+x", java_formatter_exec_path }):wait().code ~= 0 then
+        coroutine.yield({ msg = "Failed to modify file permissions", level = vim.log.levels.ERROR })
+        return false
+      end
     end
 
     coroutine.yield("Exec generated succesfully")
@@ -39,8 +62,13 @@ return {
   opts = function(_, opts)
     opts.formatters_by_ft.templ = { "templ", "injected" }
 
+    local exec_file_name = "google-java-format"
+    if vim.fn.has("win32") == 1 then
+      exec_file_name = "google-java-format.cmd"
+    end
     -- google java format
-    local java_formatter_exec = vim.g.custom_formater_exec_folder .. "/google-java-format"
+    local java_formatter_exec =
+      require("plenary.path"):new(vim.g.custom_formater_exec_folder):joinpath(exec_file_name):absolute()
     if not vim.fn.filereadable(java_formatter_exec) then
       vim.notify("[Conform] Google java formatter not found!", vim.log.levels.WARN)
     else
