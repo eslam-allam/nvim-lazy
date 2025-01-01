@@ -69,11 +69,6 @@ if vim.fn.executable("spring-initializer") == 1 then
   end, { desc = "Spring Initializer" })
 end
 
--- terminal
-vim.keymap.set("n", "<leader>ft", function()
-  Util.terminal(nil, { cwd = helpers.cwd() })
-end, { desc = "Terminal (buf dir)" })
-
 -- diagnostic
 vim.keymap.set("n", "<leader>cD", function()
   vim.diagnostic.open_float()
