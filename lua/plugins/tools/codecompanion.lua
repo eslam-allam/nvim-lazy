@@ -26,6 +26,7 @@ return {
         }
       end,
     },
+    { "MeanderingProgrammer/render-markdown.nvim", optional = true, ft = { "codecompanion" } },
   },
   config = function(_, opts)
     require("codecompanion").setup(opts)
