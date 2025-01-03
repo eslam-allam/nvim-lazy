@@ -50,6 +50,11 @@ return {
     })
   end,
   opts = {
+    display = {
+      diff = {
+        provider = "mini_diff",
+      }
+    },
     log_level = "TRACE",
     strategies = {
       chat = {
