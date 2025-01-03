@@ -53,7 +53,7 @@ return {
     display = {
       diff = {
         provider = "mini_diff",
-      }
+      },
     },
     log_level = "TRACE",
     strategies = {
