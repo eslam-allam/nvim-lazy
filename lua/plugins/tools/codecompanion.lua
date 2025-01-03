@@ -15,6 +15,17 @@ return {
         table.insert(opts.sections.lualine_x, 1, require("modules.codecompanion-status"))
       end,
     },
+    {
+      "saghen/blink.cmp",
+      optional = true,
+      opts = function(_, opts)
+        table.insert(opts.sources.default, "codecompanion")
+        opts.sources.providers.codecompanion = {
+          name = "CodeCompanion",
+          module = "codecompanion.providers.completion.blink",
+        }
+      end,
+    },
   },
   config = function(_, opts)
     require("codecompanion").setup(opts)
