@@ -76,8 +76,8 @@ function M.setup(opts)
       :new({
         command = "curl",
         args = { "-L", "-o", tempLocation, vhdlfmtUrl },
-        on_exit = function(_, code)
-          succ = code == 0
+        on_exit = function(_, downloadCode)
+          local succ = downloadCode == 0
           if not succ then
             vim.notify(
               "[VHDL] failed to download VHDLfmt. Please check your internet connection and try again.",
@@ -98,8 +98,8 @@ function M.setup(opts)
             :new({
               command = extractCmd[1],
               args = { unpack(extractCmd, 2) },
-              on_exit = function(_, code)
-                succ = code == 0
+              on_exit = function(_, extractCode)
+                succ = extractCode == 0
                 if not succ then
                   vim.notify("[VHDL] failed to extract VHDLfmt.", vim.log.levels.ERROR)
                   vim.notify("[VHDL] Cleaning up...", vim.log.levels.INFO)
