@@ -1,5 +1,6 @@
 local M = {}
 local path = require("plenary.path")
+local pathEnvSeparator = vim.fn.has("win32") == 1 and ";" or ":"
 
 M.opts = {
   fmtDir = path:new(vim.fn.stdpath("data")):joinpath("vhdl", "bin"):absolute(),
@@ -12,7 +13,7 @@ function M.setup(opts)
 
   if vim.fn.executable("vhdlfmt") == 0 then
     if path:new(M.opts.fmtDir):joinpath("vhdlfmt"):exists() then
-      vim.env.PATH = vim.env.PATH .. ":" .. M.opts.fmtDir
+      vim.env.PATH = vim.env.PATH .. pathEnvSeparator .. M.opts.fmtDir
     else
       vim.notify("[VHDL] vhdlfmt not available. Please run '" .. downloadCmd .. "' to download it", vim.log.levels.WARN)
     end
@@ -126,7 +127,7 @@ function M.setup(opts)
     end
 
     if vim.fn.executable("vhdlfmt") == 0 then
-      vim.env.PATH = vim.env.PATH .. ":" .. M.opts.fmtDir
+      vim.env.PATH = vim.env.PATH .. pathEnvSeparator .. M.opts.fmtDir
     end
   end, {})
 end
