@@ -72,6 +72,7 @@ function M.setup(opts)
     end
 
     require("plenary.job")
+      ---@diagnostic disable-next-line: missing-fields
       :new({
         command = "curl",
         args = { "-L", "-o", tempLocation, vhdlfmtUrl },
@@ -93,6 +94,7 @@ function M.setup(opts)
           end
 
           require("plenary.job")
+            ---@diagnostic disable-next-line: missing-fields
             :new({
               command = extractCmd[1],
               args = { unpack(extractCmd, 2) },
