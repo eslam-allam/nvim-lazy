@@ -58,77 +58,69 @@ function M.setup(opts)
     end
 
     vim.notify("[VHDL] Downloading VHDLfmt...", vim.log.levels.INFO)
-    local done = false
-    local succ = false
 
     local tempLocation = vim.fn.tempname()
+
+    local function tempLocationDel()
+      vim.schedule(function()
+        if vim.fn.delete(tempLocation) == -1 then
+          vim.notify("[VHDL] failed to delete temporary file at: '." .. tempLocation .. "'", vim.log.levels.WARN)
+        else
+          vim.notify("[VHDL] Cleanup succesfull", vim.log.levels.INFO)
+        end
+      end)
+    end
+
     require("plenary.job")
       :new({
         command = "curl",
         args = { "-L", "-o", tempLocation, vhdlfmtUrl },
         on_exit = function(_, code)
           succ = code == 0
-          done = true
+          if not succ then
+            vim.notify(
+              "[VHDL] failed to download VHDLfmt. Please check your internet connection and try again.",
+              vim.log.levels.ERROR
+            )
+            return
+          end
+
+          vim.notify("[VHDL] Extracting VHDLfmt...", vim.log.levels.INFO)
+          local extractCmd = { "unzip", tempLocation, "-d", fmtDir:absolute() }
+          if vim.fn.has("win32") == 1 then
+            extractCmd =
+              { "powershell.exe", "Expand-Archive", "-Path", tempLocation, "-DestinationPath", fmtDir:absolute() }
+          end
+
+          require("plenary.job")
+            :new({
+              command = extractCmd[1],
+              args = { unpack(extractCmd, 2) },
+              on_exit = function(_, code)
+                succ = code == 0
+                if not succ then
+                  vim.notify("[VHDL] failed to extract VHDLfmt.", vim.log.levels.ERROR)
+                  vim.notify("[VHDL] Cleaning up...", vim.log.levels.INFO)
+                  tempLocationDel()
+                  return
+                end
+
+                vim.notify("[VHDL] VHDLfmt downloaded and extracted successfully.", vim.log.levels.INFO)
+
+                vim.notify("[VHDL] Cleaning up...", vim.log.levels.INFO)
+                tempLocationDel()
+
+                if vim.fn.executable("vhdlfmt") == 0 then
+                  vim.schedule(function()
+                    vim.env.PATH = vim.env.PATH .. pathEnvSeparator .. M.opts.fmtDir
+                  end)
+                end
+              end,
+            })
+            :start()
         end,
       })
       :start()
-
-    vim.wait(60000, function()
-      return done
-    end)
-
-    if not succ then
-      vim.notify(
-        "[VHDL] failed to download VHDLfmt. Please check your internet connection and try again.",
-        vim.log.levels.ERROR
-      )
-      return
-    end
-
-    vim.notify("[VHDL] Extracting VHDLfmt...", vim.log.levels.INFO)
-    local extractCmd = { "unzip", tempLocation, "-d", fmtDir:absolute() }
-    if vim.fn.has("win32") == 1 then
-      extractCmd = { "powershell.exe", "Expand-Archive", "-Path", tempLocation, "-DestinationPath", fmtDir:absolute() }
-    end
-
-    succ = false
-    done = false
-    require("plenary.job")
-      :new({
-        command = extractCmd[1],
-        args = { unpack(extractCmd, 2) },
-        on_exit = function(_, code)
-          succ = code == 0
-          done = true
-        end,
-      })
-      :start()
-
-    vim.wait(60000, function()
-      return done
-    end)
-
-    if not succ then
-      vim.notify("[VHDL] failed to extract VHDLfmt.", vim.log.levels.ERROR)
-      vim.notify("[VHDL] Cleaning up...", vim.log.levels.INFO)
-      if vim.fn.delete(tempLocation) == -1 then
-        vim.notify("[VHDL] failed to delete temporary file at: '." .. tempLocation .. "'", vim.log.levels.WARN)
-      end
-      return
-    end
-
-    vim.notify("[VHDL] VHDLfmt downloaded and extracted successfully.", vim.log.levels.INFO)
-
-    vim.notify("[VHDL] Cleaning up...", vim.log.levels.INFO)
-    if vim.fn.delete(tempLocation) == -1 then
-      vim.notify("[VHDL] failed to delete temporary file at: '." .. tempLocation .. "'", vim.log.levels.WARN)
-    else
-      vim.notify("[VHDL] Cleanup succesfull", vim.log.levels.INFO)
-    end
-
-    if vim.fn.executable("vhdlfmt") == 0 then
-      vim.env.PATH = vim.env.PATH .. pathEnvSeparator .. M.opts.fmtDir
-    end
   end, {})
 end
 
