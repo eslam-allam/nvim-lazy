@@ -1,6 +1,7 @@
 local M = {}
 local path = require("plenary.path")
 local pathEnvSeparator = vim.fn.has("win32") == 1 and ";" or ":"
+local formatterFileName = vim.fn.has("win32") == 1 and "vhdlfmt.exe" or "vhdlfmt"
 
 M.opts = {
   fmtDir = path:new(vim.fn.stdpath("data")):joinpath("vhdl", "bin"):absolute(),
@@ -12,7 +13,7 @@ function M.setup(opts)
   M.opts = vim.tbl_deep_extend("force", M.opts, opts or {})
 
   if vim.fn.executable("vhdlfmt") == 0 then
-    if path:new(M.opts.fmtDir):joinpath("vhdlfmt"):exists() then
+    if path:new(M.opts.fmtDir):joinpath(formatterFileName):exists() then
       vim.env.PATH = vim.env.PATH .. pathEnvSeparator .. M.opts.fmtDir
     else
       vim.notify("[VHDL] vhdlfmt not available. Please run '" .. downloadCmd .. "' to download it", vim.log.levels.WARN)
@@ -39,7 +40,9 @@ function M.setup(opts)
 
     if not fmtDir:exists() then
       vim.notify("[VHDL] bin directory does not exist. Creating...", vim.log.levels.INFO)
-      local ok, res = pcall(function() return fmtDir:mkdir({ parents = true }) end)
+      local ok, res = pcall(function()
+        return fmtDir:mkdir({ parents = true })
+      end)
       if not ok then
         vim.notify(
           "[VHDL] failed to create bin directory. Please check permissions and try again: " .. res,
