@@ -59,7 +59,7 @@ function M.setup(opts)
 
     vim.notify("[VHDL] Downloading VHDLfmt...", vim.log.levels.INFO)
 
-    local tempLocation = vim.fn.tempname()
+    local tempLocation = vim.fn.tempname() .. ".zip"
 
     local function tempLocationDel()
       vim.schedule(function()
