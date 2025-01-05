@@ -39,7 +39,7 @@ function M.setup(opts)
 
     if not fmtDir:exists() then
       vim.notify("[VHDL] bin directory does not exist. Creating...", vim.log.levels.INFO)
-      local ok, res = pcall(fmtDir:mkdir())
+      local ok, res = pcall(function() return fmtDir:mkdir({ parents = true }) end)
       if not ok then
         vim.notify(
           "[VHDL] failed to create bin directory. Please check permissions and try again: " .. res,
