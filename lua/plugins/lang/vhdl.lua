@@ -24,7 +24,7 @@ return {
         opts.formatters["vhdlfmt"] = {
           inherit = false,
           command = "vhdlfmt",
-          args = { "--write", "$FILENAME" },
+          args = { "--print-width", 80, "--write", "$FILENAME" },
           stdin = false,
         }
       end,
