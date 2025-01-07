@@ -69,6 +69,18 @@ if vim.fn.executable("spring-initializer") == 1 then
   end, { desc = "Spring Initializer" })
 end
 
+vim.keymap.set("n", "<leader>f1", function()
+  Util.terminal(nil, { cwd = LazyVim.root() })
+end, { desc = "Open Term 1" })
+
+for i = 2, 5 do
+  vim.keymap.set("n", "<leader>f" .. tostring(i), function()
+    Util.terminal(nil, { cwd = LazyVim.root(), env = {
+      ["SNACKS_TERM"] = tostring(i),
+    } })
+  end, { desc = "Open Term " .. tostring(i) })
+end
+
 -- diagnostic
 vim.keymap.set("n", "<leader>cD", function()
   vim.diagnostic.open_float()
