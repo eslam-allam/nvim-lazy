@@ -148,7 +148,7 @@ return {
       path_display = { filename_first = { reverse_directories = false } },
       mappings = {
         i = {
-          ["<M-C-Y>"] = function()
+          ["<a-y>"] = function()
             copy_selected_path("relative")
           end,
           ["<c-Y>"] = copy_selected_path,
