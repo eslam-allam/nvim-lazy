@@ -1,25 +1,17 @@
 local Util = require("lazyvim.util")
 local helpers = require("modules.helpers")
 local browse_files = function()
-  local action_state = require("telescope.actions.state")
-  local line = action_state.get_current_line()
-  require("telescope").extensions.file_browser.file_browser({ default_text = line })
+  require("telescope").extensions.file_browser.file_browser()
 end
 local find_all_files = function()
-  local action_state = require("telescope.actions.state")
-  local line = action_state.get_current_line()
-  require("telescope.builtin").find_files({ no_ignore = true, hidden = true, default_text = line })
+  require("telescope.builtin").find_files({ no_ignore = true, hidden = true })
 end
 local find_root_files = function()
-  local action_state = require("telescope.actions.state")
-  local line = action_state.get_current_line()
-  require("telescope.builtin").find_files({ cwd = Util.root(), default_text = line })
+  require("telescope.builtin").find_files({ cwd = Util.root() })
 end
 
 local find_cwd_files = function()
-  local action_state = require("telescope.actions.state")
-  local line = action_state.get_current_line()
-  require("telescope.builtin").find_files({ cwd = helpers.cwd(), default_text = line })
+  require("telescope.builtin").find_files({ cwd = helpers.cwd() })
 end
 
 local function copy_selected_path(mode)
