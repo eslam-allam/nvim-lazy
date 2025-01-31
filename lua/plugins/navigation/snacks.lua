@@ -139,7 +139,6 @@ return {
 
                   if image then
                     image:render()
-                    vim.g.snacks_previous_image = image
                     return
                   end
 
@@ -152,7 +151,6 @@ return {
 
                   images[filepath] = image
 
-                  vim.g.snacks_previous_image = image
                   if not image then
                     return
                   end
