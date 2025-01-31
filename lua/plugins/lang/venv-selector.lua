@@ -1,5 +1,6 @@
 return {
   "linux-cultist/venv-selector.nvim",
+  enabled = true,
 
   opts = function(_, opts)
     local conda_prefix = os.getenv("CONDA_PREFIX")

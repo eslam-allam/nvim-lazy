@@ -13,9 +13,9 @@ return {
         require("lualine").refresh()
       end,
     },
+    { "linux-cultist/venv-selector.nvim" },
   },
   opts = function(_, opts)
-    local util = require("lazyvim.util")
     local function envSection(envName)
       return " " .. envName
     end
@@ -23,7 +23,7 @@ return {
     local function pythonEnv()
       -- @type string
       local activeEnv = require("venv-selector").python()
-      local pythonExec = vim.fn.has("win32") == 1 and '\\python%.exe' or '/bin/python'
+      local pythonExec = vim.fn.has("win32") == 1 and "\\python%.exe" or "/bin/python"
       if activeEnv ~= nil then
         return envSection(activeEnv:match("([%w-_]+)" .. pythonExec .. "$"))
       else
@@ -44,9 +44,9 @@ return {
       function()
         return require("recorder").recordingStatus()
       end,
-      color = function ()
-        return { fg = Snacks.util.color("Special")}
-      end
+      color = function()
+        return { fg = Snacks.util.color("Special") }
+      end,
     })
 
     table.insert(opts.sections.lualine_x, "rest")
@@ -55,7 +55,7 @@ return {
       function()
         return require("recorder").displaySlots()
       end,
-      color = function ()
+      color = function()
         return { fg = Snacks.util.color("Special") }
       end,
     })

@@ -47,25 +47,8 @@ local group = vim.api.nvim_create_augroup("TelescopeImageView", { clear = true }
 
 return {
   "nvim-telescope/telescope.nvim",
-  keys = {
-    { "<leader>cb", "<cmd>Telescope lsp_document_symbols<CR>", desc = "Find Symbol" },
-    { "<leader>gb", "<cmd>Telescope git_branches<CR>", desc = "branches" },
-    { "<leader>fF", find_cwd_files, desc = "Find Files (cwd)" },
-    { "<leader><Space>", find_root_files, desc = "Find Files (Root)" },
-    {
-      "<leader>ff",
-      find_root_files,
-      desc = "Find Files (Root)",
-    },
-  },
+  optional = true,
   opts = {
-    extensions = {
-      file_browser = {
-        no_ignore = true,
-        collapse_dirs = true,
-        hijack_netrw = true,
-      },
-    },
 
     defaults = {
       preview = {

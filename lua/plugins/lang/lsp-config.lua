@@ -5,7 +5,6 @@ return {
     dependencies = {
       { "neovim/nvim-lspconfig" },
       { "nvim-lua/plenary.nvim" },
-      { "nvim-telescope/telescope.nvim" },
     },
     config = function()
       local cfg = require("yaml-companion").setup({})
@@ -14,7 +13,7 @@ return {
       local keys = require("lazyvim.plugins.lsp.keymaps").get()
       keys[#keys + 1] = {
         "<leader>ys",
-        "<cmd>Telescope yaml_schema<CR>",
+        function () require("yaml-companion").open_ui_select() end,
         desc = "Yaml Schema",
       }
     end,
