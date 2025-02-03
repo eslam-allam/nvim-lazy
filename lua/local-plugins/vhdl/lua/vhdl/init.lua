@@ -3,11 +3,40 @@ local path = require("plenary.path")
 local pathEnvSeparator = vim.fn.has("win32") == 1 and ";" or ":"
 local formatterFileName = vim.fn.has("win32") == 1 and "vhdlfmt.exe" or "vhdlfmt"
 
+---@class setup.opts.silicon
+---@field userCommand string
+---@field syntaxFileUrl string
+---@field batConfigDir string?
+
+---@class setup.opts.fmt.binUrl
+---@field linux string
+---@field windows string
+
+---@class setup.opts.fmt
+---@field userCommand string
+---@field binUrl setup.opts.fmt.binUrl
+
+---@class setup.opts
+---@field fmtDir string
+---@field silicon setup.opts.silicon
+---@field fmt setup.opts.fmt
+
+---@type setup.opts
 M.opts = {
   fmtDir = path:new(vim.fn.stdpath("data")):joinpath("vhdl", "bin"):absolute(),
+  silicon = {
+    userCommand = "VHDLSiliconSyntaxDownload",
+    syntaxFileUrl = "https://raw.githubusercontent.com/TheClams/SmartVHDL/refs/heads/master/VHDL.sublime-syntax",
+    batConfigDir = nil,
+  },
+  fmt = {
+    userCommand = "VHDLFormatDownload",
+    binUrl = {
+      linux = "https://releases.vhdlfmt.com/0.0.0-SNAPSHOT-7403572/vhdlfmt_0.0.0-SNAPSHOT-7403572_linux_amd64.zip",
+      windows = "https://releases.vhdlfmt.com/0.0.0-SNAPSHOT-7403572/vhdlfmt_0.0.0-SNAPSHOT-7403572_windows_amd64.zip",
+    },
+  },
 }
-
-local downloadCmd = "VhdlFmtDownload"
 
 function M.setup(opts)
   M.opts = vim.tbl_deep_extend("force", M.opts, opts or {})
@@ -16,11 +45,92 @@ function M.setup(opts)
     if path:new(M.opts.fmtDir):joinpath(formatterFileName):exists() then
       vim.env.PATH = vim.env.PATH .. pathEnvSeparator .. M.opts.fmtDir
     else
-      vim.notify("[VHDL] vhdlfmt not available. Please run '" .. downloadCmd .. "' to download it", vim.log.levels.WARN)
+      vim.notify(
+        "[VHDL] vhdlfmt not available. Please run '" .. M.opts.fmt.userCommand .. "' to download it",
+        vim.log.levels.WARN
+      )
     end
   end
 
-  vim.api.nvim_create_user_command(downloadCmd, function()
+  vim.api.nvim_create_user_command(M.opts.silicon.userCommand, function()
+    if vim.fn.executable("silicon") == 0 then
+      vim.notify("[VHDL] silicon not available. Please install and try again.", vim.log.levels.ERROR)
+      return
+    end
+
+    if vim.fn.executable("curl") == 0 then
+      vim.notify("[VHDL] curl not available. Please install and try again.", vim.log.levels.ERROR)
+      return
+    end
+
+    local batCommand = vim.fn.executable("bat") == 1 and "bat" or vim.fn.executable("batcat") == 1 and "batcat" or nil
+
+    if batCommand ~= nil and M.opts.silicon.batConfigDir == nil then
+      local result = vim.system({ batCommand, "--config-dir" }, { text = true }):wait()
+      if result.code ~= 0 then
+        vim.notify("[VHDL] Failed to get bat config dir", vim.log.levels.ERROR)
+        return
+      end
+      M.opts.silicon.batConfigDir = result.stdout:gsub("\n", "")
+    end
+
+    if M.opts.silicon.batConfigDir == nil then
+      vim.notify("[VHDL] bat config dir not available. Please set it manually.", vim.log.levels.ERROR)
+      return
+    end
+    local batConfigDir = path:new(M.opts.silicon.batConfigDir)
+
+    vim.notify("[VHDL] Creating necessary directories...", vim.log.levels.INFO)
+    local syntaxDir = batConfigDir:joinpath("syntaxes")
+    if not syntaxDir:exists() and not syntaxDir:mkdir({ parents = true }) then
+      vim.notify("[VHDL] Failed to create syntax dir", vim.log.levels.ERROR)
+      return
+    end
+
+    local themesDir = batConfigDir:joinpath("themes")
+
+    if not themesDir:exists() and not themesDir:mkdir({ parents = true }) then
+      vim.notify("[VHDL] Failed to create themes dir", vim.log.levels.ERROR)
+      return
+    end
+
+    local syntaxFilePath = syntaxDir:joinpath("VHDL.sublime-syntax")
+
+    vim.notify("[VHDL] Downloading VHDL syntax file...", vim.log.levels.INFO)
+    require("plenary.job")
+      ---@diagnostic disable-next-line: missing-fields
+      :new({
+        command = "curl",
+        args = { "-L", "-o", syntaxFilePath:absolute(), M.opts.silicon.syntaxFileUrl },
+        on_exit = function(_, downloadCode)
+          if downloadCode ~= 0 then
+            vim.notify("[VHDL] Failed to download VHDL syntax file", vim.log.levels.ERROR)
+            return
+          end
+          vim.notify("[VHDL] VHDL syntax file downloaded successfully.", vim.log.levels.INFO)
+          vim.notify("[VHDL] Rebuilding Silicon cache...", vim.log.levels.INFO)
+          require("plenary.job")
+            ---@diagnostic disable-next-line: missing-fields
+            :new({
+              command = "silicon",
+              args = { "--build-cache" },
+              cwd = batConfigDir:absolute(),
+              on_exit = function(_, buildCode)
+                if buildCode ~= 0 then
+                  vim.notify("[VHDL] Failed to build silicon cache", vim.log.levels.ERROR)
+                  return
+                end
+
+                vim.notify("[VHDL] Silicon cache built successfully.", vim.log.levels.INFO)
+              end,
+            })
+            :start()
+        end,
+      })
+      :start()
+  end, {})
+
+  vim.api.nvim_create_user_command(M.opts.fmt.userCommand, function()
     if vim.fn.executable("vhdlfmt") == 1 then
       vim.notify("[VHDL] vhdlfmt already available. Skipping download.", vim.log.levels.WARN)
       return
@@ -52,13 +162,7 @@ function M.setup(opts)
       end
     end
 
-    local vhdlfmtUrl =
-      "https://releases.vhdlfmt.com/0.0.0-SNAPSHOT-7403572/vhdlfmt_0.0.0-SNAPSHOT-7403572_linux_amd64.zip"
-
-    if vim.fn.has("win32") == 1 then
-      vhdlfmtUrl =
-        "https://releases.vhdlfmt.com/0.0.0-SNAPSHOT-7403572/vhdlfmt_0.0.0-SNAPSHOT-7403572_windows_amd64.zip"
-    end
+    local vhdlfmtUrl = vim.fn.has("win32") == 1 and M.opts.fmt.binUrl.windows or M.opts.fmt.binUrl.linux
 
     vim.notify("[VHDL] Downloading VHDLfmt...", vim.log.levels.INFO)
 
