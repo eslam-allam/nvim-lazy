@@ -8,22 +8,23 @@ local function render_image_nvim(filepath, ctx)
 
   if image then
     image:render()
-    return
+    return true
   end
 
-  image = require("image").from_file(filepath, {
+  local loaded_image = require("image").from_file(filepath, {
     window = ctx.win,
     buffer = ctx.buf,
     width = vim.api.nvim_win_get_width(ctx.win),
     with_virtual_padding = true,
   })
 
-  images[filepath] = image
-
-  if not image then
-    return
+  if not loaded_image then
+    error("Could not render image")
   end
-  image:render()
+
+  images[filepath] = loaded_image
+
+  loaded_image:render()
 end
 
 ---@param cwd string
@@ -59,7 +60,7 @@ local function preview_file(ctx)
     local prev_image = images[prev_path]
 
     if prev_image then
-      prev_image:clear(true)
+      prev_image:clear(prev_image.is_chafa ~= nil)
     end
   end
 
@@ -95,7 +96,7 @@ local function preview_file(ctx)
   })
 
   if has_image_nvim then
-    render_image_nvim(filepath, ctx)
+    return render_image_nvim(filepath, ctx)
   end
 
   if has_chafa then
@@ -116,7 +117,7 @@ local function preview_file(ctx)
     Image.__index = Image
 
     function Image:new(buf, win)
-      return setmetatable({ __buf = buf, __win = win }, self)
+      return setmetatable({ __buf = buf, __win = win, is_chafa = true }, self)
     end
 
     function Image:clear(shallow)
