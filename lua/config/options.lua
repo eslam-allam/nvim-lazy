@@ -43,7 +43,7 @@ vim.g.definition_exclude_lsps = {
 vim.g.custom_formater_exec_folder = data_dir:joinpath("conform", "custom_formatters"):absolute()
 
 
-vim.g.cmp_file_disabled = { "DressingInput", "TelescopePrompt", "snacks_input", "snacks_picker_input", "speedtyper" }
+vim.g.cmp_file_disabled = { "DressingInput", "TelescopePrompt", "snacks_input", "snacks_picker_input", "speedtyper", "rip-substitute" }
 
 vim.g.loaded_netrw = 1
 vim.g.loaded_netrwPlugin = 1
