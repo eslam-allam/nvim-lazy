@@ -127,6 +127,7 @@ local function preview_file(ctx)
         vim.api.nvim_buf_delete(self.__buf, { force = true })
       end
     end
+
     function Image:render()
       self.__win = vim.api.nvim_open_win(buf, false, opts)
     end
@@ -155,6 +156,9 @@ return {
   lazy = false,
   priority = 1000,
   opts = {
+    explorer = {
+      replace_netrw = false,
+    },
     picker = {
       sources = {
         explorer = {
@@ -168,4 +172,17 @@ return {
       },
     },
   },
+  init = function()
+    vim.api.nvim_create_autocmd("BufEnter", {
+      group = vim.api.nvim_create_augroup("snacks_explorer_start_directory", { clear = true }),
+      desc = "Start Snacks Explorer with directory",
+      once = true,
+      callback = function()
+        local dir = vim.fn.argv(0) --[[@as string]]
+        if dir ~= "" and vim.fn.isdirectory(dir) == 1 then
+          Snacks.picker.explorer({ cwd = dir })
+        end
+      end,
+    })
+  end,
 }
