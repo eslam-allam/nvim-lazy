@@ -6,6 +6,8 @@ local path = require("plenary.path")
 local data_dir = path:new(vim.fn.stdpath("data"))
 
 vim.o.guifont = "JetBrainsMono Nerd Font Mono:h12"
+vim.o.termbidi = true
+vim.o.arabicshape = false
 
 if vim.fn.has("win32") == 1 then
   vim.opt.shell = vim.fn.expand("~\\AppData\\Local\\Programs\\nu\\bin\\nu.exe")
