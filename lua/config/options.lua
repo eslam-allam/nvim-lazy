@@ -13,7 +13,30 @@ if vim.fn.has("win32") == 1 then
   vim.opt.shell = vim.fn.expand("~\\AppData\\Local\\Programs\\nu\\bin\\nu.exe")
 end
 
-vim.g.python3_host_prog = "~/miniconda3/envs/nvim/bin/python"
+local function get_conda_nvim_root()
+  local condaEnvs = vim.system({ "conda", 'info', '--envs' }):wait()
+  local pythonFileName = vim.fn.has('win32') and 'python.exe' or 'python'
+  if condaEnvs.code ~= 0 then
+    vim.notify("Could not find conda envs", vim.log.levels.WARN)
+    return nil
+  end
+  local lines = vim.split(condaEnvs.stdout, "\n")
+  for _, line in ipairs(lines) do
+    if line:match("nvim.*") then
+      local envPath = path:new(line:match("nvim%s+(.*)")):joinpath("bin", pythonFileName)
+      return envPath:absolute()
+    end
+  end
+  vim.notify("Could not find conda nvim env", vim.log.levels.WARN)
+  return nil
+end
+
+if vim.fn.executable('conda') then
+  local conda_env = get_conda_nvim_root()
+  if conda_env then
+    vim.g.python3_host_prog = conda_env
+  end
+end
 
 vim.g.maplocalleader = ","
 
