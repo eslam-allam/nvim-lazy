@@ -1,5 +1,6 @@
 ---@type table<string, Image>
 local images = {}
+local lastPath = nil;
 
 ---@param filepath string
 ---@param ctx snacks.picker.preview.ctx
@@ -53,7 +54,12 @@ local function preview_file(ctx)
   local fileName = ctx.item.file
 
   local cwd = ctx.item.cwd
+  local filepath = getFullPath(cwd, fileName)
 
+  if lastPath ~= nil and lastPath == filepath then
+    return true
+  end
+  lastPath = filepath
   -- Clear previous image
   if ctx.prev ~= nil then
     local prev_path = getFullPath(ctx.prev.cwd, ctx.prev.file)
@@ -74,7 +80,6 @@ local function preview_file(ctx)
   -- Remove the content from the previous preview
   ctx.preview:set_lines({})
 
-  local filepath = getFullPath(cwd, fileName)
 
   local autocmd
 
