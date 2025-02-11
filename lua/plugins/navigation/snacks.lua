@@ -28,7 +28,7 @@ local function preview_file(ctx)
   local has_chafa = vim.fn.executable("chafa") == 1
   local fileName = ctx.item.file
 
-  if ( LazyVim.is_win() and not has_chafa ) or not check_is_image(fileName) then
+  if  not LazyVim.is_win() or not has_chafa or not check_is_image(fileName) then
     return require("snacks").picker.preview.file(ctx)
   end
 
