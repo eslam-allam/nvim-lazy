@@ -18,8 +18,8 @@ local function get_conda_nvim_root()
   if cacheFile:exists() then
     return cacheFile:read()
   end
-  local condaEnvs = vim.system({ "conda", 'info', '--envs' }):wait()
-  local pythonFileName = vim.fn.has('win32') and 'python.exe' or 'python'
+  local condaEnvs = vim.system({ "conda", "info", "--envs" }):wait()
+  local pythonFileName = vim.fn.has("win32") and "python.exe" or "python"
   if condaEnvs.code ~= 0 then
     vim.notify("Could not find conda envs", vim.log.levels.WARN)
     return nil
@@ -29,7 +29,7 @@ local function get_conda_nvim_root()
     if line:match("nvim.*") then
       local envFolder = vim.fn.trim(line:match("nvim%s+(.*)"))
       local envPath = path:new(envFolder, "bin", pythonFileName):absolute()
-      cacheFile:write(envPath, 'w', 464)
+      cacheFile:write(envPath, "w", 464)
       return envPath
     end
   end
@@ -37,7 +37,7 @@ local function get_conda_nvim_root()
   return nil
 end
 
-if vim.fn.executable('conda') then
+if vim.fn.executable("conda") == 1 then
   local conda_env = get_conda_nvim_root()
   if conda_env then
     vim.g.python3_host_prog = conda_env
@@ -73,8 +73,8 @@ vim.g.definition_exclude_lsps = {
 
 vim.g.custom_formater_exec_folder = data_dir:joinpath("conform", "custom_formatters"):absolute()
 
-
-vim.g.cmp_file_disabled = { "DressingInput", "TelescopePrompt", "snacks_input", "snacks_picker_input", "speedtyper", "rip-substitute" }
+vim.g.cmp_file_disabled =
+  { "DressingInput", "TelescopePrompt", "snacks_input", "snacks_picker_input", "speedtyper", "rip-substitute" }
 
 vim.g.loaded_netrw = 1
 vim.g.loaded_netrwPlugin = 1
