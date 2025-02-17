@@ -19,7 +19,7 @@ local function get_conda_nvim_root()
     return cacheFile:read()
   end
   local condaEnvs = vim.system({ "conda", "info", "--envs" }):wait()
-  local pythonFileName = vim.fn.has("win32") and "python.exe" or "python"
+  local pythonFileName = LazyVim.is_win() and "python.exe" or "python"
   if condaEnvs.code ~= 0 then
     vim.notify("Could not find conda envs", vim.log.levels.WARN)
     return nil
@@ -27,7 +27,7 @@ local function get_conda_nvim_root()
   local lines = vim.split(condaEnvs.stdout, "\n")
   for _, line in ipairs(lines) do
     if line:match("nvim.*") then
-      local envFolder = vim.fn.trim(line:match("nvim%s+(.*)"))
+      local envFolder = vim.fn.trim(line:match("nvim%s+%*?(.*)"))
       local envPath = path:new(envFolder, "bin", pythonFileName):absolute()
       cacheFile:write(envPath, "w", 464)
       return envPath
