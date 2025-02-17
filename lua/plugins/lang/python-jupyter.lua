@@ -2,11 +2,15 @@ return {
   {
     "benlubas/molten-nvim",
     cond = vim.fn.has("win32") == 0,
+    ft = "quarto",
     dependencies = {
       {
-        "chrisgrieser/nvim-various-textobjs",
-        event = "UIEnter",
-        opts = { keymaps = { useDefaults = false } },
+        "MeanderingProgrammer/render-markdown.nvim",
+        optional = true,
+        ft = { "quarto" },
+        opts = {
+          filetypes = { "quarto" },
+        }
       },
       {
         "3rd/image.nvim",
@@ -24,6 +28,7 @@ return {
               enabled = true,
               clear_in_insert_mode = false,
               download_remote_images = true,
+              filetypes = { "quarto" }
             },
           },
           max_width = 500,
@@ -32,30 +37,74 @@ return {
           max_width_window_percentage = math.huge,
           window_overlap_clear_enabled = false, -- toggles images when windows are overlapped
           window_overlap_clear_ft_ignore = { "cmp_menu", "cmp_docs", "noice", "" },
+          tmux_show_only_in_active_window = true,
         },
       },
       {
-        "AckslD/nvim-FeMaco.lua",
-        config = true,
-        init = function()
-          vim.api.nvim_create_autocmd("FileType", {
-            pattern = "markdown",
-            callback = function(event)
-              vim.keymap.set("n", "<C-CR>", function() require('femaco.edit').edit_code_block() end, { buffer = event.buf, desc = "Edit Code Block" })
-            end
-          })
+        "GCBallesteros/jupytext.nvim",
+        lazy = false,
+        opts = {
+          style = "quarto",
+          output_extension = "qmd",
+          force_ft = "quarto",
+        }
+      },
+      {
+        "quarto-dev/quarto-nvim",
+        ft = { "quarto" },
+        dependencies = {
+          "jmbuhr/otter.nvim",
+          "nvim-treesitter/nvim-treesitter",
+        },
+        config = function(_, opts)
+          require("quarto").setup(opts)
+          local runner = require("quarto.runner")
+          require("which-key").add({
+            "<localleader>r",
+            group = "Quarto",
+            { "<localleader>rc", runner.run_cell,  desc = "Run Cell" },
+            { "<localleader>ra", runner.run_above, desc = "Run Cell and Above" },
+            { "<localleader>rA", runner.run_all,   desc = "Run All Cell" },
+            { "<localleader>rl", runner.run_line,  desc = "Run Line" },
+            { "<localleader>rc", runner.run_cell,  desc = "Run Cell" },
+            { "<localleader>rc", runner.run_cell,  desc = "Run Cell" },
+          }, {})
         end,
         opts = {
-          prepare_buffer = function(opts)
-              local buf = vim.api.nvim_create_buf(false, false)
-              vim.keymap.set({"n", "i"}, "<C-s>", "<cmd>close<CR>", { buffer = buf, desc = "Close" })
-              return vim.api.nvim_open_win(buf, true, opts)
-            end,
+          lspFeatures = {
+            -- NOTE: put whatever languages you want here:
+            languages = { "python" },
+            chunks = "all",
+            diagnostics = {
+              enabled = true,
+              triggers = { "BufWritePost" },
+            },
+            completion = {
+              enabled = true,
+            },
+          },
+          keymap = {
+            -- NOTE: setup your own keymaps:
+            hover = "H",
+            definition = "gd",
+            rename = "<leader>rn",
+            references = "gr",
+            format = "<leader>gf",
+          },
+          codeRunner = {
+            enabled = true,
+            default_method = "molten",
+          },
         }
+      },
+      {
+        "chrisgrieser/nvim-various-textobjs",
+        event = "UIEnter",
+        opts = { keymaps = { useDefaults = false } },
       },
     },
     build = ":UpdateRemotePlugins",
-    init = function()
+    config = function()
       vim.g.molten_image_provider = "image.nvim"
       vim.g.molten_auto_init_behavior = "init"
       vim.g.molten_enter_output_behavior = "open_and_enter"
@@ -73,28 +122,5 @@ return {
       vim.g.molten_copy_output = true
       vim.g.molten_output_show_exec_time = false
     end,
-    keys = {
-      {
-        "<S-Enter>",
-        function()
-          require("various-textobjs").mdFencedCodeBlock("inner")
-          vim.cmd("MoltenEvaluateOperator")
-        end,
-        desc = "Molten Eval Block",
-        mode = "n",
-        ft = { "markdown" },
-      },
-      {
-        "<S-Enter>",
-        function()
-          vim.cmd("stopinsert")
-          require("various-textobjs").mdFencedCodeBlock("inner")
-          vim.cmd("MoltenEvaluateOperator")
-        end,
-        desc = "Molten Eval Block",
-        mode = "i",
-        ft = { "markdown" },
-      },
-    },
   },
 }
