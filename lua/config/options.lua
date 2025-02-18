@@ -41,6 +41,7 @@ if vim.fn.executable("conda") == 1 then
   local conda_env = get_conda_nvim_root()
   if conda_env then
     vim.g.python3_host_prog = conda_env
+    vim.g.python_host_prog = conda_env
   end
 end
 
