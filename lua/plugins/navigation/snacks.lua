@@ -132,6 +132,11 @@ return {
     explorer = {
       replace_netrw = false,
     },
+    image = {
+      doc = {
+        enabled = true
+      }
+    },
     picker = {
       sources = {
         explorer = {
