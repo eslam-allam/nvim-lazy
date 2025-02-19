@@ -9,10 +9,6 @@ vim.o.guifont = "JetBrainsMono Nerd Font Mono:h12"
 vim.o.termbidi = true
 vim.o.arabicshape = false
 
-if vim.fn.has("win32") == 1 then
-  vim.opt.shell = vim.fn.expand("~\\AppData\\Local\\Programs\\nu\\bin\\nu.exe")
-end
-
 local function get_conda_nvim_root()
   local cacheFile = path:new(vim.fn.stdpath("cache"), "conda_nvim_root.txt")
   if cacheFile:exists() then
