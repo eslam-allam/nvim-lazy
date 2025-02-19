@@ -1,7 +1,6 @@
 return {
   {
     "benlubas/molten-nvim",
-    cond = vim.fn.has("win32") == 0,
     ft = "quarto",
     dependencies = {
       {
@@ -13,7 +12,13 @@ return {
         }
       },
       {
+          'willothy/wezterm.nvim',
+          cond = vim.fn.has("win32") == 1,
+          config = true
+      },
+      {
         "3rd/image.nvim",
+        cond = vim.fn.has("win32") == 0,
         dependencies = {
           "vhyrro/luarocks.nvim",
           priority = 1001,
@@ -105,7 +110,7 @@ return {
     },
     build = ":UpdateRemotePlugins",
     config = function()
-      vim.g.molten_image_provider = "image.nvim"
+      vim.g.molten_image_provider = LazyVim.is_win() and "wezterm" or "image.nvim"
       vim.g.molten_auto_init_behavior = "init"
       vim.g.molten_enter_output_behavior = "open_and_enter"
       vim.g.molten_auto_image_popup = false
