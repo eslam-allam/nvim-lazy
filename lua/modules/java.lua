@@ -1,12 +1,17 @@
-local M = {}
+local M = {
+  ---@type table<string, string>
+  runtimes = {}
+}
 local path = require("plenary.path")
 
 local function versionFromKey(key)
   return tonumber(key:match("java(%d+)"))
 end
 
----@type table<string, string>
-M.runtimes = vim.json.decode(table.concat(vim.fn.readfile(vim.env.JAVA_RUNTIMES_JSON), "\n"))
+
+if vim.fn.filereadable(vim.env.JAVA_RUNTIMES_JSON) == 1 then
+  M.runtimes = vim.json.decode(table.concat(vim.fn.readfile(vim.env.JAVA_RUNTIMES_JSON), "\n"))
+end
 
 M.filetypes = vim.g.java_filetypes
 local java_root_config = vim.env.CUSTOM_JAVA_ROOTS
@@ -26,6 +31,10 @@ function M.javaRoot(fileName)
     end
   end
   return require("lspconfig.configs.jdtls").default_config.root_dir(fileName)
+end
+
+function M.has_runtimes()
+  return not vim.tbl_isempty(M.runtimes)
 end
 
 -- Utility function to extend or override a config table, similar to the way

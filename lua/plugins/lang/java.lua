@@ -8,6 +8,7 @@ return {
   {
     "mfussenegger/nvim-jdtls",
     ft = java_filetypes,
+    cond = javaHelpers.has_runtimes(),
     dependencies = {
       "williamboman/mason.nvim",
     },
