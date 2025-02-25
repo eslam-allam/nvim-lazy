@@ -30,20 +30,6 @@ cmd("TermOpen", {
   end,
 })
 
--- Dadbod Auto complete
-cmd({
-  "FileType",
-}, {
-  pattern = {
-    "sql",
-    "mysql",
-    "plsql",
-  },
-  callback = function()
-    require("cmp").setup.buffer({ sources = { { name = "vim-dadbod-completion" }, { name = "buffer" } } })
-  end,
-})
-
 -- octo
 cmd("FileType", {
   pattern = "octo",
