@@ -14,7 +14,7 @@ return {
     coroutine.yield("Finding google-java-format installation")
     local java_formatter_jar_dir = require("mason-registry").get_package("google-java-format"):get_install_path()
     local java_formatter_jar =
-      vim.fn.glob(path:new(java_formatter_jar_dir):joinpath("google-java-format-*.jar"):absolute())
+        vim.fn.glob(path:new(java_formatter_jar_dir):joinpath("google-java-format-*.jar"):absolute())
     if java_formatter_jar == "" then
       coroutine.yield({ msg = "Google java formatter not found!", level = vim.log.levels.WARN })
       return false
@@ -68,7 +68,7 @@ return {
     end
     -- google java format
     local java_formatter_exec =
-      require("plenary.path"):new(vim.g.custom_formater_exec_folder):joinpath(exec_file_name):absolute()
+        require("plenary.path"):new(vim.g.custom_formater_exec_folder):joinpath(exec_file_name):absolute()
     if not vim.fn.filereadable(java_formatter_exec) then
       vim.notify("[Conform] Google java formatter not found!", vim.log.levels.WARN)
     else
@@ -135,5 +135,15 @@ return {
     opts.formatters.injected.options.lang_to_formatters = {
       javascript = { "prettierd" },
     }
+
+    if vim.fn.executable("kulala-fmt") == 1 then
+      opts.formatters.kulala = {
+        command = "kulala-fmt",
+        args = { "format", "$FILENAME" },
+        stdin = false,
+      }
+
+      opts.formatters_by_ft.http = { "kulala" }
+    end
   end,
 }

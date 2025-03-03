@@ -16,6 +16,9 @@ return {
       -- GO
       vim.list_extend(opts.ensure_installed, { "templ" })
 
+      -- HTTP
+      vim.list_extend(opts.ensure_installed, { "kulala-ls", "kulala-fmt" })
+
       -- Config files
       vim.list_extend(
         opts.ensure_installed,
@@ -30,7 +33,7 @@ return {
     "nvim-treesitter/nvim-treesitter",
     opts = function(_, opts)
       if type(opts.ensure_installed) == "table" then
-        vim.list_extend(opts.ensure_installed, { "css", "typescript", "javascript", "scss", "templ" })
+        vim.list_extend(opts.ensure_installed, { "css", "typescript", "javascript", "scss", "templ", "http" })
       end
     end,
   },
