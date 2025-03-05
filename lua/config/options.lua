@@ -75,3 +75,5 @@ vim.g.cmp_file_disabled =
 
 vim.g.loaded_netrw = 1
 vim.g.loaded_netrwPlugin = 1
+
+vim.opt.spell = true
