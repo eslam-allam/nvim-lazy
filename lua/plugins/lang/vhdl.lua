@@ -1,6 +1,7 @@
 return {
   lazy = false,
   dir = require("plenary.path"):new(vim.fn.stdpath("config")):joinpath("lua", "local-plugins", "vhdl"):absolute(),
+  name = "vhdl-tools",
   config = true,
   dependencies = {
     {
