@@ -23,7 +23,7 @@ local formatterFileName = vim.fn.has("win32") == 1 and "vhdlfmt.exe" or "vhdlfmt
 
 ---@type setup.opts
 M.opts = {
-  fmtDir = path:new(vim.fn.stdpath("data")):joinpath("vhdl", "bin"):absolute(),
+  fmtDir = path:new(vim.fn.stdpath("data")):joinpath("vhdl", "vhdl-fmt", "bin"):absolute(),
   silicon = {
     userCommand = "VHDLSiliconSyntaxDownload",
     syntaxFileUrl = "https://raw.githubusercontent.com/TheClams/SmartVHDL/refs/heads/master/VHDL.sublime-syntax",
