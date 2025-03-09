@@ -8,7 +8,7 @@ return {
       "williamboman/mason.nvim",
       opts = function(_, opts)
         opts.ensure_installed = opts.ensure_installed or {}
-        vim.list_extend(opts.ensure_installed, { "rust_hdl", "vsg" })
+        vim.list_extend(opts.ensure_installed, { "rust_hdl" })
       end,
     },
     {
@@ -33,6 +33,15 @@ return {
     {
       "nvimtools/none-ls.nvim",
       optional = true,
+      dependencies = {
+        {
+          "williamboman/mason.nvim",
+          opts = function(_, opts)
+            opts.ensure_installed = opts.ensure_installed or {}
+            vim.list_extend(opts.ensure_installed, { "vsg" })
+          end,
+        },
+      },
       opts = function(_, opts)
         local null_ls = require("null-ls")
         local helpers = require("null-ls.helpers")
@@ -106,7 +115,7 @@ return {
           }),
         }
 
-        opts.sources = vim.tbl_deep_extend('force', opts.sources or {}, { vsg_lint, vsg_format })
+        opts.sources = vim.tbl_deep_extend("force", opts.sources or {}, { vsg_lint, vsg_format })
       end,
     },
   },
