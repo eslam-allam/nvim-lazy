@@ -1,7 +1,10 @@
 return {
   "linux-cultist/venv-selector.nvim",
   enabled = true,
-
+  dependencies = {
+    "nvim-telescope/telescope.nvim",
+    "nvim-lua/plenary.nvim",
+  },
   opts = function(_, opts)
     local conda_prefix = os.getenv("CONDA_PREFIX")
     local path_regex = '/envs/.*/bin/python$'
