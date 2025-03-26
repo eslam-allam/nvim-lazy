@@ -1,6 +1,24 @@
 return {
   {
     "lervag/vimtex",
+    dependencies = {
+      "micangl/cmp-vimtex",
+      {
+        "saghen/blink.cmp",
+        opts = {
+          sources = {
+            compat = { "vimtex" },
+            providers = {
+              supermaven = {
+                kind = "Supermaven",
+                score_offset = 100,
+                async = true,
+              },
+            },
+          },
+        },
+      },
+    },
     init = function()
       -- VimTeX configuration goes here, e.g.
       vim.g.vimtex_view_method = "zathura"
