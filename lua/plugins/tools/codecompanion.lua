@@ -57,13 +57,13 @@ return {
     log_level = "TRACE",
     strategies = {
       chat = {
-        adapter = "llama_remote",
+        adapter = "openai",
       },
       inline = {
-        adapter = "llama_remote",
+        adapter = "openai",
       },
       agent = {
-        adapter = "llama_remote",
+        adapter = "openai",
       },
     },
     adapters = {
@@ -117,6 +117,13 @@ return {
             num_predict = {
               default = -1,
             },
+          },
+        })
+      end,
+      openai = function()
+        return require("codecompanion.adapters").extend("openai", {
+          env = {
+            api_key = "cmd:rbw get 'OpenAI Neovim'"
           },
         })
       end,
