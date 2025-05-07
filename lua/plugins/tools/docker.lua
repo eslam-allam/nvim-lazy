@@ -4,12 +4,11 @@ return {
     dependencies = {
       "MunifTanjim/nui.nvim",
     },
-    cmd = "LazyDocker",
     init = function()
       require("which-key").add({
         {
           "<leader>kd",
-          "<cmd>LazyDocker<CR>",
+          "<Cmd>lua LazyDocker.toggle()<CR>",
           desc = "Open Lazy Docker",
           mode = { "n" },
           icon = { cat = "filetype", name = "DockerFile" },
