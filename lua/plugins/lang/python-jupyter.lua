@@ -94,35 +94,6 @@ return {
           config = true
       },
       {
-        "3rd/image.nvim",
-        cond = vim.fn.has("win32") == 0,
-        dependencies = {
-          "vhyrro/luarocks.nvim",
-          priority = 1001,
-          opts = {
-            rocks = { "magick" },
-          },
-        },
-        opts = {
-          backend = "kitty",
-          integrations = {
-            markdown = {
-              enabled = true,
-              clear_in_insert_mode = false,
-              download_remote_images = true,
-              filetypes = { "quarto" }
-            },
-          },
-          max_width = 500,
-          max_height = 500,
-          max_height_window_percentage = math.huge,
-          max_width_window_percentage = math.huge,
-          window_overlap_clear_enabled = false, -- toggles images when windows are overlapped
-          window_overlap_clear_ft_ignore = { "cmp_menu", "cmp_docs", "noice", "" },
-          tmux_show_only_in_active_window = true,
-        },
-      },
-      {
         "GCBallesteros/jupytext.nvim",
         lazy = false,
         opts = {
@@ -148,8 +119,6 @@ return {
             { "<localleader>ra", runner.run_above, desc = "Run Cell and Above" },
             { "<localleader>rA", runner.run_all,   desc = "Run All Cell" },
             { "<localleader>rl", runner.run_line,  desc = "Run Line" },
-            { "<localleader>rc", runner.run_cell,  desc = "Run Cell" },
-            { "<localleader>rc", runner.run_cell,  desc = "Run Cell" },
           }, {})
         end,
         opts = {
@@ -187,18 +156,18 @@ return {
     },
     build = ":UpdateRemotePlugins",
     config = function()
-      vim.g.molten_image_provider = LazyVim.is_win() and "wezterm" or "image.nvim"
+      vim.g.molten_image_provider = LazyVim.is_win() and "wezterm" or "snacks.nvim"
       vim.g.molten_auto_init_behavior = "init"
       vim.g.molten_enter_output_behavior = "open_and_enter"
       vim.g.molten_auto_image_popup = false
       vim.g.molten_auto_open_output = false
       vim.g.molten_output_crop_border = false
       vim.g.molten_output_virt_lines = true
-      vim.g.molten_output_win_max_height = 50
+      vim.g.molten_output_win_max_height = 100
       vim.g.molten_output_win_style = "minimal"
       vim.g.molten_output_win_hide_on_leave = false
       vim.g.molten_virt_text_output = true
-      vim.g.molten_virt_lines_off_by_1 = true
+      vim.g.molten_virt_lines_off_by_1 = false
       vim.g.molten_virt_text_max_lines = 10000
       vim.g.molten_cover_empty_lines = false
       vim.g.molten_copy_output = true
@@ -229,10 +198,10 @@ return {
             return
           end
           if require("molten.status").initialized() == "Molten" then
-            vim.fn.MoltenUpdateOption("virt_lines_off_by_1", true)
+            vim.fn.MoltenUpdateOption("virt_lines_off_by_1", false)
             vim.fn.MoltenUpdateOption("virt_text_output", true)
           else
-            vim.g.molten_virt_lines_off_by_1 = true
+            vim.g.molten_virt_lines_off_by_1 = false
             vim.g.molten_virt_text_output = true
           end
         end,
