@@ -145,5 +145,15 @@ return {
 
       opts.formatters_by_ft.http = { "kulala" }
     end
+
+    if vim.fn.executable("tex-fmt") == 1 then
+      opts.formatters.tex_fmt = {
+        command = "tex-fmt",
+        args = {"--stdin"},
+        stdin = true,
+      }
+
+      opts.formatters_by_ft.tex = { "tex-fmt" }
+    end
   end,
 }
