@@ -135,8 +135,8 @@ return {
     image = {
       doc = {
         enabled = true,
-        max_width = 100,
-        max_height = 100,
+        max_width = 80,
+        max_height = 80,
       }
     },
     picker = {
