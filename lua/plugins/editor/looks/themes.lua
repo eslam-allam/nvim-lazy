@@ -14,6 +14,7 @@ return {
     lazy = false,
     priotity = 1000,
     opts = function(_, opts)
+      opts.transparent_background = true
       local colors = require("catppuccin.palettes").get_palette("mocha")
       local localOpts = {
         custom_highlights = {
