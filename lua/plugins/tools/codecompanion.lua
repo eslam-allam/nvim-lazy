@@ -61,6 +61,16 @@ return {
       },
       inline = {
         adapter = "openai",
+        keymaps = {
+          accept_change = {
+            modes = { n = "gca" },
+            description = "Accept the suggested change",
+          },
+          reject_change = {
+            modes = { n = "gcr" },
+            description = "Reject the suggested change",
+          },
+        },
       },
       agent = {
         adapter = "openai",
@@ -123,7 +133,7 @@ return {
       openai = function()
         return require("codecompanion.adapters").extend("openai", {
           env = {
-            api_key = "cmd:rbw get 'OpenAI Neovim'"
+            api_key = "cmd:rbw get 'OpenAI Neovim'",
           },
         })
       end,
