@@ -1,5 +1,6 @@
 return {
   "mistweaverco/kulala.nvim",
+  optional = true,
   keys = function()
     return {}
   end,
@@ -74,4 +75,9 @@ return {
       },
     })
   end,
+  opts = {
+    ui = {
+      formatter = true
+    }
+  }
 }

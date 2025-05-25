@@ -16,9 +16,6 @@ return {
       -- GO
       vim.list_extend(opts.ensure_installed, { "templ" })
 
-      -- HTTP
-      vim.list_extend(opts.ensure_installed, { "kulala-ls", "kulala-fmt" })
-
       -- Config files
       vim.list_extend(
         opts.ensure_installed,

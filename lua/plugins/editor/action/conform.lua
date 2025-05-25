@@ -136,16 +136,6 @@ return {
       javascript = { "prettierd" },
     }
 
-    if vim.fn.executable("kulala-fmt") == 1 then
-      opts.formatters.kulala = {
-        command = "kulala-fmt",
-        args = { "format", "$FILENAME" },
-        stdin = false,
-      }
-
-      opts.formatters_by_ft.http = { "kulala" }
-    end
-
     if vim.fn.executable("tex-fmt") == 1 then
       opts.formatters.tex_fmt = {
         command = "tex-fmt",

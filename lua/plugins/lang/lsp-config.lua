@@ -72,8 +72,6 @@ return {
           },
         }
       end
-
-      opts.servers.kulala_ls = {}
     end,
   },
 }
