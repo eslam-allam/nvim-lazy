@@ -15,6 +15,10 @@ if vim.g.neovide then
   vim.g.neovide_scroll_animation_length = 0
 end
 
+if LazyVim.is_win() then
+  vim.o.shell = 'powershell.exe -nologo'
+end
+
 local function get_conda_nvim_root()
   local cacheFile = path:new(vim.fn.stdpath("cache"), "conda_nvim_root.txt")
   if cacheFile:exists() then
