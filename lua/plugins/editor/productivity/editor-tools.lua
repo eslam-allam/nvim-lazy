@@ -36,7 +36,7 @@ return {
     end,
   },
   {
-    "eslam-allam/fastaction.nvim",
+    "Chaitanyabsprip/fastaction.nvim",
     config = function(_, opts)
       require("fastaction").setup(opts)
 
@@ -44,19 +44,23 @@ return {
 
       keys[#keys + 1] = {
         "<leader>ca",
-        require("fastaction").code_action,
+        function()
+          require("fastaction").code_action()
+        end,
         mode = "n",
         desc = "Code Action",
       }
       keys[#keys + 1] = {
         "<leader>ca",
-        require("fastaction").range_code_action,
+        function()
+          require("fastaction").code_action()
+        end,
         mode = "x",
         desc = "Code Action",
       }
     end,
     opts = {
-      keys = "qwertyuopasdfghlzxcvbnm",
+      dismiss_keys = {"q"},
       register_ui_select = true,
     },
   },
