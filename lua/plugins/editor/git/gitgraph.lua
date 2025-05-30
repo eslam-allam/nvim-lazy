@@ -1,5 +1,6 @@
 return {
   "isakbm/gitgraph.nvim",
+  enabled = false,
   dependencies = { "sindrets/diffview.nvim" },
   opts = function()
     local is_kitty = vim.fn.getenv("KITTY_WINDOW_ID") ~= vim.v.null
