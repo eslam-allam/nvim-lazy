@@ -153,6 +153,16 @@ return {
           confirm = function (_, item)
             vim.cmd(":DiffviewOpen " .. item.commit .. "^!")
           end
+        },
+        git_log_line = {
+          confirm = function (_, item)
+            vim.cmd(":DiffviewOpen " .. item.commit .. "^!" .. " -- " .. item.file)
+          end
+        },
+        git_log_file = {
+          confirm = function (_, item)
+            vim.cmd(":DiffviewOpen " .. item.commit .. "^!" .. " -- " .. item.file)
+          end
         }
       },
     },
