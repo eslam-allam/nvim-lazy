@@ -2,8 +2,11 @@ return {
   "yujinyuz/gitpad.nvim",
   opts = {
     on_attach = function(bufnr)
-      vim.api.nvim_buf_set_keymap(bufnr, "n", "q", "<Cmd>wq<CR>", { noremap = true, silent = true })
+      vim.api.nvim_buf_set_keymap(bufnr, "n", "<C-q>", "<Cmd>wq<CR>", { noremap = true, silent = true })
     end,
+    floating_win_opts = {
+      focusable = true
+    }
   },
   init = function()
     require("which-key").add({
