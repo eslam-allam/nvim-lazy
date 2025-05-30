@@ -149,6 +149,11 @@ return {
         files = {
           preview = preview_file,
         },
+        git_log = {
+          confirm = function (_, item)
+            vim.cmd(":DiffviewOpen " .. item.commit .. "^!")
+          end
+        }
       },
     },
   },
