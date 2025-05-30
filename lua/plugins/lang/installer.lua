@@ -5,6 +5,11 @@ return {
       opts.ensure_installed = opts.ensure_installed or {}
 
       --- Java
+      if LazyVim.has_extra("lang.rust") then
+        vim.list_extend(opts.ensure_installed, { "rust-analyzer" })
+      end
+
+      --- Java
       vim.list_extend(opts.ensure_installed, { "sonarlint-language-server", "gradle-language-server", "jdtls" })
 
       --- Bash
