@@ -57,7 +57,9 @@ cmd("FileType", {
     "xsd",
     "templ",
     "markdown",
-    "vhdl"
+    "vhdl",
+    "tex",
+    "bib"
   },
   callback = function()
     vim.bo.tabstop = 2
