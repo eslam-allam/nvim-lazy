@@ -47,7 +47,6 @@ cmd("FileType", {
     "zsh",
     "c",
     "cpp",
-    "rust",
     "html",
     "javascript",
     "svelte",
