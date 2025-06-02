@@ -69,6 +69,20 @@ if vim.fn.executable("spring-initializer") == 1 then
   end, { desc = "Spring Initializer" })
 end
 
+if vim.fn.executable("lazydocker") == 1 then
+      require("which-key").add({
+        {
+          "<leader>kd",
+          function ()
+            Util.terminal("lazydocker")
+          end,
+          desc = "Open Lazy Docker",
+          mode = { "n" },
+          icon = { cat = "filetype", name = "DockerFile" },
+        },
+      }, {})
+end
+
 vim.keymap.set("n", "<leader>f1", function()
   Util.terminal(nil, { cwd = LazyVim.root() })
 end, { desc = "Open Term 1" })

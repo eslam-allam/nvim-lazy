@@ -1,25 +1,5 @@
 return {
   {
-    "crnvl96/lazydocker.nvim",
-    dependencies = {
-      "MunifTanjim/nui.nvim",
-    },
-    init = function()
-      require("which-key").add({
-        {
-          "<leader>kd",
-          "<Cmd>lua LazyDocker.toggle()<CR>",
-          desc = "Open Lazy Docker",
-          mode = { "n" },
-          icon = { cat = "filetype", name = "DockerFile" },
-        },
-      }, {})
-    end,
-    config = function()
-      require("lazydocker").setup()
-    end,
-  },
-  {
     "ramilito/kubectl.nvim",
     lazy = true,
     init = function()
