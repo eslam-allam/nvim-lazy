@@ -1,18 +1,13 @@
 return {
   "nvim-lualine/lualine.nvim",
   dependencies = {
-    "abeldekat/harpoonline",
-    version = "*",
-    opts = {
-      formatter_opts = {
-        default = {
-          max_slots = 5,
-        },
+    {
+      "letieu/harpoon-lualine",
+      dependencies = {
+        { "ThePrimeagen/harpoon", lazy = false },
       },
-      on_update = function()
-        require("lualine").refresh()
-      end,
     },
+    opts = false,
     { "linux-cultist/venv-selector.nvim" },
   },
   opts = function(_, opts)
@@ -31,7 +26,7 @@ return {
       end
     end
 
-    table.insert(opts.sections.lualine_b, 2, require("harpoonline").format)
+    table.insert(opts.sections.lualine_b, 2, "harpoon2")
 
     table.insert(opts.sections.lualine_z, 1, {
       pythonEnv,
