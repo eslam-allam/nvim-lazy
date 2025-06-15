@@ -36,7 +36,7 @@ return {
       mode = { "n", "v" },
       { "<leader>cgc", "<cmd>CodeCompanionChat<CR>", desc = "Chat" },
       { "<leader>cga", "<cmd>CodeCompanionActions<CR>", desc = "Display Actions" },
-      { "<leader>cgt", "<cmd>CodeCompanionToggle<CR>", desc = "Toggle Chat" },
+      { "<leader>cgt", "<cmd>CodeCompanionChat Toggle<CR>", desc = "Toggle Chat" },
       { "ga", "<cmd>CodeCompanionAdd<CR>", desc = "Add code", mode = "v" },
       {
         "<leader>cgA",
