@@ -60,7 +60,7 @@ return {
     return true
   end,
   opts = function(_, opts)
-    opts.formatters_by_ft.templ = { "templ", "injected" }
+    opts.formatters_by_ft.templ = { "templ" }
 
     local exec_file_name = "google-java-format"
     if vim.fn.has("win32") == 1 then
