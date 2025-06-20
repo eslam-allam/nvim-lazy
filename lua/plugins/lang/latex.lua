@@ -5,6 +5,7 @@ return {
       "micangl/cmp-vimtex",
       {
         "saghen/blink.cmp",
+        optional = true,
         opts = {
           sources = {
             compat = { "vimtex" },
