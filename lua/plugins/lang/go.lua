@@ -11,6 +11,9 @@ return {
         mason = false,
       }
 
+      opts.capabilities.workspace.didChangeWatchedFiles = {
+        dynamicRegistration = true,
+      }
       -- Enable completion in wire template file
       opts.setup.gopls = function(_, sopts)
         sopts.settings = {
