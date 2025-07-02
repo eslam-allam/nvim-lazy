@@ -19,7 +19,6 @@ return {
             "-analyzers",
             analyzers:joinpath("sonargo.jar"):absolute(),
             analyzers:joinpath("sonarhtml.jar"):absolute(),
-            analyzers:joinpath("sonarhtml.jar"):absolute(),
             analyzers:joinpath("sonariac.jar"):absolute(),
             analyzers:joinpath("sonarjava.jar"):absolute(),
             analyzers:joinpath("sonarjavasymbolicexecution.jar"):absolute(),
@@ -27,6 +26,7 @@ return {
             analyzers:joinpath("sonarphp.jar"):absolute(),
             analyzers:joinpath("sonarpython.jar"):absolute(),
             analyzers:joinpath("sonartext.jar"):absolute(),
+            analyzers:joinpath("sonarxml.jar"):absolute(),
           },
         },
       }
