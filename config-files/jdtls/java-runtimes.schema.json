@@ -27,6 +27,16 @@
       "description": "Path to java 22 jre",
       "type": "string",
       "pattern": "^(?:\\/[\\w\\-_.]+)+$"
+    },
+    "java23": {
+      "description": "Path to java 23 jre",
+      "type": "string",
+      "pattern": "^(?:\\/[\\w\\-_.]+)+$"
+    },
+    "java24": {
+      "description": "Path to java 24 jre",
+      "type": "string",
+      "pattern": "^(?:\\/[\\w\\-_.]+)+$"
     }
   },
   "required": ["java17"]
