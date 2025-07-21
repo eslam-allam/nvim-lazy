@@ -89,3 +89,5 @@ vim.g.loaded_netrwPlugin = 1
 vim.g.ngram_data = data_dir:joinpath("spell", "ngram"):absolute()
 
 vim.opt.spell = true
+
+vim.g.lazyvim_python_lsp = "basedpyright"
