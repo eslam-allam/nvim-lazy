@@ -54,7 +54,7 @@ return {
       preview = {
         check_mime_type = true,
         mime_hook = function(filepath, bufnr, opts)
-          local chafa_installed = vim.fn.executable("chafa")
+          local chafa_installed = vim.fn.executable("chafa") == 1
           if not chafa_installed then
             vim.notify_once("Chafa is not installed. Please install it to preview images.", vim.log.levels.WARN)
           end
