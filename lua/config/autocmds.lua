@@ -6,30 +6,6 @@ local ugroup = require("modules.helpers").ugroup
 
 local cmd = vim.api.nvim_create_autocmd
 
-cmd("TermOpen", {
-  callback = function()
-    local envSelector = require("venv-selector")
-    local selectedEnv = envSelector.python()
-    local pythonExec = vim.fn.has("win32") == 1 and "\\python%.exe" or "/bin/python"
-    local activator = vim.fn.has("win32") == 1 and "\\activate.bat" or "/bin/activate"
-    if selectedEnv ~= nil then
-      local activateCommand = 'source "' .. selectedEnv:match("(.*)" .. pythonExec) .. activator .. '"'
-      local condaPrefix = os.getenv("CONDA_PREFIX")
-      if type(condaPrefix) ~= "string" then
-        vim.notify_once("[TermEnv] Invalid conda prefix!")
-        return
-      end
-      if selectedEnv:sub(0, string.len(condaPrefix)) == condaPrefix then
-        activateCommand = "conda activate " .. envSelector.python():match("([%w-_]+)" .. pythonExec .. "$")
-      end
-      local term = vim.o.channel
-      vim.fn.timer_start(100, function()
-        vim.api.nvim_chan_send(term, activateCommand .. "\r\n")
-      end)
-    end
-  end,
-})
-
 -- octo
 cmd("FileType", {
   pattern = "octo",
@@ -58,7 +34,7 @@ cmd("FileType", {
     "markdown",
     "vhdl",
     "tex",
-    "bib"
+    "bib",
   },
   callback = function()
     vim.bo.tabstop = 2
