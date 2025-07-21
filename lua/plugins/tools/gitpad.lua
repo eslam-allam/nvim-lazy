@@ -5,8 +5,8 @@ return {
       vim.api.nvim_buf_set_keymap(bufnr, "n", "<C-q>", "<Cmd>wq<CR>", { noremap = true, silent = true })
     end,
     floating_win_opts = {
-      focusable = true
-    }
+      focusable = true,
+    },
   },
   init = function()
     require("which-key").add({

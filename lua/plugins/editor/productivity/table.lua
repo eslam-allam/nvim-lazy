@@ -1,5 +1,5 @@
 return {
-  'SCJangra/table-nvim',
-  ft = 'markdown',
+  "SCJangra/table-nvim",
+  ft = "markdown",
   opts = {},
 }

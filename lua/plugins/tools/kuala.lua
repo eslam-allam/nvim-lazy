@@ -77,7 +77,7 @@ return {
   end,
   opts = {
     ui = {
-      formatter = true
-    }
-  }
+      formatter = true,
+    },
+  },
 }

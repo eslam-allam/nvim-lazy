@@ -100,7 +100,7 @@ function M.hoverPrioritizeLsp(name, ...)
   for _, client in pairs(clients) do
     if ... == nil or M.contains({ ... }, filetype) then
       -- Use the hover method of the preferred client
-      client:request(vim.lsp.protocol.Methods.textDocument_hover, vim.lsp.util.make_position_params(0, 'utf-32'))
+      client:request(vim.lsp.protocol.Methods.textDocument_hover, vim.lsp.util.make_position_params(0, "utf-32"))
       return
     end
   end
@@ -126,7 +126,7 @@ function M.hoverExcludeLsps(lsps)
       end)
     then
       -- Use the hover method of the preferred client
-      client:request(vim.lsp.protocol.Methods.textDocument_hover, vim.lsp.util.make_position_params(0, 'utf-32'))
+      client:request(vim.lsp.protocol.Methods.textDocument_hover, vim.lsp.util.make_position_params(0, "utf-32"))
       return
     end
   end
@@ -170,7 +170,7 @@ function M.lspRequestExcludeLsps(request, lsps)
       end)
     then
       found_one = true
-      client:request(request, vim.lsp.util.make_position_params(0, 'utf-32'))
+      client:request(request, vim.lsp.util.make_position_params(0, "utf-32"))
     end
   end
   if not found_one then

@@ -1,6 +1,6 @@
 ---@type table<string, Image>
 local images = {}
-local lastPath = nil;
+local lastPath = nil
 
 ---@param cwd string
 ---@param filename string
@@ -28,11 +28,9 @@ local function preview_file(ctx)
   local has_chafa = vim.fn.executable("chafa") == 1
   local fileName = ctx.item.file
 
-  if  not LazyVim.is_win() or not has_chafa or not check_is_image(fileName) then
+  if not LazyVim.is_win() or not has_chafa or not check_is_image(fileName) then
     return require("snacks").picker.preview.file(ctx)
   end
-
-
 
   local cwd = ctx.item.cwd
   local filepath = getFullPath(cwd, fileName)
@@ -53,7 +51,6 @@ local function preview_file(ctx)
 
   -- Remove the content from the previous preview
   ctx.preview:set_lines({})
-
 
   local autocmd
 
@@ -137,7 +134,7 @@ return {
         enabled = true,
         max_width = 80,
         max_height = 80,
-      }
+      },
     },
     picker = {
       sources = {
@@ -150,20 +147,20 @@ return {
           preview = preview_file,
         },
         git_log = {
-          confirm = function (_, item)
+          confirm = function(_, item)
             vim.cmd(":DiffviewOpen " .. item.commit .. "^!")
-          end
+          end,
         },
         git_log_line = {
-          confirm = function (_, item)
+          confirm = function(_, item)
             vim.cmd(":DiffviewOpen " .. item.commit .. "^!" .. " -- " .. item.file)
-          end
+          end,
         },
         git_log_file = {
-          confirm = function (_, item)
+          confirm = function(_, item)
             vim.cmd(":DiffviewOpen " .. item.commit .. "^!" .. " -- " .. item.file)
-          end
-        }
+          end,
+        },
       },
     },
   },

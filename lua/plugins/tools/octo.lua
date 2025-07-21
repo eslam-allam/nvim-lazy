@@ -21,7 +21,7 @@ return {
       },
       submit_win = {
         approve_review = { lhs = "<C-g>", desc = "approve review" },
-      }
+      },
     },
   },
 }

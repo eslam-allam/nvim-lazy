@@ -1,4 +1,4 @@
 return {
   "akinsho/toggleterm.nvim",
-  opts = {}
+  opts = {},
 }

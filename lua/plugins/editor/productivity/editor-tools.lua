@@ -60,7 +60,7 @@ return {
       }
     end,
     opts = {
-      dismiss_keys = {"q"},
+      dismiss_keys = { "q" },
       register_ui_select = true,
     },
   },

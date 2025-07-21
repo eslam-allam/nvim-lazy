@@ -50,11 +50,11 @@ return {
         end
       end
 
-      vim.api.nvim_create_user_command('NewNotebook', function(opts)
+      vim.api.nvim_create_user_command("NewNotebook", function(opts)
         new_notebook(opts.args)
       end, {
         nargs = 1,
-        complete = 'file'
+        complete = "file",
       })
     end,
     cond = vim.fn.has("win32") == 0,
@@ -69,7 +69,7 @@ return {
           else
             opts.servers.marksman.filetypes = { "markdown", "markdown.mdx", "quarto" }
           end
-        end
+        end,
       },
       {
         "stevearc/conform.nvim",
@@ -78,7 +78,7 @@ return {
           formatters_by_ft = {
             ["quarto"] = { "prettier", "markdownlint-cli2", "markdown-toc" },
           },
-        }
+        },
       },
       {
         "MeanderingProgrammer/render-markdown.nvim",
@@ -86,12 +86,12 @@ return {
         ft = { "quarto" },
         opts = {
           filetypes = { "quarto" },
-        }
+        },
       },
       {
-          'willothy/wezterm.nvim',
-          cond = vim.fn.has("win32") == 1,
-          config = true
+        "willothy/wezterm.nvim",
+        cond = vim.fn.has("win32") == 1,
+        config = true,
       },
       {
         "GCBallesteros/jupytext.nvim",
@@ -100,7 +100,7 @@ return {
           style = "quarto",
           output_extension = "qmd",
           force_ft = "quarto",
-        }
+        },
       },
       {
         "quarto-dev/quarto-nvim",
@@ -115,10 +115,10 @@ return {
           require("which-key").add({
             "<localleader>r",
             group = "Quarto",
-            { "<localleader>rc", runner.run_cell,  desc = "Run Cell" },
+            { "<localleader>rc", runner.run_cell, desc = "Run Cell" },
             { "<localleader>ra", runner.run_above, desc = "Run Cell and Above" },
-            { "<localleader>rA", runner.run_all,   desc = "Run All Cell" },
-            { "<localleader>rl", runner.run_line,  desc = "Run Line" },
+            { "<localleader>rA", runner.run_all, desc = "Run All Cell" },
+            { "<localleader>rl", runner.run_line, desc = "Run Line" },
           }, {})
         end,
         opts = {
@@ -146,7 +146,7 @@ return {
             enabled = true,
             default_method = "molten",
           },
-        }
+        },
       },
       {
         "chrisgrieser/nvim-various-textobjs",
@@ -206,7 +206,6 @@ return {
           end
         end,
       })
-
 
       -- automatically import output chunks from a jupyter notebook
       -- tries to find a kernel that matches the kernel in the jupyter notebook

@@ -31,7 +31,7 @@ wk.add({
   {
     "<leader>jg",
     group = "Gradle",
-    icon = {icon = "", color = "azure"},
+    icon = { icon = "", color = "azure" },
     {
       "<leader>jgq",
       group = "Kill",
@@ -70,17 +70,17 @@ if vim.fn.executable("spring-initializer") == 1 then
 end
 
 if vim.fn.executable("lazydocker") == 1 then
-      require("which-key").add({
-        {
-          "<leader>kd",
-          function ()
-            Util.terminal("lazydocker")
-          end,
-          desc = "Open Lazy Docker",
-          mode = { "n" },
-          icon = { cat = "filetype", name = "DockerFile" },
-        },
-      }, {})
+  require("which-key").add({
+    {
+      "<leader>kd",
+      function()
+        Util.terminal("lazydocker")
+      end,
+      desc = "Open Lazy Docker",
+      mode = { "n" },
+      icon = { cat = "filetype", name = "DockerFile" },
+    },
+  }, {})
 end
 
 vim.keymap.set("n", "<leader>f1", function()
@@ -103,10 +103,10 @@ end, { desc = "Line Diagnostics (Focus)" })
 
 if vim.g.neovide then
   -- Allow clipboard copy paste in neovim
-  vim.api.nvim_set_keymap('', '<D-v>', '+p<CR>', { noremap = true, silent = true})
-  vim.api.nvim_set_keymap('!', '<D-v>', '<C-R>+', { noremap = true, silent = true})
-  vim.api.nvim_set_keymap('t', '<D-v>', '<C-R>+', { noremap = true, silent = true})
-  vim.api.nvim_set_keymap('v', '<D-v>', '<C-R>+', { noremap = true, silent = true})
+  vim.api.nvim_set_keymap("", "<D-v>", "+p<CR>", { noremap = true, silent = true })
+  vim.api.nvim_set_keymap("!", "<D-v>", "<C-R>+", { noremap = true, silent = true })
+  vim.api.nvim_set_keymap("t", "<D-v>", "<C-R>+", { noremap = true, silent = true })
+  vim.api.nvim_set_keymap("v", "<D-v>", "<C-R>+", { noremap = true, silent = true })
 end
 
 -- Plugins

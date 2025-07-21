@@ -16,7 +16,7 @@ if vim.g.neovide then
 end
 
 if LazyVim.is_win() then
-  vim.o.shell = 'powershell.exe -nologo'
+  vim.o.shell = "powershell.exe -nologo"
 end
 
 local function get_conda_nvim_root()
@@ -34,7 +34,7 @@ local function get_conda_nvim_root()
   for _, line in ipairs(lines) do
     if line:match("nvim.*") then
       local envFolder = vim.fn.trim(line:match("nvim%s+%*?(.*)"))
-      local envPath = path:new(envFolder,  unpack(pythonFileName)):absolute()
+      local envPath = path:new(envFolder, unpack(pythonFileName)):absolute()
       cacheFile:write(envPath, "w", 464)
       return envPath
     end

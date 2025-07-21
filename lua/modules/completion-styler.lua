@@ -1,5 +1,4 @@
-local M = {
-}
+local M = {}
 
 local icons = {}
 
@@ -18,11 +17,11 @@ function M.getIcon(category)
 end
 
 local function shallow_copy(orig)
-    local copy = {}
-    for k, v in pairs(orig) do
-        copy[k] = v
-    end
-    return copy
+  local copy = {}
+  for k, v in pairs(orig) do
+    copy[k] = v
+  end
+  return copy
 end
 
 function M.getIcons()
@@ -30,4 +29,3 @@ function M.getIcons()
 end
 
 return M
-

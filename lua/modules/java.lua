@@ -1,13 +1,12 @@
 local M = {
   ---@type table<string, string>
-  runtimes = {}
+  runtimes = {},
 }
 local path = require("plenary.path")
 
 local function versionFromKey(key)
   return tonumber(key:match("java(%d+)"))
 end
-
 
 if vim.fn.filereadable(vim.env.JAVA_RUNTIMES_JSON) == 1 then
   M.runtimes = vim.json.decode(table.concat(vim.fn.readfile(vim.env.JAVA_RUNTIMES_JSON), "\n"))

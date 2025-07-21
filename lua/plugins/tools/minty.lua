@@ -12,8 +12,20 @@ return {
         {
           "<localleader>cp",
           group = "Picker",
-          { "<localleader>cph", function() require("minty.huefy").open() end,desc = "Pick Hue" },
-          { "<localleader>cps", function() require("minty.shades").open() end, desc = "Pick Shade" },
+          {
+            "<localleader>cph",
+            function()
+              require("minty.huefy").open()
+            end,
+            desc = "Pick Hue",
+          },
+          {
+            "<localleader>cps",
+            function()
+              require("minty.shades").open()
+            end,
+            desc = "Pick Shade",
+          },
         },
       })
     end,

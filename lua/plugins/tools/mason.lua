@@ -4,7 +4,7 @@ return {
   opts = {
     registries = {
       "github:mason-org/mason-registry",
-      "github:mistweaverco/zana-registry"
-    }
-  }
+      "github:mistweaverco/zana-registry",
+    },
+  },
 }

@@ -1,15 +1,15 @@
 return {
   "rachartier/tiny-inline-diagnostic.nvim",
   dependencies = {
-    "neovim/nvim-lspconfig"
+    "neovim/nvim-lspconfig",
   },
   event = "VeryLazy",
   opts = {
     options = {
       overflow = {
-        mode = "wrap"
-      }
-    }
+        mode = "wrap",
+      },
+    },
   },
   config = function(_, opts)
     vim.diagnostic.config({ virtual_text = false, underline = true })
