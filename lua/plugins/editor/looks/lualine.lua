@@ -17,10 +17,9 @@ return {
 
     local function pythonEnv()
       -- @type string
-      local activeEnv = require("venv-selector").python()
-      local pythonExec = vim.fn.has("win32") == 1 and "\\python%.exe" or "/bin/python"
+      local activeEnv = require("venv-selector").venv()
       if activeEnv ~= nil then
-        return envSection(activeEnv:match("([%w-_]+)" .. pythonExec .. "$"))
+        return envSection(activeEnv:match("([%w-_]+)$"))
       else
         return ""
       end
