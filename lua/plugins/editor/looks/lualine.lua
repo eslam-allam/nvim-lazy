@@ -11,6 +11,8 @@ return {
     { "linux-cultist/venv-selector.nvim" },
   },
   opts = function(_, opts)
+    opts.options.theme = "catppuccin"
+
     local function envSection(envName)
       return " " .. envName
     end
