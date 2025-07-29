@@ -1,8 +1,8 @@
 return {
   "linux-cultist/venv-selector.nvim",
   lazy = false,
+  enabled = true,
   dependencies = {
-    { "nvim-telescope/telescope.nvim", branch = "0.1.x", dependencies = { "nvim-lua/plenary.nvim" } },
     "nvim-lua/plenary.nvim",
   },
   opts = {
