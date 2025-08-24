@@ -2,15 +2,6 @@ return {
   {
     "neovim/nvim-lspconfig",
     opts = function(_, opts)
-      local helpers = require("modules.helpers")
-      local keys = require("lazyvim.plugins.lsp.keymaps").get()
-      keys[#keys + 1] = {
-        "K",
-        function()
-          helpers.lspRequestExcludeLsps(vim.lsp.protocol.Methods.textDocument_hover, vim.g.hover_exclude_lsps)
-        end,
-      }
-
       local mason_home = vim.fn.getenv("MASON")
 
       -- make sure mason installs the server
