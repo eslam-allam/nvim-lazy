@@ -70,8 +70,6 @@ vim.env.CUSTOM_JAVA_ROOTS = jdtls_config_dir .. "/jdtls-custom-roots.json"
 vim.g.root_spec = { "lsp", { ".git" }, "cwd" }
 vim.g.java_filetypes = { "java" }
 
-vim.g.spring_cache_dir = data_dir:joinpath("spring-boot"):absolute()
-
 vim.g.hover_exclude_lsps = { { name = "spring-boot", filetypes = { "java" } } }
 vim.g.definition_exclude_lsps = {
   { name = "spring-boot", filetypes = { "java" }, ts_captures = { "!string" } },
