@@ -2,7 +2,12 @@ return {
   {
     "neovim/nvim-lspconfig",
     opts = function(_, opts)
-      local mason_home = vim.fn.getenv("MASON")
+      local gradle_jar = require("plenary.path"):new(
+        require("mason-registry").get_package("gradle-language-server"):get_install_path(),
+        "extension",
+        "lib",
+        "gradle-language-server.jar"
+      )
 
       -- make sure mason installs the server
       opts.servers.gradle_ls = {}
@@ -10,7 +15,7 @@ return {
         sopts.cmd = {
           require("modules.java").execAtleast(17),
           "-jar",
-          mason_home .. "/packages/gradle-language-server/extension/lib/gradle-language-server.jar",
+          gradle_jar:absolute(),
         }
         sopts.root_dir = require("modules.java").javaRoot
       end
