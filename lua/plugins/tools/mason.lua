@@ -1,10 +1,9 @@
 return {
-  "williamboman/mason.nvim",
+  "mason-org/mason.nvim",
   optional = true,
   opts = {
     registries = {
       "github:mason-org/mason-registry",
-      "github:mistweaverco/zana-registry",
     },
   },
 }
