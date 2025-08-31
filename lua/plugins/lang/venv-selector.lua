@@ -2,6 +2,7 @@ return {
   "linux-cultist/venv-selector.nvim",
   lazy = false,
   enabled = true,
+  branch = "main",
   dependencies = {
     "nvim-lua/plenary.nvim",
   },
