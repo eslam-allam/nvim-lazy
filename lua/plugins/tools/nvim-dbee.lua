@@ -2,6 +2,23 @@ return {
   "kndndrj/nvim-dbee",
   dependencies = {
     "MunifTanjim/nui.nvim",
+    {
+      "MattiasMTS/cmp-dbee",
+      dependencies = {
+        { "kndndrj/nvim-dbee" },
+      },
+      ft = "sql", -- optional but good to have
+      opts = {}, -- needed
+    },
+    {
+      "saghen/blink.cmp",
+      optional = true,
+      opts = {
+        sources = {
+          compat = { "cmp-dbee" },
+        },
+      },
+    },
   },
   keys = {
     { "<leader>D", "<cmd>Dbee<CR>", desc = "Toggle DB", mode = "n" },

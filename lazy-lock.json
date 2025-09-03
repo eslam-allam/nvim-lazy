@@ -12,6 +12,7 @@
   "catppuccin": { "branch": "main", "commit": "30fa4d122d9b22ad8b2e0ab1b533c8c26c4dde86" },
   "checkbox-cycle.nvim": { "branch": "main", "commit": "05ae2ead2ff2fd9d50be8ad288f8c1b716f5fb90" },
   "cloak.nvim": { "branch": "main", "commit": "648aca6d33ec011dc3166e7af3b38820d01a71e4" },
+  "cmp-dbee": { "branch": "main", "commit": "1650f67b9bf43c029fc37570665ca895a33cdf5a" },
   "cmp-vimtex": { "branch": "master", "commit": "5283bf9108ef33d41e704027b9ef22437ce7a15b" },
   "codecompanion.nvim": { "branch": "main", "commit": "ec81e80073f5332a6e443924c504a2d034a56d1c" },
   "conform.nvim": { "branch": "master", "commit": "b4aab989db276993ea5dcb78872be494ce546521" },
