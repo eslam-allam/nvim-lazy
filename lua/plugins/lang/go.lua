@@ -50,7 +50,7 @@ return {
     "neovim/nvim-lspconfig",
     opts = function(_, opts)
       opts.servers.htmx = {
-        mason = true,
+        mason = false,
       }
 
       opts.capabilities.workspace.didChangeWatchedFiles = {
