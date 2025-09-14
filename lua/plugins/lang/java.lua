@@ -1,6 +1,6 @@
 local javaHelpers = require("modules.java")
 local java_filetypes = javaHelpers.filetypes
-local javaExec = javaHelpers.execAtleast(17)
+local javaExec = javaHelpers.execAtleast(24)
 
 return {
   {
@@ -234,7 +234,7 @@ return {
       },
     },
     opts = {
-      java_cmd = require("modules.java").execAtleast(17),
+      java_cmd = javaExec,
     },
   },
 }
