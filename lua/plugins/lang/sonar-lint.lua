@@ -8,10 +8,8 @@ return {
       require("sonarqube").setup(opts)
     end,
     opts = function()
-      local extension_path = require("plenary.path"):new(
-        vim.fn.expand("$MASON/packages/sonarlint-language-server"),
-        "extension"
-      )
+      local extension_path =
+        require("plenary.path"):new(vim.fn.expand("$MASON/packages/sonarlint-language-server"), "extension")
       local analyzers = extension_path:joinpath("analyzers")
       local javaExec = require("modules.java").execAtleast(17)
       return {

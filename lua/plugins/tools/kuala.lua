@@ -78,7 +78,7 @@ return {
   opts = {
     ui = {
       formatter = true,
-      max_response_size = 1024000
+      max_response_size = 1024000,
     },
   },
 }
