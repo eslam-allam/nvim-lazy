@@ -1,6 +1,9 @@
 return {
   {
     "iamkarasik/sonarqube.nvim",
+    dependencies = {
+      "mason-org/mason.nvim",
+    },
     config = function(_, opts)
       require("sonarqube").setup(opts)
     end,

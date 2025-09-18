@@ -1,5 +1,8 @@
 return {
   "stevearc/conform.nvim",
+  dependencies = {
+    "mason-org/mason.nvim",
+  },
   build = function()
     local path = require("plenary.path")
 
