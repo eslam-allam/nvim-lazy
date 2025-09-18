@@ -12,7 +12,7 @@ return {
     end
 
     coroutine.yield("Finding google-java-format installation")
-    local java_formatter_jar_dir = require("mason-registry").get_package("google-java-format"):get_install_path()
+    local java_formatter_jar_dir = vim.fn.expand("$MASON/packages/google-java-format")
     local java_formatter_jar =
       vim.fn.glob(path:new(java_formatter_jar_dir):joinpath("google-java-format-*.jar"):absolute())
     if java_formatter_jar == "" then

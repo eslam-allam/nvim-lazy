@@ -8,14 +8,14 @@ return {
     ft = java_filetypes,
     cond = javaHelpers.has_runtimes(),
     dependencies = {
-      "williamboman/mason.nvim",
+      "mason-org/mason.nvim",
     },
     opts = function(_, opts)
       -- How to find the root dir for a given filename. The default comes from
       -- lspconfig which provides a function specifically for java projects.
       opts.root_dir = require("modules.java").javaRoot
 
-      local jdtls_path = require("plenary.path"):new(require("mason-registry").get_package("jdtls"):get_install_path())
+      local jdtls_path = require("plenary.path"):new(vim.fn.expand("$MASON/packages/jdtls"))
       local shared_config_path = jdtls_path:joinpath("config_linux"):absolute()
       local plugins_dir = jdtls_path:joinpath("plugins", "org.eclipse.equinox.launcher_*.jar"):absolute()
 
@@ -76,15 +76,13 @@ return {
       local mason_registry = require("mason-registry")
       local bundles = {} ---@type string[]
       if opts.dap and LazyVim.has("nvim-dap") and mason_registry.is_installed("java-debug-adapter") then
-        local java_dbg_pkg = mason_registry.get_package("java-debug-adapter")
-        local java_dbg_path = java_dbg_pkg:get_install_path()
+        local java_dbg_path = vim.fn.expand("$MASON/packages/java-debug-adapter")
         local jar_patterns = {
           java_dbg_path .. "/extension/server/com.microsoft.java.debug.plugin-*.jar",
         }
         -- java-test also depends on java-debug-adapter.
         if opts.test and mason_registry.is_installed("java-test") then
-          local java_test_pkg = mason_registry.get_package("java-test")
-          local java_test_path = java_test_pkg:get_install_path()
+          local java_test_path = vim.fn.expand("$MASON/packages/java-test")
           vim.list_extend(jar_patterns, {
             java_test_path .. "/extension/server/*.jar",
           })
@@ -226,7 +224,7 @@ return {
     dependencies = {
       "mfussenegger/nvim-jdtls", -- or nvim-java, nvim-lspconfig
       {
-        "williamboman/mason.nvim",
+        "mason-org/mason.nvim",
         opts = function(_, opts)
           opts.ensure_installed = opts.ensure_installed or {}
           vim.list_extend(opts.ensure_installed, { "vscode-spring-boot-tools" })

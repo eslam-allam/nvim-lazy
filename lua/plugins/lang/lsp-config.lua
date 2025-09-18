@@ -3,7 +3,7 @@ return {
     "neovim/nvim-lspconfig",
     opts = function(_, opts)
       local gradle_jar = require("plenary.path"):new(
-        require("mason-registry").get_package("gradle-language-server"):get_install_path(),
+        vim.fn.expand("$MASON/packages/gradle-language-server"),
         "extension",
         "lib",
         "gradle-language-server.jar"

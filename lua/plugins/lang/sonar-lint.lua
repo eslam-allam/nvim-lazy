@@ -6,7 +6,7 @@ return {
     end,
     opts = function()
       local extension_path = require("plenary.path"):new(
-        require("mason-registry").get_package("sonarlint-language-server"):get_install_path(),
+        vim.fn.expand("$MASON/packages/sonarlint-language-server"),
         "extension"
       )
       local analyzers = extension_path:joinpath("analyzers")

@@ -1,5 +1,5 @@
 return {
-  "echasnovski/mini.icons",
+  "nvim-mini/mini.icons",
   opts = {
     file = {
       ["favicon.ico"] = { glyph = "", hl = "MiniIconsPurple" },
