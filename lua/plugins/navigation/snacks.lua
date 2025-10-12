@@ -140,7 +140,7 @@ return {
       sources = {
         explorer = {
           layout = { preset = "default", preview = true },
-          jump = {close = true },
+          jump = { close = true },
           preview = preview_file,
         },
         files = {

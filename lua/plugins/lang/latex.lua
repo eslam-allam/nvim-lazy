@@ -6,7 +6,7 @@ return {
       {
         "saghen/blink.cmp",
         optional = true,
-        dependencies = {"saghen/blink.compat"},
+        dependencies = { "saghen/blink.compat" },
         opts = {
           sources = {
             compat = { "vimtex" },

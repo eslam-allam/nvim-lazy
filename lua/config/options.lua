@@ -81,7 +81,6 @@ vim.g.custom_formater_exec_folder = data_dir:joinpath("conform", "custom_formatt
 vim.g.cmp_file_disabled =
   { "DressingInput", "TelescopePrompt", "snacks_input", "snacks_picker_input", "speedtyper", "rip-substitute" }
 
-
 vim.g.ngram_data = data_dir:joinpath("spell", "ngram"):absolute()
 
 vim.opt.spell = true
