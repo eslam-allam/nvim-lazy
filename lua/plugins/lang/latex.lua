@@ -6,16 +6,10 @@ return {
       {
         "saghen/blink.cmp",
         optional = true,
+        dependencies = {"saghen/blink.compat"},
         opts = {
           sources = {
             compat = { "vimtex" },
-            providers = {
-              supermaven = {
-                kind = "Supermaven",
-                score_offset = 100,
-                async = true,
-              },
-            },
           },
         },
       },
