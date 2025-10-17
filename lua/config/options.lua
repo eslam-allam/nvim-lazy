@@ -19,12 +19,12 @@ if LazyVim.is_win() then
   vim.o.shell = "powershell.exe -nologo"
 end
 
-local function get_conda_nvim_root()
+local function get_conda_nvim_root(command)
   local cacheFile = path:new(vim.fn.stdpath("cache"), "conda_nvim_root.txt")
   if cacheFile:exists() then
     return cacheFile:read()
   end
-  local condaEnvs = vim.system({ "conda", "info", "--envs" }):wait()
+  local condaEnvs = vim.system({ command, "info", "--envs" }):wait()
   local pythonFileName = LazyVim.is_win() and { "python.exe" } or { "bin", "python" }
   if condaEnvs.code ~= 0 then
     vim.notify("Could not find conda envs", vim.log.levels.WARN)
@@ -43,12 +43,22 @@ local function get_conda_nvim_root()
   return nil
 end
 
+local conda_env = nil
 if vim.fn.executable("conda") == 1 then
-  local conda_env = get_conda_nvim_root()
-  if conda_env then
-    vim.g.python3_host_prog = conda_env
-    vim.g.python_host_prog = conda_env
-  end
+  conda_env = get_conda_nvim_root("conda")
+end
+
+if vim.fn.executable("micromamba") == 1 then
+  conda_env = get_conda_nvim_root("micromamba")
+end
+
+if vim.fn.executable("mamba") == 1 then
+  conda_env = get_conda_nvim_root("mamba")
+end
+
+if conda_env ~= nil then
+  vim.g.python3_host_prog = conda_env
+  vim.g.python_host_prog = conda_env
 end
 
 vim.g.maplocalleader = ","
