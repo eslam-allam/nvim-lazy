@@ -15,26 +15,24 @@ return {
     end
 
     coroutine.yield("Finding google-java-format installation")
-    local java_formatter_jar_dir = vim.fn.expand("$MASON/packages/google-java-format")
-    local java_formatter_jar =
-      vim.fn.glob(path:new(java_formatter_jar_dir):joinpath("google-java-format-*.jar"):absolute())
-    if java_formatter_jar == "" then
+    local java_formatter_dir = vim.fn.expand("$MASON/packages/google-java-format")
+    local java_formatter = vim.fn.glob(path:new(java_formatter_dir):joinpath("google-java-format*"):absolute())
+    if java_formatter == "" then
       coroutine.yield({ msg = "Google java formatter not found!", level = vim.log.levels.WARN })
       return false
     end
 
-    local java_exec = require("modules.java").execAtleast(11)
     local commands = {}
     local is_linux = vim.fn.has("linux") == 1
     local exec_file_name = "google-java-format"
 
     if is_linux then
       table.insert(commands, { "#!/usr/bin/env bash", "" })
-      table.insert(commands, { "exec", java_exec, "-jar", '"' .. java_formatter_jar .. '"', '"$@"' })
+      table.insert(commands, { "exec", '"' .. java_formatter .. '"', '"$@"' })
     else
       exec_file_name = "google-java-format.cmd"
       table.insert(commands, { "@ECHO OFF" })
-      table.insert(commands, { '"' .. java_exec .. '"', "-jar", '"' .. java_formatter_jar .. '"', "%*" })
+      table.insert(commands, { '"' .. java_formatter .. '"', "%*" })
     end
 
     local java_formatter_exec_folder = path:new(vim.g.custom_formater_exec_folder)
