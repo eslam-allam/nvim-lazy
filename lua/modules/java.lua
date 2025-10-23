@@ -12,6 +12,39 @@ if vim.fn.filereadable(vim.env.JAVA_RUNTIMES_JSON) == 1 then
   M.runtimes = vim.json.decode(table.concat(vim.fn.readfile(vim.env.JAVA_RUNTIMES_JSON), "\n"))
 end
 
+function M.To_java_version_name(path)
+  -- Extract the basename from the path
+  local basename = path:match("([^/]+)$")
+  if not basename then
+    return nil
+  end
+
+  -- Extract the version number between non-digits followed by digits
+  local version = basename:match("-(%d+)")
+  if not version then
+    return nil
+  end
+
+  return "java" .. version
+end
+
+if vim.fn.executable("fd") == 1 and not LazyVim.is_win() then
+  local paths_result = vim.system({ "fd", "bin/java$", "/usr/lib/jvm", "--full-path" }):wait(300)
+  if paths_result.code ~= 0 then
+    vim.notify("Failed to get java paths", vim.log.levels.ERROR, { title = "Java" })
+  else
+    local javaPaths = vim.split(paths_result.stdout, "\n", { trimempty = true })
+    vim.notify("Found " .. #javaPaths .. " java runtimes", vim.log.levels.INFO, { title = "Java" })
+    for _, v in pairs(javaPaths) do
+      local javaPath = path:new(v):parent():parent():absolute()
+      M.runtimes[M.To_java_version_name(javaPath)] = javaPath
+    end
+  end
+  vim.notify("Detected runtimes: " .. vim.inspect(M.runtimes), vim.log.levels.DEBUG, { title = "Java" })
+else
+  vim.notify("fd not found. Skipping java runtime detection", vim.log.levels.WARN, { title = "Java" })
+end
+
 M.filetypes = vim.g.java_filetypes
 local java_root_config = vim.env.CUSTOM_JAVA_ROOTS
 local java_roots = {}
