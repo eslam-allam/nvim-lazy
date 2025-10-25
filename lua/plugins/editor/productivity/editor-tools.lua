@@ -37,28 +37,35 @@ return {
   },
   {
     "Chaitanyabsprip/fastaction.nvim",
-    config = function(_, opts)
-      require("fastaction").setup(opts)
-
-      local keys = require("lazyvim.plugins.lsp.keymaps").get()
-
-      keys[#keys + 1] = {
-        "<leader>ca",
-        function()
-          require("fastaction").code_action()
-        end,
-        mode = "n",
-        desc = "Code Action",
-      }
-      keys[#keys + 1] = {
-        "<leader>ca",
-        function()
-          require("fastaction").code_action()
-        end,
-        mode = "x",
-        desc = "Code Action",
-      }
-    end,
+    dependencies = {
+      {
+        "neovim/nvim-lspconfig",
+        opts = {
+          servers = {
+            ["*"] = {
+              keys = {
+                {
+                  "<leader>ca",
+                  function()
+                    require("fastaction").code_action()
+                  end,
+                  mode = "n",
+                  desc = "Code Action",
+                },
+                {
+                  "<leader>ca",
+                  function()
+                    require("fastaction").code_action()
+                  end,
+                  mode = "x",
+                  desc = "Code Action",
+                },
+              },
+            },
+          },
+        },
+      },
+    },
     opts = {
       dismiss_keys = { "q" },
       register_ui_select = true,
