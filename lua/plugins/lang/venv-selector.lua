@@ -16,7 +16,7 @@ return {
         mamba = {
           command = "fd 'bin/python$' ~/.local/share/mamba/envs --no-ignore-vcs --full-path --color never",
           type = "anaconda",
-        }
+        },
       },
     },
   },
