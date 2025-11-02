@@ -1,5 +1,6 @@
 return {
   "pwntester/octo.nvim",
+  optional = true,
   opts = {
     mappings = {
       review_diff = {
