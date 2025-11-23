@@ -32,6 +32,9 @@ return {
             analyzers:joinpath("sonarxml.jar"):absolute(),
           },
         },
+        python = {
+          enabled = false,
+        },
       }
     end,
   },
