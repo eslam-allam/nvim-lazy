@@ -57,10 +57,15 @@ return {
     log_level = "TRACE",
     strategies = {
       chat = {
-        adapter = "openai",
+        adapter = {
+          name = "openai",
+          model = "gpt-5.1",
+        },
       },
       inline = {
-        adapter = "openai",
+        adapter = {
+          name = "openai",
+        },
         keymaps = {
           accept_change = {
             modes = { n = "gca" },
@@ -73,63 +78,12 @@ return {
         },
       },
       agent = {
-        adapter = "openai",
+        adapter = {
+          name = "openai",
+        },
       },
     },
     adapters = {
-
-      llama_remote = function()
-        local home = vim.fn.getenv("HOME")
-        return require("codecompanion.adapters").extend("ollama", {
-          name = "llama_remote", -- Ensure the model is differentiated from Ollama
-          env = {
-            url = "https://adriai.org/ollama/backend",
-            api_key = "cmd:gpg --decrypt " .. home .. "/.secrets/adri-ollama-secret.gpg 2>/dev/null",
-          },
-          headers = {
-            ["Content-Type"] = "application/json",
-            ["CF-Access-Client-Id"] = "2b2c5857211179d8dcee2e65d9d0dffd.access",
-            ["CF-Access-Client-Secret"] = "${api_key}",
-          },
-          schema = {
-            model = {
-              default = "llama3.1:70b",
-            },
-          },
-        })
-      end,
-      wizardcoder = function()
-        return require("codecompanion.adapters").extend("ollama", {
-          name = "wizardcoder", -- Ensure the model is differentiated from Ollama
-          schema = {
-            model = {
-              default = "wizardcoder:python",
-            },
-            num_ctx = {
-              default = 16384,
-            },
-            num_predict = {
-              default = -1,
-            },
-          },
-        })
-      end,
-      deepseek_v2 = function()
-        return require("codecompanion.adapters").extend("ollama", {
-          name = "deepseek-v2", -- Ensure the model is differentiated from Ollama
-          schema = {
-            model = {
-              default = "deepseek-coder-v2",
-            },
-            num_ctx = {
-              default = 16384,
-            },
-            num_predict = {
-              default = -1,
-            },
-          },
-        })
-      end,
       openai = function()
         return require("codecompanion.adapters").extend("openai", {
           env = {
