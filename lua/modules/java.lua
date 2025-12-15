@@ -34,13 +34,13 @@ if vim.fn.executable("fd") == 1 and not LazyVim.is_win() then
     vim.notify("Failed to get java paths", vim.log.levels.ERROR, { title = "Java" })
   else
     local javaPaths = vim.split(paths_result.stdout, "\n", { trimempty = true })
-    vim.notify("Found " .. #javaPaths .. " java runtimes", vim.log.levels.INFO, { title = "Java" })
+    -- vim.notify("Found " .. #javaPaths .. " java runtimes", vim.log.levels.DEBUG, { title = "Java" })
     for _, v in pairs(javaPaths) do
       local javaPath = path:new(v):parent():parent():absolute()
       M.runtimes[M.To_java_version_name(javaPath)] = javaPath
     end
   end
-  vim.notify("Detected runtimes: " .. vim.inspect(M.runtimes), vim.log.levels.DEBUG, { title = "Java" })
+  -- vim.notify("Detected runtimes: " .. vim.inspect(M.runtimes), vim.log.levels.DEBUG, { title = "Java" })
 else
   vim.notify("fd not found. Skipping java runtime detection", vim.log.levels.WARN, { title = "Java" })
 end
