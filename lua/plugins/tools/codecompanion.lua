@@ -2,8 +2,21 @@ return {
   "olimorris/codecompanion.nvim",
   event = "VeryLazy",
   dependencies = {
+    "ravitemer/mcphub.nvim",
     "nvim-lua/plenary.nvim",
     "nvim-treesitter/nvim-treesitter",
+    {
+      "HakonHarnes/img-clip.nvim",
+      opts = {
+        filetypes = {
+          codecompanion = {
+            prompt_for_file_name = false,
+            template = "[Image]($FILE_PATH)",
+            use_absolute_path = true,
+          },
+        },
+      },
+    },
     {
       "stevearc/dressing.nvim", -- Optional: Improves the default Neovim UI
       opts = {},
@@ -55,7 +68,7 @@ return {
       },
     },
     log_level = "TRACE",
-    strategies = {
+    interactions = {
       chat = {
         adapter = {
           name = "openai",
@@ -65,6 +78,7 @@ return {
       inline = {
         adapter = {
           name = "openai",
+          model = "gpt-5.1",
         },
         keymaps = {
           accept_change = {
@@ -84,13 +98,25 @@ return {
       },
     },
     adapters = {
-      openai = function()
-        return require("codecompanion.adapters").extend("openai", {
-          env = {
-            api_key = "cmd:rbw get 'OpenAI Neovim'",
-          },
-        })
-      end,
+      http = {
+        openai = function()
+          return require("codecompanion.adapters").extend("openai", {
+            env = {
+              api_key = "cmd:rbw get 'OpenAI Neovim'",
+            },
+          })
+        end,
+      },
+    },
+    extensions = {
+      mcphub = {
+        callback = "mcphub.extensions.codecompanion",
+        opts = {
+          make_vars = true,
+          make_slash_commands = true,
+          show_result_in_chat = true,
+        },
+      },
     },
   },
 }
