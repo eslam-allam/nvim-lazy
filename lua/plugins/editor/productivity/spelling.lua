@@ -14,23 +14,25 @@ return {
       },
       setup = {
         ltex_plus = function(_, opts)
-          if vim.fn.isdirectory(vim.g.ngram_data) == 0 then
-            vim.notify(
-              "ngram data doesn't exist at '" .. vim.g.ngram_data .. "'. Download to unlock full capabilities.",
-              vim.log.levels.WARN,
-              {
-                title = "Spell",
-              }
-            )
-            return
-          end
-          opts.settings = {
-            ltex = {
-              additionalRules = {
-                languageModel = vim.g.ngram_data,
+          if vim.g.spell_use_ngram then
+            if vim.fn.isdirectory(vim.g.ngram_data) == 0 then
+              vim.notify(
+                "ngram data doesn't exist at '" .. vim.g.ngram_data .. "'. Download to unlock full capabilities.",
+                vim.log.levels.WARN,
+                {
+                  title = "Spell",
+                }
+              )
+              return
+            end
+            opts.settings = {
+              ltex = {
+                additionalRules = {
+                  languageModel = vim.g.ngram_data,
+                },
               },
-            },
-          }
+            }
+          end
         end,
       },
     },
