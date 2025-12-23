@@ -37,6 +37,7 @@ return {
   },
   {
     "Chaitanyabsprip/fastaction.nvim",
+    enabled = false,
     dependencies = {
       {
         "neovim/nvim-lspconfig",
