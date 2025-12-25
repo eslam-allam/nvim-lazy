@@ -23,25 +23,7 @@ return {
               name = "gradle_ls",
               filetypes = { "groovy" },
               root_markers = { "settings.gradle", { "build.gradle", "build.gradle.kts" }, "gradlew", "gradle.war" },
-              cmd = {
-                require("modules.java").execAtleast(17),
-                "-jar",
-                require("plenary.path")
-                  :new(
-                    require("mason.settings").current.install_root_dir,
-                    "packages",
-                    "gradle-language-server",
-                    "extension",
-                    "lib",
-                    "gradle-language-server.jar"
-                  )
-                  :absolute(),
-              },
-              init_options = {
-                settings = {
-                  gradleWrapperEnabled = true,
-                },
-              },
+              cmd_env = { JAVA_HOME = require("modules.java").runtimesAtleast(17) },
             },
           },
         },
