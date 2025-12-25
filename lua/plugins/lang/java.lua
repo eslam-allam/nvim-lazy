@@ -15,6 +15,10 @@ return {
         opts = {
           servers = {
             --- @type vim.lsp.Config
+            kotlin_language_server = {
+              cmd_env = { JAVA_HOME = require("modules.java").runtimesAt(17) },
+            },
+            --- @type vim.lsp.Config
             gradle_ls = {
               name = "gradle_ls",
               filetypes = { "groovy" },
