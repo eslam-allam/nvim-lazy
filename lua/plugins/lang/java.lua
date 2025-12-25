@@ -17,7 +17,7 @@ return {
             --- @type vim.lsp.Config
             gradle_ls = {
               name = "gradle_ls",
-              filetypes = { "groovy", "kotlin" },
+              filetypes = { "groovy" },
               root_markers = { "settings.gradle", { "build.gradle", "build.gradle.kts" }, "gradlew", "gradle.war" },
               cmd = {
                 require("modules.java").execAtleast(17),
