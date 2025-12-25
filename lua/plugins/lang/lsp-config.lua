@@ -5,23 +5,6 @@ return {
       "mason-org/mason.nvim",
     },
     opts = function(_, opts)
-      local gradle_jar = require("plenary.path"):new(
-        vim.fn.expand("$MASON/packages/gradle-language-server"),
-        "extension",
-        "lib",
-        "gradle-language-server.jar"
-      )
-
-      -- make sure mason installs the server
-      opts.servers.gradle_ls = {}
-      opts.setup.gradle_ls = function(_, sopts)
-        sopts.cmd = {
-          require("modules.java").execAtleast(17),
-          "-jar",
-          gradle_jar:absolute(),
-        }
-        sopts.root_dir = require("modules.java").javaRoot
-      end
 
       opts.setup.tailwindcss = function(_, sopts)
         sopts.settings = {

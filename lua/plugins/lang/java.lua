@@ -9,6 +9,39 @@ return {
     cond = javaHelpers.has_runtimes(),
     dependencies = {
       "mason-org/mason.nvim",
+      {
+        "neovim/nvim-lspconfig",
+        ---@class PluginLspOpts
+        opts = {
+          servers = {
+            --- @type vim.lsp.Config
+            gradle_ls = {
+              name = "gradle_ls",
+              filetypes = { "groovy", "kotlin" },
+              root_markers = { "settings.gradle", { "build.gradle", "build.gradle.kts" }, "gradlew", "gradle.war" },
+              cmd = {
+                require("modules.java").execAtleast(17),
+                "-jar",
+                require("plenary.path")
+                  :new(
+                    require("mason.settings").current.install_root_dir,
+                    "packages",
+                    "gradle-language-server",
+                    "extension",
+                    "lib",
+                    "gradle-language-server.jar"
+                  )
+                  :absolute(),
+              },
+              init_options = {
+                settings = {
+                  gradleWrapperEnabled = true,
+                },
+              },
+            },
+          },
+        },
+      },
     },
     opts = function(_, opts)
       -- How to find the root dir for a given filename. The default comes from

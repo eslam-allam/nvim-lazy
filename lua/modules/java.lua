@@ -65,6 +65,11 @@ function M.javaRoot(fileName)
   return require("lspconfig.configs.jdtls").default_config.root_dir(fileName)
 end
 
+function M.javaRootCallback(bufnr, callback)
+  local filePath = vim.uri_from_bufnr(bufnr)
+  callback(M.javaRoot(filePath))
+end
+
 function M.has_runtimes()
   return not vim.tbl_isempty(M.runtimes)
 end
