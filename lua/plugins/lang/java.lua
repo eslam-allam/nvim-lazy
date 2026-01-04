@@ -13,6 +13,9 @@ return {
         "neovim/nvim-lspconfig",
         ---@class PluginLspOpts
         opts = {
+          inlay_hints = {
+            exclude = { "java" },
+          },
           servers = {
             --- @type vim.lsp.Config
             kotlin_language_server = {
