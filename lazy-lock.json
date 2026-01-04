@@ -95,6 +95,7 @@
   "sonarqube.nvim": { "branch": "master", "commit": "811bf8f46e0aa5ed9c9b5783aaf6f87640df553a" },
   "speedtyper.nvim": { "branch": "v2", "commit": "7a86646020fdec9e892f2d6ae4ac67f55dcbf257" },
   "spring-boot.nvim": { "branch": "main", "commit": "affc5d16f1de9bbcbb260a31e74ee1037d4903a0" },
+  "sshfs.nvim": { "branch": "main", "commit": "4516f32f2e104c31b7431b06d3a5c5c4f455038d" },
   "tabby.nvim": { "branch": "main", "commit": "b3affa6db7eab80fca2a2db5b73b473144507039" },
   "table-nvim": { "branch": "main", "commit": "287056dab467bce5c34d288c47467856db4f7457" },
   "tiny-inline-diagnostic.nvim": { "branch": "main", "commit": "7dcf8542059fb15c978de845fc8665428ae13a04" },
