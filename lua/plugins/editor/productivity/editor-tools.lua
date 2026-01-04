@@ -25,55 +25,6 @@ return {
     end,
   },
   {
-    "stevearc/dressing.nvim",
-    -- Don't replace vim.ui.select
-    init = function()
-      ---@diagnostic disable-next-line: duplicate-set-field
-      vim.ui.input = function(...)
-        require("lazy").load({ plugins = { "dressing.nvim" } })
-        return vim.ui.input(...)
-      end
-    end,
-  },
-  {
-    "Chaitanyabsprip/fastaction.nvim",
-    enabled = false,
-    dependencies = {
-      {
-        "neovim/nvim-lspconfig",
-        opts = {
-          servers = {
-            ["*"] = {
-              keys = {
-                {
-                  "<leader>ca",
-                  function()
-                    require("fastaction").code_action()
-                  end,
-                  mode = "n",
-                  desc = "Code Action",
-                },
-                {
-                  "<leader>ca",
-                  function()
-                    require("fastaction").code_action()
-                  end,
-                  mode = "x",
-                  desc = "Code Action",
-                },
-              },
-            },
-          },
-        },
-      },
-    },
-    opts = {
-      dismiss_keys = { "q" },
-      register_ui_select = true,
-    },
-  },
-
-  {
     "dmtrKovalenko/caps-word.nvim",
     lazy = true,
     opts = {},

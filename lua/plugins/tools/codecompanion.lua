@@ -18,10 +18,6 @@ return {
       },
     },
     {
-      "stevearc/dressing.nvim", -- Optional: Improves the default Neovim UI
-      opts = {},
-    },
-    {
       "nvim-lualine/lualine.nvim",
       opts = function(_, opts)
         table.insert(opts.sections.lualine_x, 1, require("modules.codecompanion-status"))
