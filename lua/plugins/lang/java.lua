@@ -69,6 +69,16 @@ return {
       end
     end,
     config = function(_, opts)
+      require("jdtls.ui").pick_one = function(items, prompt, label_f)
+        local co = coroutine.running()
+        vim.ui.select(items, {
+          prompt = prompt,
+          format_item = label_f,
+        }, function(item, _)
+          coroutine.resume(co, item)
+        end)
+        return coroutine.yield()
+      end
       -- Find the extra bundles that should be passed on the jdtls command-line
       -- if nvim-dap is enabled with java debug/test.
       local bundles = {} ---@type string[]
