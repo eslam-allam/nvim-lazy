@@ -66,12 +66,14 @@ return {
     priotity = 1000,
     opts = {
       colorscheme = function()
-        local ok, matugen = pcall(require, "matugen")
-        if ok then
-          ok, matugen = pcall(matugen.setup)
+        if vim.g.auto_color_scheme then
+          local ok, matugen = pcall(require, "matugen")
           if ok then
-            vim.g.color_scheme = "matugen"
-            return
+            ok, matugen = pcall(matugen.setup)
+            if ok then
+              vim.g.color_scheme = "matugen"
+              return
+            end
           end
         end
 
