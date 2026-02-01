@@ -57,10 +57,27 @@ return {
   },
   {
     "LazyVim/LazyVim",
+    dependencies = {
+      {
+        "RRethy/base16-nvim",
+      },
+    },
     lazy = false,
     priotity = 1000,
     opts = {
-      colorscheme = "catppuccin",
+      colorscheme = function()
+        local ok, matugen = pcall(require, "matugen")
+        if ok then
+          ok, matugen = pcall(matugen.setup)
+          if ok then
+            vim.g.color_scheme = "matugen"
+            return
+          end
+        end
+
+        vim.g.color_scheme = "matugen"
+        vim.cmd.colorscheme("catppuccin")
+      end,
     },
   },
 }

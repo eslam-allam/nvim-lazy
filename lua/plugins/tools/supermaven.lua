@@ -20,9 +20,13 @@ return {
       },
     },
     config = function(_, opts)
+      local color = require("catppuccin.palettes").get_palette("mocha").blue
+      if vim.g.color_scheme == "matugen" then
+        color = require("base16-colorscheme").colors.base08
+      end
+
       require("modules.completion-styler").addIcon("Supermaven", "󱚟")
-      local colors = require("catppuccin.palettes").get_palette("mocha")
-      vim.api.nvim_set_hl(0, "CmpItemKindSupermaven", { fg = colors.blue })
+      vim.api.nvim_set_hl(0, "CmpItemKindSupermaven", { fg = color })
       require("supermaven-nvim").setup(opts)
     end,
   },
