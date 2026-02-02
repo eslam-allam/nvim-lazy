@@ -58,9 +58,7 @@ return {
   {
     "LazyVim/LazyVim",
     dependencies = {
-      {
-        "RRethy/base16-nvim",
-      },
+      { "nvim-mini/mini.base16", version = false },
     },
     lazy = false,
     priotity = 1000,
@@ -77,7 +75,7 @@ return {
           end
         end
 
-        vim.g.color_scheme = "matugen"
+        vim.g.color_scheme = "catppuccin"
         vim.cmd.colorscheme("catppuccin")
       end,
     },
