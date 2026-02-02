@@ -23,7 +23,7 @@ function M.setup()
       base0E = "{{colors.secondary_fixed_dim.default.hex}}", -- Keywords, Storage
       base0F = "{{colors.error_container.default.hex}}", -- Deprecated, Embedded Tags
     },
-    use_cterm = true,
+    use_cterm = false,
   })
 end
 
