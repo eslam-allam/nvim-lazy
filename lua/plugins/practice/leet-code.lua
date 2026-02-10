@@ -6,10 +6,8 @@ return {
         "nvim-lua/plenary.nvim",
         "MunifTanjim/nui.nvim",
         "nvim-treesitter/nvim-treesitter",
-        "3rd/image.nvim"
     },
   opts = {
     lang = "golang",
-    image_support = true,
   }
 }
