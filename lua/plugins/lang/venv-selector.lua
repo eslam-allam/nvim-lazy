@@ -7,7 +7,6 @@ return {
     "nvim-lua/plenary.nvim",
   },
   opts = {
-    settings = {
       search = {
         miniconda_arch = {
           command = "fd 'bin/python$' /opt/miniconda3/envs --no-ignore-vcs --full-path --color never",
@@ -18,6 +17,5 @@ return {
           type = "anaconda",
         },
       },
-    },
   },
 }
