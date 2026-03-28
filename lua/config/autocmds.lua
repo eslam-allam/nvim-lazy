@@ -6,15 +6,6 @@ local ugroup = require("modules.helpers").ugroup
 
 local cmd = vim.api.nvim_create_autocmd
 
--- octo
-cmd("FileType", {
-  pattern = "octo",
-  callback = function()
-    vim.keymap.set("i", "@", "@<C-x><C-o>", { silent = true, buffer = true })
-    vim.keymap.set("i", "#", "#<C-x><C-o>", { silent = true, buffer = true })
-  end,
-})
-
 -- Tab Width
 cmd("FileType", {
   pattern = {
