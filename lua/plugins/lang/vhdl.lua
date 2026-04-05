@@ -19,18 +19,6 @@ return {
       end,
     },
     {
-      "stevearc/conform.nvim",
-      opts = function(_, opts)
-        opts.formatters_by_ft.vhdl = { "vhdlfmt" }
-        opts.formatters["vhdlfmt"] = {
-          inherit = false,
-          command = "vhdlfmt",
-          args = { "--print-width", 80, "--write", "$FILENAME" },
-          stdin = false,
-        }
-      end,
-    },
-    {
       "nvimtools/none-ls.nvim",
       optional = true,
       dependencies = {
