@@ -23,16 +23,37 @@ return {
     },
   },
   {
-    "Maxteabag/sqlit.nvim",
-    opts = {},
+    "kndndrj/nvim-dbee",
+    dependencies = {
+      "MunifTanjim/nui.nvim",
+    },
     keys = {
       {
         "<leader>D",
         function()
-          require("sqlit").open()
+          require("dbee").toggle()
         end,
-        desc = "Database (sqlit)",
+        desc = "Database",
       },
     },
+    build = function()
+      require("dbee").install()
+    end,
+    config = function(opts)
+      require("dbee").setup(opts)
+      vim.api.nvim_create_autocmd("FileType", {
+        pattern = "dbee",
+        callback = function(args)
+          vim.api.nvim_buf_set_keymap(args.buf, "n", "q", "", {
+            desc = "Close Dbee",
+            noremap = true,
+            silent = true,
+            callback = function()
+              require("dbee").close()
+            end,
+          })
+        end,
+      })
+    end,
   },
 }
