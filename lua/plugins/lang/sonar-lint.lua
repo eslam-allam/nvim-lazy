@@ -26,8 +26,6 @@ return {
             analyzers:joinpath("sonarjava.jar"):absolute(),
             analyzers:joinpath("sonarjavasymbolicexecution.jar"):absolute(),
             analyzers:joinpath("sonarjs.jar"):absolute(),
-            analyzers:joinpath("sonarphp.jar"):absolute(),
-            analyzers:joinpath("sonarpython.jar"):absolute(),
             analyzers:joinpath("sonartext.jar"):absolute(),
             analyzers:joinpath("sonarxml.jar"):absolute(),
           },
@@ -35,6 +33,9 @@ return {
         python = {
           enabled = false,
         },
+        php = {
+          enabled = false
+        }
       }
     end,
   },
