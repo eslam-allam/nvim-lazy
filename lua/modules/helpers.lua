@@ -182,4 +182,25 @@ function M.ugroup(name)
   return vim.api.nvim_create_augroup("user_" .. name, { clear = true })
 end
 
+---Read a file or return default
+---@param path string The path of the file to be read
+---@param default string|fun(): string The default value to return if the file does not exist
+function M.readOrDefault(path, default)
+  local expandedPath = vim.fn.expand(path)
+  local function computeDefault()
+    if type(default) == "string" then
+      return default
+    end
+    return default()
+  end
+  if vim.fn.filereadable(expandedPath) == 0 then
+    return computeDefault()
+  end
+  local content = vim.fn.readfile(expandedPath)
+  if vim.fn.empty(content) == 1 then
+    return computeDefault()
+  end
+  return table.concat(content, "\n")
+end
+
 return M

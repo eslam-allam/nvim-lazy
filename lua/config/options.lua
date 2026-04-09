@@ -103,3 +103,4 @@ vim.g.auto_color_scheme = false
 
 vim.g.lazyvim_php_lsp = "intelephense"
 
+vim.g.intelephense_license_file = "~/Documents/keys/intelephense.txt"
