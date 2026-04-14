@@ -33,4 +33,30 @@ return {
       }
     end,
   },
+  {
+    "mason-org/mason.nvim",
+    opts = {
+      ensure_installed = {
+        "phpcs",
+        "phpcbf",
+        "blade-formatter",
+      },
+    },
+  },
+  {
+    "stevearc/conform.nvim",
+    optional = true,
+    opts = {
+      formatters_by_ft = {
+        php = { "phpcbf", "blade-formatter" },
+      },
+      formatters = {
+        ["blade-formatter"] = {
+          condition = function(_, ctx)
+            return ctx.dirname:match("/view[s]?/")
+          end,
+        },
+      },
+    },
+  },
 }
