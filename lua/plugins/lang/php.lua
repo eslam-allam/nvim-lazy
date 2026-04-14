@@ -51,6 +51,9 @@ return {
         php = { "phpcbf", "blade-formatter" },
       },
       formatters = {
+        phpcbf = {
+          temp_dr = vim.fn.tempname()
+        },
         ["blade-formatter"] = {
           condition = function(_, ctx)
             return ctx.dirname:match("/view[s]?/")
