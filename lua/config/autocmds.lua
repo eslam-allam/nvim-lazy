@@ -6,7 +6,7 @@ local ugroup = require("modules.helpers").ugroup
 
 local cmd = vim.api.nvim_create_autocmd
 
--- Tab Width
+-- Tab Width (2)
 cmd("FileType", {
   pattern = {
     "lua",
@@ -30,6 +30,17 @@ cmd("FileType", {
   callback = function()
     vim.bo.tabstop = 2
     vim.bo.shiftwidth = 2
+  end,
+})
+
+-- Tab Width (4)
+cmd("FileType", {
+  pattern = {
+    "php"
+  },
+  callback = function()
+    vim.bo.tabstop = 4
+    vim.bo.shiftwidth = 4
   end,
 })
 
