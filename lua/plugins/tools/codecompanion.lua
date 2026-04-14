@@ -67,14 +67,26 @@ return {
     interactions = {
       chat = {
         adapter = {
-          name = "openai",
-          model = "gpt-5.1",
+          name = "ollama",
+          model = "qwen2.5-coder:14b-instruct-q4_K_M",
+        },
+      },
+      cmd = {
+        adapter = {
+          name = "ollama",
+          model = "qwen2.5-coder:14b-instruct-q4_K_M",
+        },
+      },
+      background = {
+        adapter = {
+          name = "ollama",
+          model = "qwen2.5-coder:14b-instruct-q4_K_M",
         },
       },
       inline = {
         adapter = {
-          name = "openai",
-          model = "gpt-5.1",
+          name = "ollama",
+          model = "qwen2.5-coder:14b-instruct-q4_K_M",
         },
         keymaps = {
           accept_change = {
@@ -89,7 +101,7 @@ return {
       },
       agent = {
         adapter = {
-          name = "openai",
+          name = "ollama",
         },
       },
     },
