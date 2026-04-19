@@ -36,7 +36,7 @@ cmd("FileType", {
 -- Tab Width (4)
 cmd("FileType", {
   pattern = {
-    "php"
+    "php",
   },
   callback = function()
     vim.bo.tabstop = 4
@@ -76,3 +76,16 @@ cmd("FileType", {
     vim.keymap.set("n", "q", closeCommand, { buffer = event.buf, silent = true })
   end,
 })
+
+if LazyVim.has("snacks.nvim") then
+  cmd({ "TermOpen", "TermEnter" }, {
+    callback = function()
+      local pickers = require("snacks.picker").get({
+        source = "explorer",
+      })
+      for _, picker in ipairs(pickers) do
+        picker:close()
+      end
+    end,
+  })
+end
