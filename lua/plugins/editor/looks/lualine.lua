@@ -1,13 +1,6 @@
 return {
   "nvim-lualine/lualine.nvim",
   dependencies = {
-    {
-      "letieu/harpoon-lualine",
-      dependencies = {
-        { "ThePrimeagen/harpoon", lazy = false },
-      },
-    },
-    opts = false,
     { "linux-cultist/venv-selector.nvim" },
   },
   opts = function(_, opts)
@@ -26,8 +19,6 @@ return {
         return ""
       end
     end
-
-    table.insert(opts.sections.lualine_b, 2, "harpoon2")
 
     table.insert(opts.sections.lualine_z, 1, {
       pythonEnv,
