@@ -9,4 +9,4 @@ data
 __pycache__
 .gradle
 java-runtimes.json
-lua/matugen.lua
+/lua/matugen.json

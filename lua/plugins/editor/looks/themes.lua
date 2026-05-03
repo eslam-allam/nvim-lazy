@@ -7,16 +7,22 @@ return {
         sidebars = "transparent",
         floats = "transparent",
       },
-    }
+    },
   },
   {
     "LazyVim/LazyVim",
     dependencies = {
       {
-        "GnRlLeclerc/dynamic-base16.nvim",
-        config = function()
-          require("dynamic-base16").setup()
-        end,
+        "daedlock/matugen.nvim",
+        lazy = false,
+        priority = 1000,
+        config = true,
+        opts = {
+          colors_path = require("plenary.path")
+            :new(vim.fn.stdpath("config"))
+            :joinpath("lua", "matugen.json")
+            :absolute(),
+        },
       },
     },
     lazy = false,
@@ -24,16 +30,9 @@ return {
     opts = {
       colorscheme = function()
         if vim.g.auto_color_scheme then
-          local ok, matugen = pcall(require, "matugen")
-          if ok then
-            ok, matugen = pcall(matugen.setup)
-            if ok then
-              vim.g.color_scheme = "dynamic-base16"
-              return
-            else
-              vim.notify_once("[LazyVim] Error setting up matugen:" .. matugen, vim.log.levels.WARN)
-            end
-          end
+          vim.g.color_scheme = "matugen"
+          vim.cmd.colorscheme("matugen")
+          return
         end
 
         vim.g.color_scheme = "tokyonight-night"
