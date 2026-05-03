@@ -4,7 +4,19 @@ return {
     { "linux-cultist/venv-selector.nvim" },
   },
   opts = function(_, opts)
-    opts.options.theme = "auto"
+    if not vim.g.auto_color_scheme then
+      opts.options.theme = "auto"
+    else
+      opts.options.theme = require("matugen").lualine()
+      vim.api.nvim_create_autocmd("User", {
+        pattern = "MatugenReloaded",
+        callback = function()
+          require("lualine").setup({
+            options = { theme = require("matugen").lualine() },
+          })
+        end,
+      })
+    end
 
     local function envSection(envName)
       return " " .. envName
