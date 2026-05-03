@@ -99,7 +99,7 @@ vim.g.lazyvim_python_lsp = "pyright"
 
 vim.g.spell_use_ngram = false
 
-vim.g.auto_color_scheme = false
+vim.g.auto_color_scheme = true
 
 vim.g.lazyvim_php_lsp = "intelephense"
 
