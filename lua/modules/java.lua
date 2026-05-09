@@ -37,7 +37,11 @@ if vim.fn.executable("fd") == 1 and not LazyVim.is_win() then
     -- vim.notify("Found " .. #javaPaths .. " java runtimes", vim.log.levels.DEBUG, { title = "Java" })
     for _, v in pairs(javaPaths) do
       local javaPath = path:new(v):parent():parent():absolute()
+      if vim.fn.fnamemodify(javaPath, ":t") == "jre" then
+        goto continue
+      end
       M.runtimes[M.To_java_version_name(javaPath)] = javaPath
+      ::continue::
     end
   end
   -- vim.notify("Detected runtimes: " .. vim.inspect(M.runtimes), vim.log.levels.DEBUG, { title = "Java" })
