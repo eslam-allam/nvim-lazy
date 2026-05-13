@@ -23,7 +23,7 @@ return {
     },
   },
   {
-    "kndndrj/nvim-dbee",
+    "eslam-allam/nvim-dbee",
     dependencies = {
       "MunifTanjim/nui.nvim",
     },
