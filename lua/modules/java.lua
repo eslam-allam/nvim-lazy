@@ -28,14 +28,19 @@ function M.To_java_version_name(path)
   return "java" .. version
 end
 
-if vim.fn.executable("fd") == 1 and not LazyVim.is_win() then
-  local paths_result = vim.system({ "fd", "bin/java$", "/usr/lib/jvm", "--full-path" }):wait(300)
+if vim.fn.executable("fd") == 1 then
+  local sourceDir = not LazyVim.is_win() and '/usr/lib/jvm' or 'C://Program Files'
+  local pattern = not LazyVim.is_win() and "bin/java$" or "bin\\\\java\\.exe$"
+  local paths_result = vim.system({ "fd", pattern, sourceDir, "--full-path" }):wait(300)
   if paths_result.code ~= 0 then
     vim.notify("Failed to get java paths", vim.log.levels.ERROR, { title = "Java" })
   else
     local javaPaths = vim.split(paths_result.stdout, "\n", { trimempty = true })
     -- vim.notify("Found " .. #javaPaths .. " java runtimes", vim.log.levels.DEBUG, { title = "Java" })
     for _, v in pairs(javaPaths) do
+      if LazyVim.is_win() then
+        v = string.gsub(v, "/", "\\")
+      end
       local javaPath = path:new(v):parent():parent():absolute()
       if vim.fn.fnamemodify(javaPath, ":t") == "jre" then
         goto continue
