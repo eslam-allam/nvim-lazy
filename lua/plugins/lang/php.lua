@@ -10,7 +10,7 @@ return {
         opts = {
           secrets = {
             intelephense = {
-              generator = { "rbw", "get", "intelephense license key" },
+              generator = function() return require("secrets").get_bw_password("intelephense license key") end,
             },
           },
         },
