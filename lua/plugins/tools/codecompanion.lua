@@ -6,6 +6,16 @@ return {
     "nvim-lua/plenary.nvim",
     "nvim-treesitter/nvim-treesitter",
     {
+      "secrets",
+      opts = {
+        secrets = {
+          openai = {
+            generator = function() return require("secrets").get_bw_password("OpenAI Neovim") end,
+          },
+        },
+      },
+    },
+    {
       "HakonHarnes/img-clip.nvim",
       opts = {
         filetypes = {
@@ -110,7 +120,7 @@ return {
         openai = function()
           return require("codecompanion.adapters").extend("openai", {
             env = {
-              api_key = "cmd:rbw get 'OpenAI Neovim'",
+              api_key = function() return require("secrets").get("openai") end,
             },
           })
         end,
