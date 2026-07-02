@@ -152,4 +152,104 @@ function M.register(name, secret)
   M.secrets[name] = secret
 end
 
+function M.get_bw_password(item_name)
+    local is_windows = vim.fn.has("win32") == 1 or vim.fn.has("win64") == 1
+    local dev_null = is_windows and "2>nul" or "2>/dev/null"
+
+    local has_rbw = vim.fn.executable("rbw") == 1
+    local has_bw = vim.fn.executable("bw") == 1
+
+    if not has_rbw and not has_bw then
+        vim.notify("Bitwarden Error: Neither 'rbw' nor 'bw' executables were found on your system PATH.", vim.log.levels.ERROR)
+        return nil
+    end
+
+    -- 1. Try rbw first
+    if has_rbw then
+        local check_rbw = io.popen(string.format("rbw locked %s", dev_null))
+        if check_rbw then
+            local status = check_rbw:read("*a"):gsub("%s+", "")
+            check_rbw:close()
+            
+            if status == "false" or status == "" then
+                local rbw_cmd = string.format("rbw get \"%s\" %s", item_name, dev_null)
+                local handle = io.popen(rbw_cmd)
+                if handle then
+                    local res = handle:read("*a"):gsub("^%s*(.-)%s*$", "%1")
+                    handle:close()
+                    if res ~= "" then return res end
+                end
+            end
+        end
+    end
+
+    -- 2. Fallback to official bw
+    if has_bw then
+        -- Step A: Handle Unlocking
+        if not vim.g.bw_session or vim.g.bw_session == "" then
+            local password = vim.fn.inputsecret("Enter Bitwarden Master Password: ")
+            if password == "" then 
+                vim.notify("Bitwarden: Unlock cancelled by user.", vim.log.levels.WARN)
+                return nil 
+            end
+
+            local unlock_cmd = is_windows 
+                and string.format("powershell -Command \"bw unlock --raw '%s'\"", password)
+                or string.format("bw unlock --raw \"%s\" %s", password, dev_null)
+
+            local handle = io.popen(unlock_cmd)
+            if handle then
+                local result = handle:read("*a"):gsub("%s+", "")
+                handle:close()
+                
+                if result:match("^[A-Za-z0-9%+/=]+$") and #result > 20 then
+                    vim.g.bw_session = result
+                    vim.notify("Bitwarden vault unlocked successfully!", vim.log.levels.INFO)
+                else
+                    vim.notify("Bitwarden Error: Invalid master password or failed vault unlock.", vim.log.levels.ERROR)
+                    return nil
+                end
+            else
+                vim.notify("Bitwarden Error: Failed to execute the unlock command.", vim.log.levels.ERROR)
+                return nil
+            end
+        end
+
+        -- Step B: Handle Fetching (Attempt 1: Try password field)
+        local fetch_pw_cmd = is_windows
+            and string.format("powershell -Command \"$env:BW_SESSION='%s'; bw get password '%s'\"", vim.g.bw_session, item_name)
+            or string.format("BW_SESSION=\"%s\" bw get password \"%s\" %s", vim.g.bw_session, item_name, dev_null)
+
+        local fetch_handle = io.popen(fetch_pw_cmd)
+        if fetch_handle then
+            local password_value = fetch_handle:read("*a"):gsub("^%s*(.-)%s*$", "%1")
+            fetch_handle:close()
+            
+            if password_value ~= "" and not password_value:match("[Ee]rror") then 
+                return password_value 
+            end
+        end
+
+        -- Step C: Fallback Fetching (Attempt 2: If password field was empty/error, try Notes)
+        local fetch_notes_cmd = is_windows
+            and string.format("powershell -Command \"$env:BW_SESSION='%s'; bw get notes '%s'\"", vim.g.bw_session, item_name)
+            or string.format("BW_SESSION=\"%s\" bw get notes \"%s\" %s", vim.g.bw_session, item_name, dev_null)
+
+        local notes_handle = io.popen(fetch_notes_cmd)
+        if notes_handle then
+            local notes_value = notes_handle:read("*a"):gsub("^%s*(.-)%s*$", "%1")
+            notes_handle:close()
+            
+            if notes_value ~= "" and not notes_value:match("[Ee]rror") then 
+                return notes_value 
+            end
+        end
+
+        -- If both password and notes failed
+        vim.notify(string.format("Bitwarden Error: Could not find data or notes for item '%s'.", item_name), vim.log.levels.ERROR)
+    end
+
+    return nil
+end
+
 return M
