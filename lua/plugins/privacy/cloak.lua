@@ -1,5 +1,6 @@
 return {
   "laytan/cloak.nvim",
+  enabled = false,
   keys = {
     { "<leader>cc", "<cmd>CloakToggle<cr>", desc = "Toggle Cloak", mode = "n" },
     { "<leader>cC", "<cmd>CloakPreviewLine<cr>", desc = "Cloak Preview Line", mode = "n" },
