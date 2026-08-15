@@ -48,7 +48,6 @@ cmd("FileType", {
 cmd("FileType", {
   group = ugroup("close_with_q"),
   pattern = {
-    "toggleterm",
     "http",
     "gitgraph",
     "DiffviewFiles",
