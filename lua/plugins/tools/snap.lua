@@ -1,6 +1,7 @@
 return {
   "eslam-allam/snap.nvim",
   build = ":SnapBuild",
+  cmd = "Snap",
   opts = {
     theme = "tmTheme://~/.config/bat/themes/Catppuccin Mocha.tmTheme",
     line_offset = true,
