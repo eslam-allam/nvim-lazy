@@ -31,7 +31,7 @@ end
 if vim.fn.executable("fd") == 1 then
   local sourceDir = not LazyVim.is_win() and '/usr/lib/jvm' or 'C://Program Files'
   local pattern = not LazyVim.is_win() and "bin/java$" or "bin\\\\java\\.exe$"
-  local paths_result = vim.system({ "fd", pattern, sourceDir, "--full-path" }):wait(300)
+  local paths_result = vim.system({ "fd", pattern, sourceDir, "--full-path" }):wait(3000)
   if paths_result.code ~= 0 then
     vim.notify("Failed to get java paths", vim.log.levels.ERROR, { title = "Java" })
   else
