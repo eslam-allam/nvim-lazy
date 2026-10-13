@@ -77,26 +77,26 @@ return {
     interactions = {
       chat = {
         adapter = {
-          name = "ollama",
-          model = "qwen2.5-coder:14b-instruct-q4_K_M",
+          name = "opencode",
+          model = "opencode/mimo-v2.6-flash-free",
         },
       },
       cmd = {
         adapter = {
-          name = "ollama",
-          model = "qwen2.5-coder:14b-instruct-q4_K_M",
+          name = "opencode",
+          model = "opencode/mimo-v2.6-flash-free",
         },
       },
       background = {
         adapter = {
-          name = "ollama",
-          model = "qwen2.5-coder:14b-instruct-q4_K_M",
+          name = "opencode",
+          model = "opencode/mimo-v2.6-flash-free",
         },
       },
       inline = {
         adapter = {
-          name = "ollama",
-          model = "qwen2.5-coder:14b-instruct-q4_K_M",
+          name = "opencode",
+          model = "opencode/mimo-v2.6-flash-free",
         },
         keymaps = {
           accept_change = {
@@ -111,7 +111,7 @@ return {
       },
       agent = {
         adapter = {
-          name = "ollama",
+          name = "opencode",
         },
       },
     },
